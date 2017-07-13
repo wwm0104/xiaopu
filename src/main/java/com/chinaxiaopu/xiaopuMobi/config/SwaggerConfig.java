@@ -15,7 +15,7 @@ import static springfox.documentation.builders.PathSelectors.*;
 
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 16/9/13
  */
 @Configuration

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 /**
  * 系统登录接口返回json内容类
- * Created by liuwei
+ * Created by ellien
  * date: 16/5/27
  */
 public class RegisterResult extends AbstractResult {

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 16/9/27
  */
 @Component

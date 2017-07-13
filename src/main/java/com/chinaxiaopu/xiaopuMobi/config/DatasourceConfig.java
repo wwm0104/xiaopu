@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Druid连接池配置
- * Created by liuwei
+ * Created by ellien
  * date: 16/8/25
  */
 @Configuration

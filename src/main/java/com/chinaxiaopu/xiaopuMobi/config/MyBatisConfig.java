@@ -22,7 +22,7 @@ import java.util.Properties;
 /**
  *
  * MyBatis基础配置
- * Created by liuwei
+ * Created by ellien
  * date: 16/8/25
  */
 @Configuration
