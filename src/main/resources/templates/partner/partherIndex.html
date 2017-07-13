@@ -1,0 +1,65 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>管理员首页</title>
+
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            合伙人首页
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <a th:href="@{/partnerManage/schoolLook}">
+                <div class="col-xs-4">
+                    <!--<div class="box-header">-->
+                    <!--</div>-->
+                    <!-- /.box-header -->
+                    <div  class="schoolApplyCount" style="
+                        width: 120px;
+                        height: 120px;
+                        border: 5px solid #999999;
+                        margin-top: 151px;
+                        margin-left: 150px;
+                        border-radius: 50%;
+                        text-align: center;
+                        line-height: 42px;
+                    ">
+                        <p style="font-size:30px;color:red;" th:text="${schoolNo}"></p>
+                        校园合伙人审核
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </a>
+            <a th:href="@{/partnerManage/groupLook}">
+                <div class="col-xs-4">
+                    <div  class="groupApplyCount" style="
+                            width: 120px;
+                            height: 120px;
+                            border: 5px solid #999999;
+                            margin-top: 151px;
+                            margin-left: 150px;
+                            border-radius: 50%;
+                            text-align: center;
+                            line-height: 42px;
+                        ">
+                        <p style="font-size:30px;color:red;" th:text="${groupNo}"></p>
+                        社团合伙人审核
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </a>
+        </div>
+
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.UserFansMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.UserFans">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <id column="fans_id" jdbcType="INTEGER" property="fansId" />
+    <result column="is_focus" jdbcType="VARCHAR" property="isFocus" />
+    <result column="foncus_time" jdbcType="TIMESTAMP" property="foncusTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, fans_id, is_focus, foncus_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFansExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_fans
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFansKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_fans
+    where id = #{id,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and fans_id = #{fansId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFansKey">
+    delete from user_fans
+    where id = #{id,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and fans_id = #{fansId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFansExample">
+    delete from user_fans
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFans">
+    insert into user_fans (id, user_id, fans_id, 
+      is_focus, foncus_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{fansId,jdbcType=INTEGER}, 
+      #{isFocus,jdbcType=VARCHAR}, #{foncusTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFans">
+    insert into user_fans
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="fansId != null">
+        fans_id,
+      </if>
+      <if test="isFocus != null">
+        is_focus,
+      </if>
+      <if test="foncusTime != null">
+        foncus_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="fansId != null">
+        #{fansId,jdbcType=INTEGER},
+      </if>
+      <if test="isFocus != null">
+        #{isFocus,jdbcType=VARCHAR},
+      </if>
+      <if test="foncusTime != null">
+        #{foncusTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFansExample" resultType="java.lang.Long">
+    select count(*) from user_fans
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_fans
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fansId != null">
+        fans_id = #{record.fansId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isFocus != null">
+        is_focus = #{record.isFocus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foncusTime != null">
+        foncus_time = #{record.foncusTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_fans
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      fans_id = #{record.fansId,jdbcType=INTEGER},
+      is_focus = #{record.isFocus,jdbcType=VARCHAR},
+      foncus_time = #{record.foncusTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFans">
+    update user_fans
+    <set>
+      <if test="isFocus != null">
+        is_focus = #{isFocus,jdbcType=VARCHAR},
+      </if>
+      <if test="foncusTime != null">
+        foncus_time = #{foncusTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and fans_id = #{fansId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFans">
+    update user_fans
+    set is_focus = #{isFocus,jdbcType=VARCHAR},
+      foncus_time = #{foncusTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and fans_id = #{fansId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getFanListByUserId" parameterType="java.lang.Integer" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.UserFanListVo">
+  SELECT
+	ui.user_id AS userId,
+	ui.nick_name AS nickName,
+	ui.avatar_url AS avatarUrl,
+	uf.is_focus AS isFocus
+  FROM
+      user_fans uf
+  LEFT JOIN user_info ui ON uf.fans_id = ui.user_id
+  WHERE
+	uf.user_id = #{userId}
+  </select>
+  <select id="getFollowListByUserId" parameterType="java.lang.Integer" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.UserFanListVo">
+  SELECT
+    ui.user_id AS userId,
+    ui.nick_name AS nickName,
+    ui.avatar_url AS avatarUrl,
+    uf.is_focus AS isFocus
+  FROM
+    user_fans uf
+  LEFT JOIN user_info ui ON uf.user_id = ui.user_id
+  WHERE
+    uf.fans_id = #{userId}
+  </select>
+
+
+  <resultMap id="TopicBaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.Topic">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId"/>
+    <result column="creator_nickname" jdbcType="VARCHAR" property="creatorNickname"/>
+    <result column="creator_avatar" jdbcType="VARCHAR" property="creatorAvatar"/>
+    <result column="school_id" jdbcType="INTEGER" property="schoolId"/>
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+    <result column="challenge_topic_id" jdbcType="INTEGER" property="challengeTopicId"/>
+    <result column="is_challenger" jdbcType="TINYINT" property="isChallenger"/>
+    <result column="challenge_id" jdbcType="INTEGER" property="challengeId"/>
+    <result column="challenge_nickname" jdbcType="VARCHAR" property="challengeNickname"/>
+    <result column="challenge_avatar" jdbcType="VARCHAR" property="challengeAvatar"/>
+    <result column="channel_id" jdbcType="INTEGER" property="channelId"/>
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName"/>
+    <result column="type" jdbcType="TINYINT" property="type"/>
+    <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+    <result column="content" jdbcType="VARCHAR" property="content"/>
+    <result column="recommend" jdbcType="TINYINT" property="recommend"/>
+    <result column="like_cnt" jdbcType="INTEGER" property="likeCnt"/>
+    <result column="favorite_cnt" jdbcType="INTEGER" property="favoriteCnt"/>
+    <result column="comment_cnt" jdbcType="INTEGER" property="commentCnt"/>
+    <result column="is_official" jdbcType="TINYINT" property="isOfficial"/>
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime"/>
+    <result column="is_pk" jdbcType="TINYINT" property="isPk"/>
+    <result column="further" jdbcType="VARCHAR" property="further"/>
+    <result column="status" jdbcType="TINYINT" property="status"/>
+  </resultMap>
+  <!--插叙我关注的人的图文列表 -->
+  <select id="selectFollowTopics" parameterType="com.chinaxiaopu.xiaopuMobi.dto.UserFansTopicLisDto" resultMap="TopicBaseResultMap">
+    SELECT
+	ts.id, ts.creator_id, ui.nick_name as creator_nickname, ui.avatar_url as creator_avatar, ts.school_id, ts.school_name, ts.challenge_topic_id,
+    ts.is_challenger, ts.challenge_id, ts.challenge_nickname, ts.challenge_avatar, ts.channel_id, ts.channel_name,
+    ts.type, ts.slogan, ts.content, ts.recommend, ts.like_cnt, ts.favorite_cnt, ts.comment_cnt, ts.is_official,
+    ts.is_delete, ts.create_time, ts.update_time, ts.expire_time, ts.is_pk, ts.further, ts.status
+    FROM
+	topics ts
+    LEFT JOIN user_fans uf ON ts.creator_id = uf.user_id
+    LEFT JOIN user_info ui ON ts.creator_id = ui.user_id
+    WHERE uf.fans_id = #{userId}
+    <if test="content != null">
+      AND ts.content LIKE CONCAT('%',#{content},'%')
+    </if>
+    ORDER BY ts.create_time DESC
+  </select>
+
+  <!--查询是否关注-->
+  <select id="selectIfFollow" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFans" resultType="java.lang.Integer">
+    SELECT count(*) FROM user_fans
+    WHERE user_id = #{userId}
+    AND fans_id = #{fansId}
+  </select>
+  
+  <!--互相关注或取消互相关注-->
+  <update id="updateIsFocus" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFans">
+    UPDATE user_fans SET is_focus = #{isFocus}
+    WHERE user_id = #{userId}
+    AND fans_id = #{fansId}
+  </update>
+
+  <delete id="removeFocus" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserFans">
+    DELETE FROM user_fans
+    WHERE user_id = #{userId}
+    AND fans_id = #{fansId}
+  </delete>
+</mapper>

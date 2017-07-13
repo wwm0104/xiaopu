@@ -1,0 +1,149 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>奖品详情</title>
+    <script th:src="@{/js/admin/topicDetail.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content"><!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-body">
+                        <input type="hidden" id="topicId" th:value="${topic.id}"/>
+                        <div class="fanhui-icon">
+                            <a href="javascript:history.go(-1)"><i></i>返回</a>
+                        </div>
+                        <div class="details-content">
+                            <div>
+                                <span><strong>来战发起者&nbsp;姓名：</strong><span th:text="${topic.realName}"></span></span>
+                            </div>
+                            <div style="border-bottom: 1px solid #e9e9e9;position: relative;">
+                                <strong>昵称：</strong><span th:text="${topic.nickName}"></span>
+                                <strong>来战次数：</strong><span th:text="${topic.pkCnt}"></span>
+                                <strong>冠军次数：</strong><span th:text="${topic.winCnt}"></span>
+                                <span class="span-abso" th:if="${topic.status==2}">未通过</span>
+                                <span class="span-abso" style="color: orange" th:if="${topic.status==0}">待审核</span>
+                            </div>
+                            <div style="border-bottom: 1px solid #e9e9e9;">
+                                <strong>学校：</strong><span th:text="${topic.schoolName}"></span>
+                                <strong>社团：</strong><span th:text="${topic.groups}"></span>
+                                <strong>学号：</strong><span th:text="${topic.studentNo}"></span>
+                                <strong>手机：</strong><span th:text="${topic.mobile}"></span>
+                                <strong>Q  Q：</strong><span th:text="${topic.qq}"></span>
+                            </div>
+
+                            <div class="row details-vs">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="col-md-12 col-sm-12 details-vs-img">
+                                        <img th:if="${topic.type==1}" th:src="@{${topic.imgsHostDomain}+${topic.urls[0]}}"/>
+                                        <embed th:if="${topic.type==2}" th:src="@{${topic.imgsHostDomain}+${topic.urls[0]}}"/>
+                                        <!--<span th:text="${topic.urls[0]}"></span>-->
+                                    </div>
+                                    <div class="col-md-12"><strong>标签：</strong> <span th:text="${topic.tags}"></span></div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-6">
+                                    <div><strong>来战标题</strong></div>
+                                    <div><strong>《<span th:text="${topic.slogan}"></span>》</strong></div>
+                                    <div><span th:text="${topic.desc}"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="footer-content row">
+                                <div class="col-md-3 col-sm-6">
+                                    <div>
+                                        <strong>奖类：</strong>
+                                        <span th:if="${topic.prizeType==1}">现金</span>
+                                        <span th:if="${topic.prizeType==2}">实物</span>
+                                        <span th:if="${topic.prizeType==3}">虚拟</span>
+                                    </div>
+                                    <div><strong>奖品：</strong><span th:text="${topic.prizeName}"></span></div>
+                                    <div>
+                                        <strong>投票时长：</strong>
+                                        <span th:if="${topic.periodType==1}">当天</span>
+                                        <span th:if="${topic.periodType==2}">当周</span>
+                                        <span th:if="${topic.periodType==3}">当月</span>
+                                        <span th:if="${topic.periodType==4}">当季</span>
+                                        <span th:if="${topic.periodType==5}">当年</span>
+                                    </div>
+                                    <div><strong>投票频道：</strong><span th:text="${topic.channelName}"></span></div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div><strong>参加人数要求：</strong><span th:text="${topic.challengeCnt}"></span>人以上（含）</div>
+                                    <div><strong>投票人数要求：</strong><span th:text="${topic.voteCnt}"></span>人以上（含）</div>
+                                    <div>
+                                        <strong>奖励对象：</strong>
+                                        <span th:if="${topic.rewardType==1}">最高者得</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-offset-3 col-md-3 col-sm-6">
+                                    <div th:if="${topic.status==2}">
+                                        <strong>驳回原因：</strong>
+                                        <div class="red-color"><span th:text="${topic.reason}"></span></div>
+                                    </div>
+                                    <div style="margin-top: 80px;" th:if="${topic.status==0}">
+                                        <button type="button" id="disagree" class="btn delete-btn-bg col-sm-5" style="margin-right: 10px;">驳回</button>
+                                        <button type="button" id="agree" class="btn true-color col-sm-5">通过</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--驳回Model-->
+        <div class="modal fade" id="outModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong class="modal-title">驳回</strong>
+                    </div>
+                    <div class="modal-body row">
+                        <textarea rows="5" id="reason" class="col-sm-offset-1 col-sm-10" style="resize: none;"></textarea>
+                        <div class="col-sm-12" style="margin: 20px;">
+                            <button type="button" class="btn btn-default col-sm-offset-1 col-sm-4" data-dismiss="modal">取消</button>
+                            <button type="button" id="_disagree" class="btn true-color col-sm-offset-1 col-sm-4">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--通过弹出框-->
+        <div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body row">
+                        <div class="col-sm-12 text-center" style="color: orange;margin: 35px 0;font-size: 20px;font-weight: 600;">确定通过发起来战</div>
+                        <div class="col-sm-12" style="margin: 20px 0;">
+                            <button type="button" class="btn btn-default col-sm-offset-1 col-sm-4" data-dismiss="modal" aria-label="Close">取消</button>
+                            <button type="button" id="_agree" class="btn true-color col-sm-offset-2 col-sm-4">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

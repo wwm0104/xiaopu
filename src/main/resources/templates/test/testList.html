@@ -1,0 +1,107 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>社团列表</title>
+    <script th:src="@{/js/testList.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            社团列表
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div>
+            <input id="ycId" type="text" style="display: none"/>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="col-xs-4 col-xs-offset-8">
+                            <div class="row">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="社团名称" class="form-control"/>
+                                    <span class="input-group-addon seachButton" onclick="initData()">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>社团名称</th>
+                                <th width="11%">
+                                    <select class="form-control _select" id="schoolList" onchange="initData()">
+                                        <option value="">所有大学名称</option>
+                                        <option th:each="school : ${schoolList}"
+                                                th:value="${school.id}"
+                                                th:text="${school.name}"></option>
+                                    </select>
+                                </th>
+                                <th>认领人</th>
+                                <th>手机号</th>
+                                <th>学号</th>
+                                <th>认领时间</th>
+                                <th width="12%">
+                                    <select class="form-control _select" id="status" onchange="initData()">
+                                        <option value="">所有状态</option>
+                                        <option value="1">审核通过</option>
+                                        <option value="2">待审核</option>
+                                    </select>
+                                </th>
+                                <th style="width: 200px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="groupList">
+                            </tbody>
+                        </table>
+                        <p id="groupListPagination"></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!--驳回Model-->
+
+        <!--   <div class="modal fade" id="turndownModel" role="dialog" aria-labelledby="groupModalLabel">
+               <div class="modal-dialog" role="document">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                           <h4 class="modal-title" id="myModalLabel">驳回</h4>
+                       </div>
+                       <div class="modal-body">
+                           <form class="form-horizontal" role="form" novalidate="novalidate" name="roleForm">
+                               <div class="box-body">
+                                   <div class="form-group">
+                                       <label class="col-sm-2 control-label">驳回原因</label>
+                                       <div class="col-sm-10">
+                                           <textarea id="listDescription" rows="5" style="resize: none" class="form-control"></textarea>
+                                       </div>
+                                   </div>
+                               </div>
+                           </form>
+                       </div>
+
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                           <button type="button" onclick="returndown(0)" class="btn btn-primary">确定</button>
+                       </div>
+                   </div>
+               </div>
+           </div>-->
+    </section>
+</div>
+</body>
+</html>

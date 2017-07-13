@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+</head>
+<body>
+<header class="main-header" th:fragment="header">
+    <!-- Logo -->
+    <!--<a href="#" class="logo">-->
+        <!--&lt;!&ndash; mini logo for sidebar mini 50x50 pixels &ndash;&gt;-->
+        <!--<span class="logo-mini"></span>-->
+        <!--&lt;!&ndash; logo for regular state and mobile devices &ndash;&gt;-->
+        <!--<span class="logo-lg"></span>-->
+    <!--</a>-->
+    <!-- Header Navbar: style can be found in header.less -->
+    <!--<nav class="navbar navbar-static-top">
+        &lt;!&ndash; Sidebar toggle button&ndash;&gt;
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                &lt;!&ndash; Messages: style can be found in dropdown.less&ndash;&gt;
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img th:src="@{/img/avatar.png}" class="user-image" alt="用户头像" />
+                        <span class="hidden-xs"><shiro:principal property="realName"/></span>
+                    </a>
+                    &lt;!&ndash;<ul class="dropdown-menu">&ndash;&gt;
+                        &lt;!&ndash;&lt;!&ndash; User image &ndash;&gt;&ndash;&gt;
+                        &lt;!&ndash;<li class="user-header">&ndash;&gt;
+                            &lt;!&ndash;<p>&ndash;&gt;
+                                &lt;!&ndash;超级管理员&ndash;&gt;
+                                &lt;!&ndash;<small>Member since Nov. 2016</small>&ndash;&gt;
+                            &lt;!&ndash;</p>&ndash;&gt;
+                        &lt;!&ndash;</li>&ndash;&gt;
+                        &lt;!&ndash;&lt;!&ndash; Menu Footer&ndash;&gt;&ndash;&gt;
+                        &lt;!&ndash;<li class="user-footer">&ndash;&gt;
+                            &lt;!&ndash;<div class="pull-right">&ndash;&gt;
+                                &lt;!&ndash;<a href="/user/webLogout" class="btn btn-default btn-flat">退出</a>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                        &lt;!&ndash;</li>&ndash;&gt;
+                    &lt;!&ndash;</ul>&ndash;&gt;
+                </li>
+                <li class="dropdown user-menu">
+                    <a th:href="@{/user/webLogout}" >
+                        <i class="fa fa-sign-out"></i>
+                        <span class="hidden-xs">退出</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>-->
+
+    <nav class="navbar navbar-static-top">
+
+        <div class="header-logo pull-left logo">
+            <div class="logo-img">
+                <img th:src="@{/plugins/dist/img/logo.png}" />
+            </div>
+        </div>
+
+        <a href="#" id="hide" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+
+        </a>
+
+        <div class="navbar-custom-left">
+            <div><i class="fa fa-bullhorn"></i>各位团长，近期校谱会根据个团的属性定期举办活动，请团长大人留意报名！</div>
+        </div>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- User Account: style can be found in dropdown.less -->
+
+                <li class="dropdown user-menu">
+                    <a href="#" class="menu-color">
+                        <img th:src="@{/img/logo.png}" class="user-image" alt="用户头像" />
+                        <span class="hidden-xs"><shiro:principal property="realName"/></span>
+                    </a>
+                </li>
+                <li class="dropdown user-menu user-out">
+                    <a th:href="@{/user/webLogout}" style="height: 50px;" >
+                        <i class="glyphicon glyphicon-off"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+</body>
+</html>

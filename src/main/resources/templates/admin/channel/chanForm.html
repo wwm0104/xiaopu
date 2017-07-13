@@ -1,0 +1,97 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>编辑子频道</title>
+    <script th:src="@{/js/admin/channel/chanForm.js}" ></script>
+
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            编辑子频道
+        </h1>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="fanhui-icon">
+                        <a href="javascript:history.go(-1);"><i></i>返回</a>
+                    </div>
+                    <!-- form start -->
+                    <form id="inputForm" method="post" class="form-horizontal" action="/admin/channel/saveChan">
+                        <div class="box-body">
+                            <br/>
+                            <input name="id" type="hidden"  th:name="id" id="_id" th:value="${e.id}"/>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">名称:</label>
+                                <div class="col-sm-4">
+                                <input name="name" type="text" class="form-control" th:readonly="${e.name !=null}" readonly="readonly" data-bv-stringlength="true" data-bv-stringlength-max="8" data-bv-stringlength-message="最大名称长度为8"
+                                    th:name="name" th:value="${e.name}" placeholder="请填写名称" required="required" data-bv-notempty-message="请填写名称"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">描述:</label>
+                                <div class="col-sm-4">
+                                    <input name="desc" type="text" class="form-control" th:name="desc" th:value="${e.desc}" placeholder="请填写描述" required="required" data-bv-notempty-message="请填写描述" data-bv-stringlength="true" data-bv-stringlength-max="40" data-bv-stringlength-message="最大描述长度为40"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否官方:</label>
+                                <div class="col-sm-4">
+                                    <select id="isOfficial" name="isOfficial" class="form-control">
+                                        <option value="0" th:selected="${e.isOfficial ==0}">非官方</option>
+                                        <option value="1" th:selected="${e.isOfficial ==1}">官方</option>
+                                        <option value="2" th:selected="${e.isOfficial ==2}">用户添加</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">状态:</label>
+                                <div class="col-sm-4">
+                                    <select id="status" name="status" class="form-control">
+                                        <option value="1" th:selected="${e.status ==1}">有效</option>
+                                        <option value="0" th:selected="${e.status ==0}">待审核</option>
+                                        <option value="-1" th:selected="${e.status ==-1}">无效</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">类型:</label>
+                                <div class="col-sm-4">
+                                    <select id="type" name="type" class="form-control">
+                                        <option value="1" th:selected="${e.type ==1}">图文</option>
+                                        <option value="2" th:selected="${e.type ==2}">音频</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片:</label>
+                                <div class="col-sm-6 dropz">
+                                    <input type="hidden" name="posterImg" id="posterImg" value=""/>
+                                    <img id="uploadImage_1"  class="dropzoneImgUpload"
+                                         th:src="${e.posterImg==null}?@{/img/cjhdtianjia.png}:@{${path}+${e.posterImg}}" height="100"
+                                         width="100" data-val=""
+                                         data-toggle="tooltip" title="图片上传" th:value="${e.posterImg}"/>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td style="text-align:center;width:100%;">
+                                        <input type="submit" id="submitId" class="btn btn-primary"></input>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

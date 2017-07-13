@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.TopicRankingMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.TopicRanking">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
+        <result column="vote_cnt" jdbcType="INTEGER" property="voteCnt"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="parent_type" jdbcType="INTEGER" property="parentType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, topic_id, vote_cnt, type, parent_type, create_time, status
+  </sql>
+    <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicRankingExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from topic_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from topic_ranking
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from topic_ranking
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicRankingExample">
+        delete from topic_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicRanking">
+    insert into topic_ranking (id, topic_id, vote_cnt, 
+      type, parent_type, create_time, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{voteCnt,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{parentType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicRanking">
+        insert into topic_ranking
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="topicId != null">
+                topic_id,
+            </if>
+            <if test="voteCnt != null">
+                vote_cnt,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="parentType != null">
+                parent_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="topicId != null">
+                #{topicId,jdbcType=INTEGER},
+            </if>
+            <if test="voteCnt != null">
+                #{voteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="parentType != null">
+                #{parentType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicRankingExample"
+            resultType="java.lang.Long">
+        select count(*) from topic_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update topic_ranking
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.topicId != null">
+                topic_id = #{record.topicId,jdbcType=INTEGER},
+            </if>
+            <if test="record.voteCnt != null">
+                vote_cnt = #{record.voteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=INTEGER},
+            </if>
+            <if test="record.parentType != null">
+                parent_type = #{record.parentType,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update topic_ranking
+        set id = #{record.id,jdbcType=INTEGER},
+        topic_id = #{record.topicId,jdbcType=INTEGER},
+        vote_cnt = #{record.voteCnt,jdbcType=INTEGER},
+        type = #{record.type,jdbcType=INTEGER},
+        parent_type = #{record.parentType,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicRanking">
+        update topic_ranking
+        <set>
+            <if test="topicId != null">
+                topic_id = #{topicId,jdbcType=INTEGER},
+            </if>
+            <if test="voteCnt != null">
+                vote_cnt = #{voteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="parentType != null">
+                parent_type = #{parentType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicRanking">
+    update topic_ranking
+    set topic_id = #{topicId,jdbcType=INTEGER},
+      vote_cnt = #{voteCnt,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      parent_type = #{parentType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--投票排行榜日，月，周榜-->
+    <select id="getVotesRankList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.VotesRankDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.VotesRankVo">
+    <![CDATA[
+
+
+      SELECT @row := @row + 1 as row,t0.* from (
+        SELECT
+        t.topic_id as topicId,t.vote_cnt as voteCnt,t0.slogan,DATE_FORMAT(t0.expire_time,'%Y/%m/%d %H:%i:%s') as expireTime,t1.nick_name as creatorNickname,
+        t1.user_sex userSex,t0.creator_id as userId,t0.content,t0.type,case when t0.expire_time >NOW() THEN 1 else 0 end isOver,p.id as prizeId,p.name as prizeName
+        FROM topic_ranking t
+        LEFT JOIN topics t0 on t0.id=t.topic_id
+        LEFT JOIN user_info t1 on t1.user_id = t0.creator_id
+        LEFT JOIN topic_pk tp ON t0.challenge_topic_id = tp.topic_id
+        LEFT JOIN prizes p ON tp.prize_id = p.id
+        where t.status=1 and t.type=2  and t0.is_pk=1 and t0.is_challenger=1 and t0.is_delete=1  and t.parent_type=#{parentType} and t0.`status` = 1 and (t.type=1 or t.type=2)
+      ORDER BY t.vote_cnt DESC) as t0,(SELECT @row := 0)as r
+
+        ]]>
+  </select>
+
+
+    <!--定时器 ： 投票 日排行 新数据查询-->
+    <select id="getVotesDayList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.VotesRankVo">
+        SELECT
+           a.topicId,
+	       a.voteCnt
+        FROM
+            (
+                SELECT
+                    t.challenge_topic_id topicId,
+                    IFNULL(sum(t1.voteCnt), 0) voteCnt
+                FROM
+                    topics t
+                LEFT JOIN (
+                    SELECT
+                        pv.topic_id,
+                        COUNT(1) voteCnt
+                    FROM
+                        pk_votes pv
+                    WHERE
+                        date_format(pv.vote_time, '%Y-%c-%d') = date_format(now(), '%Y-%c-%d')
+                    GROUP BY
+                        pv.topic_id
+                ) t1 ON t1.topic_id = t.id
+                WHERE
+                    t.is_delete = 1
+                AND t.`status` = 1
+                AND t.is_challenger !=- 1 and t.is_official !=1 and (t.type=1 or t.type=2)
+                GROUP BY
+                    t.challenge_topic_id
+            ) a  LEFT JOIN (SELECT tt.* FROM topics tt) tt1 ON tt1.id = a.topicId
+        ORDER BY a.voteCnt  DESC,tt1.create_time
+        LIMIT 0,20
+  </select>
+
+    <!--定时器 ： 投票 周排行 新数据查询-->
+    <select id="getVotesWeekList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.VotesRankVo">
+         SELECT
+           a.topicId,
+	       a.voteCnt
+        FROM
+            (
+                SELECT
+                    t.challenge_topic_id topicId,
+                    IFNULL(sum(t1.voteCnt), 0) voteCnt
+                FROM
+                    topics t
+                LEFT JOIN (
+                    SELECT
+                        pv.topic_id,
+                        COUNT(1) voteCnt
+                    FROM
+                        pk_votes pv
+                    WHERE
+                        YEARWEEK(date_format(pv.vote_time,'%Y-%m-%d')) = YEARWEEK(now())
+                    GROUP BY
+                        pv.topic_id
+                ) t1 ON t1.topic_id = t.id
+                WHERE
+                    t.is_delete = 1
+                AND t.`status` = 1
+                AND t.is_challenger !=- 1 and t.is_official !=1 and (t.type=1 or t.type=2)
+                GROUP BY
+                    t.challenge_topic_id
+            ) a LEFT JOIN (SELECT tt.* FROM topics tt) tt1 ON tt1.id = a.topicId
+        ORDER BY a.voteCnt  DESC,tt1.create_time
+        LIMIT 0,20
+    </select>
+
+    <!--定时器 ： 投票 月排行 新数据查询-->
+    <select id="getVotesMonthList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.VotesRankVo">
+       SELECT
+         a.topicId,
+	     a.voteCnt
+        FROM
+            (
+                SELECT
+                    t.challenge_topic_id topicId,
+                    IFNULL(sum(t1.voteCnt), 0) voteCnt
+                FROM
+                    topics t
+                LEFT JOIN (
+                    SELECT
+                        pv.topic_id,
+                        COUNT(1) voteCnt
+                    FROM
+                        pk_votes pv
+                    WHERE
+                        date_format(pv.vote_time,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 0 MONTH),'%Y-%m')
+                    GROUP BY
+                        pv.topic_id
+                ) t1 ON t1.topic_id = t.id
+                WHERE
+                    t.is_delete = 1
+                AND t.`status` = 1
+                AND t.is_challenger !=- 1 and t.is_official !=1 and (t.type=1 or t.type=2)
+                GROUP BY
+                    t.challenge_topic_id
+            ) a LEFT JOIN (SELECT tt.* FROM topics tt) tt1 ON tt1.id = a.topicId
+        ORDER BY a.voteCnt  DESC,tt1.create_time
+        LIMIT 0,20
+    </select>
+
+    <!--定时器 ： 投票 日排行  修改老数据状态为 0-->
+    <update id="updateOldVotesDay">
+        update topic_ranking set status = 0 where type=2 and parent_type = 1 and status = 1
+    </update>
+
+    <!--定时器 ： 投票 周排行  修改老数据状态为 0-->
+    <update id="updateOldVotesWeek">
+        update topic_ranking set status = 0 where type=2 and parent_type = 2 and status = 1
+    </update>
+
+    <!--定时器 ： 投票 月排行  修改老数据状态为 0-->
+    <update id="updateOldVotesMonth">
+        update topic_ranking set status = 0 where type=2 and parent_type = 3 and status = 1
+    </update>
+
+    <!--定时器 ： 投票 日排行 批量添加 新数据-->
+    <insert id="insertNewVotesDay" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into topic_ranking (topic_id, vote_cnt,type, parent_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.topicId},#{item.voteCnt},2,1)
+        </foreach>
+    </insert>
+    <!--定时器 ： 投票 日排行 删除前天的数据/*DELETE from topic_ranking WHERE datediff(curdate(),date_format(create_time,'%Y-%c-%d %h:%m:%s'))>=2 and type = 2 and parent_type=1 and status = 0*/-->
+    <delete id="deleteOldVotesDay">
+
+        DELETE FROM topic_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM topic_ranking t WHERE t.type = 2 AND t.parent_type = 1 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM topic_ranking a WHERE a.type = 2 AND a.parent_type = 1 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+
+    <!--定时器 ： 投票 周排行 批量添加 新数据-->
+    <insert id="insertNewVotesWeek" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into topic_ranking (topic_id, vote_cnt,type, parent_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.topicId},#{item.voteCnt},2,2)
+        </foreach>
+    </insert>
+    <!--定时器 ： 投票 周排行 删除上周的数据/*DELETE from topic_ranking WHERE YEARWEEK(date_format(create_time,'%Y-%m-%d')) = YEARWEEK(now())-1 and type = 2 and parent_type=2 and status = 0*/-->
+    <delete id="deleteOldVotesWeek">
+
+        DELETE FROM topic_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM topic_ranking t WHERE t.type = 2 AND t.parent_type = 2 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM topic_ranking a WHERE a.type = 2 AND a.parent_type = 2 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+
+    <!--定时器 ： 投票 月排行 批量添加 新数据-->
+    <insert id="insertNewVotesMonth" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into topic_ranking (topic_id, vote_cnt,type, parent_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.topicId},#{item.voteCnt},2,3)
+        </foreach>
+    </insert>
+    <!--定时器 ： 投票 月排行 删除上月的数据/*DELETE from topic_ranking WHERE date_format(create_time,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m') and type = 2 and parent_type=3 and status = 0*/-->
+    <delete id="deleteOldVotesMonth">
+
+        DELETE FROM topic_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM topic_ranking t WHERE t.type = 2 AND t.parent_type = 3 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM topic_ranking a WHERE a.type = 2 AND a.parent_type = 3 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+
+    <!--定时器 ： 投票汇总   新数据查询-->
+    <select id="getVotesPoolList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.VotesRankVo">
+        <![CDATA[
+
+            SELECT pc.id as parentType,IFNULL(t.voteCnt,0) as voteCnt from pk_channel pc
+            LEFT JOIN (
+            SELECT t.channel_id as parentType,COUNT(t.id) as voteCnt from topics t where t.is_pk = 1 and t.is_challenger = 1 and t.is_delete = 1 and t.`status` = 1 and (t.type=1 or t.type=2) GROUP BY t.channel_id
+            ) as t on t.parentType = pc.id
+            where pc.`status` =1 and pc.type=1 order BY t.voteCnt desc
+
+        ]]>
+    </select>
+    <!--定时器 ： 投票汇总  修改老数据状态为 0-->
+    <update id="updateVotesPool">
+        update topic_ranking set status = 0 where type=4 and status = 1
+    </update>
+
+    <!--定时器 ： 投票汇总  批量添加 新数据-->
+    <insert id="insertVotesPool" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into topic_ranking (topic_id, vote_cnt,type, parent_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.parentType},#{item.voteCnt},4,#{item.parentType})
+        </foreach>
+    </insert>
+    <!--定时器 ： 投票汇总  删除两天前的数据/*DELETE from topic_ranking WHERE datediff(curdate(),date_format(create_time,'%Y-%c-%d %h:%m:%s'))>=2 and type = 4  and status = 0*/-->
+    <delete id="deleteVotesPool">
+
+        DELETE FROM topic_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM topic_ranking t WHERE t.type = 4 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM topic_ranking a WHERE a.type = 4 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+
+</mapper>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.UserRankingMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.UserRanking">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_nickname" jdbcType="VARCHAR" property="userNickname"/>
+        <result column="user_avatar_url" jdbcType="VARCHAR" property="userAvatarUrl"/>
+        <result column="vote_cnt" jdbcType="INTEGER" property="voteCnt"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="parent_type" jdbcType="INTEGER" property="parentType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, user_id, user_nickname, user_avatar_url, vote_cnt, type, parent_type, create_time, 
+    status
+  </sql>
+    <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRankingExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from user_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_ranking
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_ranking
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRankingExample">
+        delete from user_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRanking">
+    insert into user_ranking (id, user_id, user_nickname, 
+      user_avatar_url, vote_cnt, type, 
+      parent_type, create_time, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userNickname,jdbcType=VARCHAR}, 
+      #{userAvatarUrl,jdbcType=VARCHAR}, #{voteCnt,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{parentType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRanking">
+        insert into user_ranking
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userNickname != null">
+                user_nickname,
+            </if>
+            <if test="userAvatarUrl != null">
+                user_avatar_url,
+            </if>
+            <if test="voteCnt != null">
+                vote_cnt,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="parentType != null">
+                parent_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userNickname != null">
+                #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatarUrl != null">
+                #{userAvatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="voteCnt != null">
+                #{voteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="parentType != null">
+                #{parentType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRankingExample"
+            resultType="java.lang.Long">
+        select count(*) from user_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user_ranking
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=INTEGER},
+            </if>
+            <if test="record.userNickname != null">
+                user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userAvatarUrl != null">
+                user_avatar_url = #{record.userAvatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.voteCnt != null">
+                vote_cnt = #{record.voteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=INTEGER},
+            </if>
+            <if test="record.parentType != null">
+                parent_type = #{record.parentType,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user_ranking
+        set id = #{record.id,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=INTEGER},
+        user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+        user_avatar_url = #{record.userAvatarUrl,jdbcType=VARCHAR},
+        vote_cnt = #{record.voteCnt,jdbcType=INTEGER},
+        type = #{record.type,jdbcType=INTEGER},
+        parent_type = #{record.parentType,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRanking">
+        update user_ranking
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userNickname != null">
+                user_nickname = #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatarUrl != null">
+                user_avatar_url = #{userAvatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="voteCnt != null">
+                vote_cnt = #{voteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="parentType != null">
+                parent_type = #{parentType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRanking">
+    update user_ranking
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_nickname = #{userNickname,jdbcType=VARCHAR},
+      user_avatar_url = #{userAvatarUrl,jdbcType=VARCHAR},
+      vote_cnt = #{voteCnt,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      parent_type = #{parentType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--不服榜 /达人榜-->
+    <select id="getUserRankList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.UserRankDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.UserRankVo">
+      SELECT @row := @row + 1 as row,t0.* from (
+            SELECT t1.avatar_url as userAvatarUrl,ur.user_id as userId,t1.nick_name AS userNickname,ur.vote_cnt AS voteCnt,t1.user_sex userSex
+            FROM user_ranking ur
+            LEFT JOIN user_info t1 on t1.user_id = ur.user_id
+            where ur.type=#{type} and ur.`status`=1
+      ) as t0,(SELECT @row := 0)as r
+  </select>
+
+    <!--定时器 ： 不服榜  获取不服榜最新数据-->
+    <select id="getUserBufuList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.UserRankVo">
+        <![CDATA[
+
+
+       SELECT userId,voteCnt,ui.avatar_url as userAvatarUrl,ui.nick_name as userNickname from (
+         SELECT t.creator_id as userId ,count(*) as voteCnt from topics t WHERE  t.is_delete=1 and t.is_pk=1 and t.`status` = 1 and t.is_official !=1 and (t.type=1 or t.type=2) GROUP BY t.creator_id
+         )as t LEFT JOIN user_info ui on ui.user_id = t.userId
+       ORDER BY t.voteCnt DESC LIMIT 0,20
+
+        ]]>
+    </select>
+
+
+    <!--定时器 ： 不服榜 修改老数据状态为 0-->
+    <update id="updateUserBu">
+        update user_ranking set status = 0 where type=1  and status = 1
+    </update>
+
+
+    <!--定时器 ： 不服榜  批量添加 新数据-->
+    <insert id="insertUserBu" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into user_ranking (user_id, user_nickname,user_avatar_url, vote_cnt, type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId},#{item.userNickname},#{item.userAvatarUrl},#{item.voteCnt},1)
+        </foreach>
+    </insert>
+
+    <!--定时器 ： 不服榜  删除前天的数据/* DELETE from user_ranking WHERE datediff(curdate(),date_format(create_time,'%Y-%c-%d %h:%m:%s'))>=2 and type = 1 and status = 0*/-->
+    <delete id="deleteUserBu">
+
+        DELETE FROM user_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM user_ranking t WHERE t.type = 1 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM user_ranking a WHERE a.type = 1 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+
+    <!--定时器 ： 达人榜  获取达人榜最新数据-->
+    <select id="getUserDarenList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.UserRankVo">
+        <![CDATA[
+       SELECT t0.userId,t0.voteCnt,ui.avatar_url as userAvatarUrl,ui.nick_name as userNickname from (
+         SELECT t.reward_user_id AS userId,count(1) as voteCnt from pk_result t where t.is_finish = 1 GROUP BY t.reward_user_id
+      ) as t0 LEFT JOIN user_info ui on ui.user_id = t0.userId ORDER BY t0.voteCnt desc LIMIT 0,20
+        ]]>
+    </select>
+
+
+    <!--定时器 ： 达人榜 修改老数据状态为 0-->
+    <update id="updateUserDaren">
+        update user_ranking set status = 0 where type=2  and status = 1
+    </update>
+
+
+    <!--定时器 ： 达人榜  批量添加 新数据-->
+    <insert id="insertUserDaren" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into user_ranking (user_id, user_nickname,user_avatar_url, vote_cnt, type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId},#{item.userNickname},#{item.userAvatarUrl},#{item.voteCnt},2)
+        </foreach>
+    </insert>
+
+    <!--定时器 ： 达人榜  删除前天的数据/*DELETE from user_ranking WHERE datediff(curdate(),date_format(create_time,'%Y-%c-%d %h:%m:%s'))>=2 and type = 2 and status = 0*/-->
+    <delete id="deleteUserDaren">
+
+     DELETE FROM user_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM user_ranking t WHERE t.type = 2 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM user_ranking a WHERE a.type = 2 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+</mapper>

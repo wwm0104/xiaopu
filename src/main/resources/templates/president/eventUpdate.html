@@ -1,0 +1,160 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>活动修改</title>
+    <link rel="stylesheet" th:href="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" th:href="@{/plugins/dropzone/dropzone.min.css}" />
+    <!-- datetimepicker -->
+    <script th:src="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+    <script th:src="@{/plugins/dropzone/dropzone.min.js}" charset="UTF-8"></script>
+    <script th:src="@{/js/president/eventUpdate.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content"><!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <!--活动修改-->
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form id="form" class="form-horizontal">
+                        <div class="box-body">
+                            <input type="hidden" id="eventId" th:value="${event.id}" />
+                            <input type="hidden" id="joinType" th:value="${event.joinType}" />
+                            <input type="hidden" id="schoolId" th:value="${event.group.schoolId}" />
+                            <input type="hidden" id="schoolName" th:value="${event.group.schoolName}" />
+                            <input type="hidden" id="imgsHostDomain" th:value="${imgsHostDomain}"/>
+                            <div class="form-group">
+                                <!--<div class="col-sm-2">-->
+                                    <!--<a href="javascript:history.go(-1)">-->
+                                        <!--<button type="button" class="btn btn-primary btn-sm">返回</button>-->
+                                    <!--</a>-->
+                                <!--</div>-->
+                                <div class="fanhui-icon col-sm-2">
+                                    <a href="javascript:history.go(-1);"><i></i>返回</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-xs-offset-4">
+                                    <h4><small class="text-success"> <span style="color: orange;font-size: 36px;" th:text="${event.status==2?'审核未通过':''}"></span> </small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div style="border-bottom: 1px solid #e9e9e9">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动主题：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="subject"  class="form-control" th:value="${event.subject}" check-type="required" required-message="请填写活动标题"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动组织方:</label>
+                                <div class="col-sm-6">
+                                    <select id="group" style="width: 100%;" check-type="required" required-message="请选择社团">
+                                        <option th:each="group : ${groupList}"
+                                                th:value="${group.id}"
+                                                th:selected="(${group.id} == ${event.group.id})"
+                                                th:text="${group.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动地点:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="address" class="form-control" placeholder="活动地点" th:value="${event.address}" check-type="required" required-message="请填写活动地点"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">活动时间:</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="startTime" placeholder="请选择开始时间" th:value="${#dates.format(event.startTime, 'yyyy/MM/dd HH:mm')}"/>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="endTime" placeholder="请选择结束时间"  th:value="${#dates.format(event.endTime, 'yyyy/MM/dd HH:mm')}" check-type="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $("#startTime").datetimepicker({
+                                    format: 'yyyy/mm/dd hh:ii',
+                                    language: 'zh-CN', //汉化
+                                    autoclose: true //选择日期后自动关闭
+                                });
+                                $("#endTime").datetimepicker({
+                                    format: 'yyyy/mm/dd hh:ii',
+                                    language: 'zh-CN', //汉化
+                                    autoclose: true //选择日期后自动关闭
+                                });
+                            </script>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动介绍:</label>
+                                <div class="col-sm-6">
+                                    <textarea id="description" rows="5" style="resize: none" class="form-control" th:text="${event.description}" check-type="required" required-message="请填写活动介绍"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动海报:</label>
+                                <div class="col-sm-6 dropz">
+                                    <img id="uploadImage1" class="dropzoneImgUpload" th:src="${posterImg==1}?@{${event.imgsHostDomain}+${event.posterImg}}:@{/img/cjhdtianjia.png}" height="240" width="320" th:value="${event.posterImg}"
+                                          data-toggle="tooltip"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动图片:</label>
+
+                                <div class="col-sm-3 dropz">
+                                    <input type="hidden" th:value="${width2}" id="width2"/>
+                                    <input type="hidden" th:value="${height2}" id="height2"/>
+                                    <img id="uploadImage2" class="dropzoneImgUpload" th:src="${contentImg1=='' || contentImg1==null}?@{/img/cjhdtianjia.png}:@{${event.imgsHostDomain}+${contentImg1}}" height="164" width="177"
+                                         th:value="${contentImg1}" data-toggle="tooltip"/>
+                                </div>
+                                <div class="col-sm-3 dropz">
+                                    <input type="hidden" th:value="${width3}" id="width3"/>
+                                    <input type="hidden" th:value="${height3}" id="height3"/>
+                                    <img id="uploadImage3" class="dropzoneImgUpload" th:src="${contentImg2=='' || contentImg2==null}?@{/img/cjhdtianjia.png}:@{${event.imgsHostDomain}+${contentImg2}}" height="164" width="177"
+                                         th:value="${contentImg2}" data-toggle="tooltip" />
+                                </div>
+                                <div class="col-sm-3 dropz">
+                                    <input type="hidden" th:value="${width4}" id="width4"/>
+                                    <input type="hidden" th:value="${height4}" id="height4"/>
+                                    <img id="uploadImage4" class="dropzoneImgUpload" th:src="${contentImg3=='' || contentImg3==null}?@{/img/cjhdtianjia.png}:@{${event.imgsHostDomain}+${contentImg3}}" height="164" width="177"
+                                         th:value="${contentImg3}" data-toggle="tooltip" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div style="border-bottom: 1px solid #e9e9e9">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-xs-offset-10">
+                                    <button id="update" type="button" class="btn btn-block true-color btn-sm">重新申请</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

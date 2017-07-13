@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>socket_demo</title>
+    <!--<script src="/js/sockjs-0.3.4.min.js"></script>-->
+    <script th:src="@{/js/jQuery/jQuery-2.2.0.min.js}" type="text/javascript"></script>
+    <script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+
+        var stompClient = null;
+        function setConnected(connected) {
+            document.getElementById('connect').disabled = connected;
+            document.getElementById('disconnect').disabled = !connected;
+            document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
+            document.getElementById('response').innerHTML = '';
+        }
+        // 开启socket连接
+        function connect() {
+            var socket = new SockJS('http://127.0.0.1:8080/socket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                setConnected(true);
+            });
+        }
+        // 断开socket连接
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        }
+        // 向‘/app/change-notice’服务端发送消息
+        function sendName() {
+
+            var value = document.getElementById('name').value;
+            var msgContent = {'clientDigest':'7b646af65265851b9c57f87e61764aa8','accessToken':'f7846ab1f42d7b8e4019f5117920634e','eventId':'1','eventName':'活动名称','content':value,'type':'1'};
+            stompClient.send("/app/sendEventMsg", {}, JSON.stringify(msgContent));
+//            stompClient.send("/app/change-notice", {}, JSON.stringify(msgContent));
+        }
+
+        connect();
+    </script>
+</head>
+<body>
+<div>
+    <div>
+        <button id="connect" onclick="connect();">Connect</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+    </div>
+    <div id="conversationDiv">
+        <p>
+            <label>notice content?</label>
+        </p>
+        <p>
+            <textarea id="name" rows="5"></textarea>
+        </p>
+        <button id="sendName" onclick="sendName();">Send</button>
+        <p id="response"></p>
+    </div>
+</div>
+</body>
+</html>

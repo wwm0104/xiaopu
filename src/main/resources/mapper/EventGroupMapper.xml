@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.EventGroupMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.EventGroup">
+    <id column="event_id" jdbcType="INTEGER" property="eventId" />
+    <id column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    event_id, group_id, group_name, school_id, school_name
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroupExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from event_groups
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroupKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from event_groups
+    where event_id = #{eventId,jdbcType=INTEGER}
+      and group_id = #{groupId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroupKey">
+    delete from event_groups
+    where event_id = #{eventId,jdbcType=INTEGER}
+      and group_id = #{groupId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroupExample">
+    delete from event_groups
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroup">
+    insert into event_groups (event_id, group_id, group_name, 
+      school_id, school_name)
+    values (#{eventId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, 
+      #{schoolId,jdbcType=INTEGER}, #{schoolName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroup">
+    insert into event_groups
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eventId != null">
+        event_id,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eventId != null">
+        #{eventId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroupExample" resultType="java.lang.Long">
+    select count(*) from event_groups
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update event_groups
+    <set>
+      <if test="record.eventId != null">
+        event_id = #{record.eventId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupName != null">
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolId != null">
+        school_id = #{record.schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="record.schoolName != null">
+        school_name = #{record.schoolName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update event_groups
+    set event_id = #{record.eventId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      group_name = #{record.groupName,jdbcType=VARCHAR},
+      school_id = #{record.schoolId,jdbcType=INTEGER},
+      school_name = #{record.schoolName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroup">
+    update event_groups
+    <set>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where event_id = #{eventId,jdbcType=INTEGER}
+      and group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroup">
+    update event_groups
+    set group_name = #{groupName,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=INTEGER},
+      school_name = #{schoolName,jdbcType=VARCHAR}
+    where event_id = #{eventId,jdbcType=INTEGER}
+      and group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByEventId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from event_groups
+    where event_id = #{eventId,jdbcType=INTEGER}
+  </select>
+
+
+  <resultMap id="EventBaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.Event">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="organize_id" jdbcType="INTEGER" property="organizeId" />
+    <result column="organize_name" jdbcType="VARCHAR" property="organizeName" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="join_type" jdbcType="TINYINT" property="joinType" />
+    <result column="allow_multi_groups" jdbcType="TINYINT" property="allowMultiGroups" />
+    <result column="qrcode" jdbcType="VARCHAR" property="qrcode" />
+    <result column="join_cnt" jdbcType="INTEGER" property="joinCnt" />
+    <result column="follow_cnt" jdbcType="INTEGER" property="followCnt" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+
+    <result column="small_poster_img" jdbcType="VARCHAR" property="smallPosterImg" />
+    <result column="poster_img" jdbcType="VARCHAR" property="posterImg" />
+    <result column="content_imgs" jdbcType="VARCHAR" property="contentImgs" />
+    <result column="further" jdbcType="VARCHAR" property="further" />
+  </resultMap>
+
+  <select id="selectEventByGroupId" resultMap="EventBaseResultMap" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.TopicGroupDto">
+      SELECT e.* FROM event_groups eg
+      LEFT JOIN events e ON e.id = eg.event_id
+      WHERE eg.group_id = #{groupId}
+      AND e.status = 1
+      ORDER BY start_time DESC
+  </select>
+</mapper>

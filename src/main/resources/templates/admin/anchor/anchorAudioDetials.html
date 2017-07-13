@@ -1,0 +1,99 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <script th:src="@{/js/eventDetials.js}" ></script>
+    <title>音频详情</title>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content"><!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            活动详情
+        </h1>
+    </section>
+    <section class="content" style="overflow: auto;">
+        <div class="row" style="min-width: 1000px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <div class="fanhui-icon">
+                                        <a href="javascript:history.go(-1);"><i></i>返回</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <h4><strong> 音频编号：</strong><small><span  th:text="${audio.id}"></span></small></h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4><strong> 所属频道：</strong><small><span  th:text="${audio.channelName}"></span></small></h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4><strong> 上线时间：</strong><small><span  th:text="${audio.onlineTime}"></span></small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <h4><strong> 音频名称：</strong><small><span  th:text="${audio.slogan}"></span></small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <audio id="uploadAudio" th:src="${imgsDomain+audio.contentMap.urls[0]}" controls="controls"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong> 音频封面：</strong></h4>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <img id="img2" style="width: 200px;height: 150px" th:src="${imgsDomain+audio.contentMap.coverImg[0]}" alt="..." />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong> 音频内页banner：</strong></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-md-3" th:each="img:${audio.contentMap.bannerImgs}">
+                                        <a href="#" class="thumbnail">
+                                            <img style="width: 200px;height: 150px" th:src="${imgsDomain+img}" alt="..." />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong>音频介绍</strong></h4>
+                                    <small class="text-muted"><span style="word-break:break-all;" th:text="${audio.contentMap.desc}"></span></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <img id="img3" style="width: 200px;height: 150px" th:src="${imgsDomain+audio.contentMap.posterImgs[0]}" alt="..." />
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

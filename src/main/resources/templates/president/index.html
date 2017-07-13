@@ -1,0 +1,93 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>社长首页</title>
+    <script th:src="@{/js/president/index.js}" ></script>
+</head>
+<body style="overflow: hidden;">
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            <!--社长首页-->
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body code-content">
+
+                        <div class="col-md-offset-2 col-md-8 code">
+                            <div class="col-md-5" style="background: #85ceec;" >
+                                <a th:href="@{/president/groupMember/listInit/2}">
+                                    <div class="code-nub"><span th:text="${untreatedGroupApplyCount}"></span></div>
+                                    <div class="code-text">社员申请人审核</div>
+                                </a>
+                            </div>
+                            <div class="col-md-offset-1 col-md-5" style="background: #f9be2f;" >
+                                <a th:href="@{/president/eventMember/listInit/-1/2}">
+                                    <div class="code-nub"><span th:text="${untreatedEventApplyCount}"></span></div>
+                                    <div class="code-text">活动申请人审核</div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div class="row">-->
+            <!--<div class="col-xs-2"></div>-->
+            <!--<div class="col-xs-4">-->
+                    <!--&lt;!&ndash;<div class="box-header">&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash; /.box-header &ndash;&gt;-->
+                <!--<a th:href="@{/president/eventMember/listInit/-1/2}">-->
+                    <!--<div class="eventApplyCount" style="-->
+                        <!--width: 150px;-->
+                        <!--height: 150px;-->
+                        <!--border: 5px solid #999999;-->
+                        <!--margin-top: 151px;-->
+                        <!--margin-left: 150px;-->
+                        <!--border-radius: 50%;-->
+                        <!--text-align: center;-->
+                        <!--line-height: 64px;-->
+                    <!--">-->
+                        <!--<span style="font-size: 50px;font-weight: 500;color: red;" th:text="${untreatedEventApplyCount}"></span><br/>-->
+                        <!--&lt;!&ndash;<span style="line-height: 40px;text-align:center;color: black;" th:text="${eventApplyCount}"></span>&ndash;&gt;-->
+                        <!--<span style="line-height: 40px;text-align:center;color: black;">待处理活动申请</span>-->
+                    <!--</div>-->
+                <!--</a>-->
+                <!--&lt;!&ndash; /.box &ndash;&gt;-->
+            <!--</div>-->
+                <!--<div class="col-xs-4">-->
+                <!--<a th:href="@{/president/groupMember/listInit/2}">-->
+                    <!--<div class="groupApplyCount" style="-->
+                            <!--width: 150px;-->
+                            <!--height: 150px;-->
+                            <!--border: 5px solid #999999;-->
+                            <!--margin-top: 151px;-->
+                            <!--margin-left: 150px;-->
+                            <!--border-radius: 50%;-->
+                            <!--text-align: center;-->
+                            <!--line-height: 64px;-->
+                        <!--">-->
+                            <!--<span style="font-size: 50px;font-weight: 500;color: red;" th:text="${untreatedGroupApplyCount}"></span><br/>-->
+                            <!--&lt;!&ndash;<span style="line-height: 40px;text-align:center;color: black;" th:text="${groupApplyCount}"></span>&ndash;&gt;-->
+                            <!--<span style="line-height: 40px;text-align:center;color: black;">待处理社员申请</span>-->
+                    <!--</div>-->
+                <!--</a>-->
+                <!--&lt;!&ndash; /.box &ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

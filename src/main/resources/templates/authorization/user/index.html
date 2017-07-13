@@ -1,0 +1,277 @@
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="utf-8"/>
+    <title>用户列表</title>
+
+    <script src="../../../static/js/authorization/userManage.js" th:src="@{/js/authorization/userManage.js}"></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1 shiro:hasPermission="userManage">
+            用户管理
+        </h1>
+    </section>
+
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 1100px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="col-xs-2">
+                            <button style="width: 150px;" type="button"
+                                    onclick="add()" class="btn true-color">添加用户
+                            </button>
+                        </div>
+
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <div class="input-group">
+                                <input type="text" id="keyWords" placeholder="查询" class="form-control"/>
+                                    <span class="input-group-addon seachButton" onclick="initUserList(1,10)">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--用戶列表-->
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="min-width: 68px;">用户名</th>
+                                <th style="min-width: 68px;">手机号</th>
+                                <th style="width: 220px;">
+                                    <select class="form-control" id="schoolList1" onchange="initUserList(1,10)">
+                                        <option value="">全部学校</option>
+                                    </select>
+                                </th>
+                                <th style="min-width: 68px;">昵称</th>
+                                <th style="width: 220px;">
+                                    <select class="form-control" id="roleList" onchange="initUserList(1,10)">
+                                        <option value="">全部角色</option>
+                                    </select>
+                                </th>
+                                <th style="min-width: 68px;">性别</th>
+                                <th width="10%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="userList"></tbody>
+                        </table>
+                        <p id="userListPagination"></p>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+
+    <!--添加用户-->
+    <div class="modal fade" id="selectGroup" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">创建用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm" class="form-horizontal" role="form" novalidate="novalidate"
+                          name="userForm">
+                        <div class="box-body">
+                            <input name="userId" type="hidden" id="userId"/>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">手机号:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="mobile" id="mobile" check-type="required"
+                                           required-message="请填写手机号" class="form-control" maxlength="11"
+                                           placeholder="请填写手机号"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">用户名:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="realName" id="realName" check-type="required"
+                                           required-message="请填写用户名" class="form-control" maxlength="10"
+                                           placeholder="请填写用户名"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">密码:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="password" id="password" check-type="required"
+                                           required-message="请填写密码" class="form-control" maxlength="20"
+                                           placeholder="请填写密码"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">确认密码:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="password" id="password1" check-type="required"
+                                           required-message="请再次填写密码" class="form-control" maxlength="20"
+                                           placeholder="请再次填写密码"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">昵称:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="nickName" id="nickName" check-type="required"
+                                           required-message="请填写昵称" class="form-control" maxlength="20"
+                                           placeholder="请填写昵称"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">学校:</label>
+                                <input type="text" id="schoolNameDis" style="display: none" name="schoolName"/>
+                                <div class="col-sm-6">
+                                    <select name="schoolId" id="schoolList" style="width: 100%" class="form-control"
+                                            required="required"
+                                            data-bv-notempty-message="请选择学校">
+
+                                        <option th:each="school : ${schools}"
+                                                th:value="${school.id}"
+                                                th:text="${school.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">学号:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="studentNo" id="studentNo" check-type="required"
+                                           required-message="请填写学号" class="form-control" maxlength="10"
+                                           placeholder="请填写学号"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">qq:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="qq" id="qq" check-type="required"
+                                           required-message="请填写qq号" class="form-control" maxlength="10"
+                                           placeholder="请填写qq号"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">性别:</label>
+                                <div class="col-sm-6">
+                                    <select style="width: 100%" class="form-control" id="userSex">
+                                        <option value="1">男</option>
+                                        <option value="2">女</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="add" type="button" class="btn true-color">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--更新用户信息-->
+    <div class="modal fade" id="selectGroup1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel1">更新用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm1" class="form-horizontal" role="form" novalidate="novalidate"
+                          name="userForm">
+                        <div class="box-body">
+                            <input name="userId1" type="hidden" id="userId1"/>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">手机号:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="mobile1" id="mobile1" class="form-control" maxlength="11"
+                                           disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">用户名:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="realName1" id="realName1" check-type="required"
+                                           required-message="请填写用户名" class="form-control" maxlength="10"
+                                           placeholder="请填写用户名"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">昵称:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="nickName1" id="nickName1" check-type="required"
+                                           required-message="请填写昵称" class="form-control" maxlength="20"
+                                           placeholder="请填写昵称"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">学校:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="schoolName" name="schoolName" class="form-control"
+                                           maxlength="20" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">性别:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="userSex1" name="userSex1" class="form-control"
+                                           maxlength="20" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">角色列表：<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <select id="roleInfo" style="width: 100%" multiple="multiple" class="form-control"
+                                            maxlength="10">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="update" type="button" class="btn btn-default" data-dismiss="modal">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="modal fade" id="delcfmModel">-->
+    <!--<div class="modal-dialog">-->
+    <!--<div class="modal-content message_align">-->
+    <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+    <!--aria-hidden="true">×</span></button>-->
+    <!--<h4 class="modal-title">提示信息</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+    <!--<p style="text-align: center;font-size: 30px;">您确认要删除吗？</p>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--<input type="hidden" id="delid"/>-->
+    <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+    <!--<a onclick="urlSubmit()" class="btn true-color" style="color: #444444;" data-dismiss="modal">确定</a>-->
+    <!--</div>-->
+    <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+    <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+    <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+</div>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.PkPrizeTakeLogMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="award_user_id" jdbcType="INTEGER" property="awardUserId" />
+    <result column="pk_id" jdbcType="INTEGER" property="pkId" />
+    <result column="reward_user_id" jdbcType="INTEGER" property="rewardUserId" />
+    <result column="take_time" jdbcType="TIMESTAMP" property="takeTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, award_user_id, pk_id, reward_user_id, take_time
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pk_prize_take_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pk_prize_take_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pk_prize_take_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLogExample">
+    delete from pk_prize_take_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLog">
+    insert into pk_prize_take_log (id, award_user_id, pk_id, 
+      reward_user_id, take_time)
+    values (#{id,jdbcType=INTEGER}, #{awardUserId,jdbcType=INTEGER}, #{pkId,jdbcType=INTEGER}, 
+      #{rewardUserId,jdbcType=INTEGER}, #{takeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLog">
+    insert into pk_prize_take_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="awardUserId != null">
+        award_user_id,
+      </if>
+      <if test="pkId != null">
+        pk_id,
+      </if>
+      <if test="rewardUserId != null">
+        reward_user_id,
+      </if>
+      <if test="takeTime != null">
+        take_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="awardUserId != null">
+        #{awardUserId,jdbcType=INTEGER},
+      </if>
+      <if test="pkId != null">
+        #{pkId,jdbcType=INTEGER},
+      </if>
+      <if test="rewardUserId != null">
+        #{rewardUserId,jdbcType=INTEGER},
+      </if>
+      <if test="takeTime != null">
+        #{takeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLogExample" resultType="java.lang.Long">
+    select count(*) from pk_prize_take_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pk_prize_take_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.awardUserId != null">
+        award_user_id = #{record.awardUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pkId != null">
+        pk_id = #{record.pkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rewardUserId != null">
+        reward_user_id = #{record.rewardUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.takeTime != null">
+        take_time = #{record.takeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pk_prize_take_log
+    set id = #{record.id,jdbcType=INTEGER},
+      award_user_id = #{record.awardUserId,jdbcType=INTEGER},
+      pk_id = #{record.pkId,jdbcType=INTEGER},
+      reward_user_id = #{record.rewardUserId,jdbcType=INTEGER},
+      take_time = #{record.takeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLog">
+    update pk_prize_take_log
+    <set>
+      <if test="awardUserId != null">
+        award_user_id = #{awardUserId,jdbcType=INTEGER},
+      </if>
+      <if test="pkId != null">
+        pk_id = #{pkId,jdbcType=INTEGER},
+      </if>
+      <if test="rewardUserId != null">
+        reward_user_id = #{rewardUserId,jdbcType=INTEGER},
+      </if>
+      <if test="takeTime != null">
+        take_time = #{takeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkPrizeTakeLog">
+    update pk_prize_take_log
+    set award_user_id = #{awardUserId,jdbcType=INTEGER},
+      pk_id = #{pkId,jdbcType=INTEGER},
+      reward_user_id = #{rewardUserId,jdbcType=INTEGER},
+      take_time = #{takeTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--查询发奖记录-->
+  <select id="selectPkPrizeTakeLog" parameterType="com.chinaxiaopu.xiaopuMobi.dto.PrizeTakeLogDto" resultType="com.chinaxiaopu.xiaopuMobi.vo.PrizeTakeLogVo">
+      SELECT
+      r.user_id as userId,
+      a.user_id,
+      a.pk_id as pkId,
+      r.real_name as rewardRealName,
+      r.nick_name as rewardNickName,
+      r.school_name as schoolName,
+      a.real_name as awardName,
+      ppr.has_take AS hasTake,
+      ppr.challenge_topic_id AS topicId,
+      ppr.take_time AS takeTime,
+      ppr.challenge_topic_slogan AS slogan,
+      ppr.prize_name AS prizeName,
+      t.type as topicType,
+      t.expire_time as expireTime
+      from
+      (
+      select ui.*,ppr.pk_id
+      FROM
+      pk_prize_result ppr
+      LEFT JOIN user_info ui ON ppr.reward_user_id = ui.user_id
+      ) r
+      left JOIN
+      (
+      SELECT
+      ui.user_id,
+      ui.real_name,
+      ppr.pk_id
+      FROM
+      pk_prize_result ppr
+      LEFT JOIN pk_prize_take_log pptl on ppr.pk_id=pptl.pk_id
+      LEFT JOIN user_info ui ON pptl.award_user_id = ui.user_id
+      ) a on r.pk_id=a.pk_id
+      LEFT JOIN pk_prize_result ppr ON r.pk_id = ppr.pk_id
+      LEFT JOIN topics t ON ppr.challenge_topic_id = t.id
+      where 1=1
+      <if test="realName!=null">
+          and r.real_name like CONCAT('%','${realName}','%')
+      </if>
+      <if test="topicType!=null">
+        and t.type=#{topicType}
+      </if>
+      <if test="hasTake!=null">
+        and ppr.has_take=#{hasTake}
+      </if>
+      <if test="startTime != null and startTime != '' ">
+          and t.expire_time &gt; #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+          and t.expire_time &lt; #{endTime}
+      </if>
+      <if test="takeStartTime != null and takeStartTime != '' ">
+          and ppr.take_time &gt; #{startTime}
+      </if>
+      <if test="takeEndTime != null and takeEndTime != ''">
+          and ppr.take_time &lt; #{endTime}
+      </if>
+      <if test="userId != null and userId != ''">
+          and a.user_id = #{userId}
+      </if>
+      ORDER BY ppr.take_time DESC
+  </select>
+  <select id="selectDetails" parameterType="java.lang.Integer" resultType="com.chinaxiaopu.xiaopuMobi.vo.PrizeTakeLogVo">
+      SELECT
+    r.user_id as userId,
+	a.user_id,
+	a.pk_id,
+	r.real_name as rewardRealName,
+    r.nick_name as rewardNickName,
+	r.school_name as schoolName,
+	r.mobile as mobile,
+    r.student_no as studentNo,
+    r.qq as qq,
+	a.real_name as awardName,
+	ppr.has_take AS hasTake,
+	ppr.challenge_topic_id AS topicId,
+	ppr.take_time AS takeTime,
+	ppr.challenge_topic_slogan AS slogan,
+	ppr.prize_name AS prizeName,
+	ts.content as content,
+    ts.is_challenger as isChallenger,
+    ts.type as topicType,
+    ts.expire_time as expireTime,
+	t.recommend as recommend,
+	tp.rule as rule,
+    tp.is_finish as isFinish
+from
+(
+select ui.*,ppr.pk_id
+FROM
+	pk_prize_result ppr
+LEFT JOIN user_info ui ON ppr.reward_user_id = ui.user_id
+) r
+left JOIN
+(
+SELECT
+	ui.user_id,
+  ui.real_name,
+	ppr.pk_id,
+	pptl.id
+FROM
+	pk_prize_result ppr
+LEFT JOIN pk_prize_take_log pptl on ppr.pk_id=pptl.pk_id
+LEFT JOIN user_info ui ON pptl.award_user_id = ui.user_id
+) a on r.pk_id=a.pk_id
+LEFT JOIN pk_prize_result ppr ON r.pk_id = ppr.pk_id
+LEFT JOIN topics t ON ppr.challenge_topic_id = t.id
+LEFT JOIN topic_pk tp ON ppr.challenge_topic_id=tp.topic_id
+LEFT JOIN pk_vote_result pvr ON pvr.pk_id = a.pk_id
+LEFT JOIN topics ts ON ts.id = pvr.topic_id
+where pvr.creator_id = r.user_id and a.pk_id=#{id}
+  </select>
+
+</mapper>

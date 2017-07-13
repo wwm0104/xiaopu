@@ -1,0 +1,155 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>活动修改</title>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content"><!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1></h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <ul class="nav nav-tabs">
+                        <li><a href="#">审核社团</a></li>
+                        <li class="active"><a href="#">社团<span th:text="${e.id!=null}?'修改':'创建'"></span></a></li>
+                    </ul>
+                    <!-- <link rel="stylesheet" th:href="@{/css/style.css}" />-->
+                    <script>
+
+                        $(function () {
+                            var _flag = true;
+                            $("#inputForm").validation({icon: true});
+                            $("#submit1").on('click', function (event) {
+                                if ($("#inputForm").valid(this) == false) {
+                                    return false;
+                                } else {
+
+                                    //return false;
+                                    /**************数据处理*************/
+                                    _flag = buildData();
+
+                                    /**************加载loading********************/
+                                    //layer.load();
+
+
+                                }
+                                if (_flag == false) {
+                                    return false;
+                                } else {
+                                    alert(123);
+                                }
+                            })
+                        });
+                        function buildData() {
+                            var _flag = true;
+                            alert($("#logoImgUrl").attr("value"));
+                            if ($("#logoImgUrl").attr("value") == "") {
+                                _flag = false;
+                            }
+                            return _flag;
+                        }
+                    </script>
+                    <form id="inputForm" method="post" class="form-horizontal" action="/testdemo/save">
+                        <input type="hidden" name="presidentId" th:value="${e.presidentId}"/>
+                        <input type="hidden" name="presidentName" th:value="${e.presidentName}"/>
+                        <input type="hidden" name="student" value="123"/>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">学校:</label>
+                            <div class="col-sm-4">
+                                <select id="schoolList" name="schoolId" style="width: 100%" class="form-control _select"
+                                        check-type="required" required-message="请选择学校">
+                                    <option th:each="school : ${schoolList}"
+                                            th:text="${school.name}"
+                                            th:selected="${school.id}==${e.schoolId}"
+                                            th:value="${school.id}"></option>
+                                </select>
+                                <input type="hidden" class="form-control" name="schoolName" th:value="${e.schoolName}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">社团名称:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="name" class="form-control" placeholder="请填写社团名称"
+                                       check-type="required" required-message="请填写社团名称" th:value="${e.name}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">社团口号:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="slogan" class="form-control" placeholder="请填写社团口号"
+                                       check-type="required" required-message="请填写社团口号" th:value="${e.slogan}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">社团分类:</label>
+                            <div class="col-sm-4">
+                                <select id="categoryList" name="categoryId" style="width: 100%"
+                                        class="form-control _select"
+                                        check-type="required" required-message="请选择社团分类">
+                                    <option th:each="group : ${groupList}"
+                                            th:text="${group.categoryName}"
+                                            th:selected="${group.id}==${e.categoryId}"
+                                            th:value="${group.id}"></option>
+                                </select>
+                                <!--<input type="hidden" name="category_name" th:value="${e.category_name}"/>-->
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">社团介绍:</label>
+                            <div class="col-sm-6">
+                                <textarea name="description" rows="5" style="resize: none" class="form-control"
+                                          check-type="required" required-message="请填写社团介绍"
+                                          th:text="${e.description}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">社团logo:</label>
+                            <div class="col-sm-6 dropz ">
+                                <img id="logoImgUrl" class="thumbnail" data-toggle="tooltip"
+                                     th:src="${e.logoImgUrl =='' || e.logoImgUrl ==null}?@{/img/cjhdtianjia.png}:@{${e.path}+${e.logoImgUrl}}"
+                                     style="height:164px;width:177px;"
+                                     th:value="${e.logoImgUrl}" onclick="upload(this)" title="双击上传"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">社团图片:</label>
+                            <div class="col-sm-3 dropz">
+                                <img id="img1" class="thumbnail" data-toggle="tooltip"
+                                     th:src="${e.img1 =='' || e.img1 ==null}?@{/img/cjhdtianjia.png}:@{${e.imgPth1}}"
+                                     height="164" width="177"
+                                     th:value="${e.img1}" onclick="upload(this)" title="双击上传"/>
+                            </div>
+                            <div class="col-sm-3 dropz">
+                                <img id="img2" class="thumbnail" data-toggle="tooltip"
+                                     th:src="${e.img2 =='' || e.img2 ==null}?@{/img/cjhdtianjia.png}:@{${e.imgPth2}}"
+                                     height="164" width="177"
+                                     th:value="${e.img2}" onclick="upload(this)" title="双击上传"/>
+                            </div>
+                            <div class="col-sm-3 dropz">
+                                <img id="img3" class="thumbnail" data-toggle="tooltip"
+                                     th:src="${e.img3 =='' || e.img3 ==null}?@{/img/cjhdtianjia.png}:@{${e.imgPth3}}"
+                                     height="164" width="177"
+                                     th:value="${e.img3}" onclick="upload(this)" title="双击上传"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" id="submit1" class="btn true-color col-sm-1">确认发布</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

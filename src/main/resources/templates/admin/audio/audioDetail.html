@@ -1,0 +1,167 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <script th:src="@{/js/admin/audio/audioDetail.js}" ></script>
+    <title>音频详情</title>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content"><!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            活动详情
+        </h1>
+    </section>
+    <section class="content" style="overflow: auto;">
+        <div class="row" style="min-width: 1000px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <div class="fanhui-icon">
+                                        <a href="javascript:history.go(-1);"><i></i>返回</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <input id = "topicId" th:value="${audio.id}" style="display: none"/>
+                                <input id = "status" th:value="${audio.status}" style="display: none"/>
+                                <div class="col-sm-4">
+                                    <h4><strong> 音频编号：</strong><small><span  th:text="${audio.id}"></span></small></h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4><strong> 所属频道：</strong><small><span  th:text="${audio.channelName}"></span></small></h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4><strong> 上线时间：</strong><small><span  th:text="${audio.onlineTime}"></span></small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <h4><strong> 音频名称：</strong><small><span  th:text="${audio.slogan}"></span></small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <audio id="uploadAudio" th:src="${imgsDomain+audio.contentMap.urls[0]}" controls="controls"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong> 音频封面：</strong></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <img id="img2" style="width: 200px;height: 150px" th:src="${imgsDomain+audio.contentMap.coverImg[0]}" alt="..." />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong> 音频内页banner：</strong></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-md-3" th:each="img:${audio.contentMap.bannerImgs}">
+                                        <a href="#" class="thumbnail">
+                                            <img style="width: 200px;height: 150px" th:src="${imgsDomain+img}" alt="..." />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong>音频介绍</strong></h4>
+                                    <small class="text-muted"><span style="word-break:break-all;" th:text="${audio.contentMap.desc}"></span></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <img id="img3" style="width: 200px;height: 150px" th:src="${imgsDomain+audio.contentMap.posterImgs[0]}" alt="..." />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div th:if="${audio.status==2}">
+                                        <strong>驳回原因：</strong>
+                                        <div class="red-color"><span th:text="${audio.furtherMap.reason}"></span></div>
+                                    </div>
+                                    <div id="pass" style="margin-top: 80px;" th:if="${audio.status==0}">
+                                        <button type="button" id="disagree" class="btn delete-btn-bg col-sm-5" style="margin-right: 10px;">驳回</button>
+                                        <button type="button" id="agree" class="btn true-color col-sm-5">通过</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            //判断是否失效，失效隐藏通过驳回按钮
+            $(function(){
+                var onlineTime=[[${audio.onlineTime}]];  //上线时间
+                var status=[[${audio.status}]];          //审核状态
+                var isOnline=[[${audio.isDelete}]];          //上线状态
+               if(new Date().getTime()>new Date(onlineTime).getTime() && status==0) {
+                   if(isOnline==-1){
+                       layer.msg("申请已失效，不能审核");
+                       $("#pass").hide();
+                   }
+
+               }
+
+            });
+            /*]]>*/
+        </script>
+
+        <!--驳回Model-->
+        <div class="modal fade" id="outModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong class="modal-title">驳回</strong>
+                    </div>
+                    <div class="modal-body row">
+                        <textarea rows="5" id="reason" class="col-sm-offset-1 col-sm-10" style="resize: none;"></textarea>
+                        <div class="col-sm-12" style="margin: 20px;">
+                            <button type="button" class="btn btn-default col-sm-offset-1 col-sm-4" data-dismiss="modal">取消</button>
+                            <button type="button" id="_disagree" class="btn true-color col-sm-offset-1 col-sm-4">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--通过弹出框-->
+        <div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body row">
+                        <div class="col-sm-12 text-center" style="color: orange;margin: 35px 0;font-size: 20px;font-weight: 600;">确定音频通过吗？</div>
+                        <div class="col-sm-12" style="margin: 20px 0;">
+                            <button type="button" class="btn btn-default col-sm-offset-1 col-sm-4" data-dismiss="modal" aria-label="Close">取消</button>
+                            <button type="button" id="_agree" class="btn true-color col-sm-offset-2 col-sm-4">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="utf-8"/>
+    <title>用户列表</title>
+
+    <script src="../../../static/js/authorization/presonalManage.js"
+            th:src="@{/js/authorization/presonalManage.js}"></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1 th:text="${role.roleName}">
+            人员管理
+        </h1>
+    </section>
+
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 1100px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="fanhui-icon">
+                            <a href="javascript:history.go(-1)"><i></i>返回</a>
+                        </div>
+                        <div class="col-xs-4 col-xs-offset-8">
+                            <div class="input-group">
+                                <input type="text" id="keyWords" placeholder="查寻非该角色下用户" class="form-control"/>
+                                    <span class="input-group-addon seachButton" onclick="searchUserNotInRole(1,10)">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--用戶列表-->
+                    <div class="box-body">
+                        <input type="hidden" id="roleId" name="roleId" th:value="${role.id}"/>
+                        <input type="hidden" id="roleName" name="roleName" th:value="${role.roleName}"/>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="min-width: 68px;">用户名</th>
+                                <th style="min-width: 68px;">手机号</th>
+                                <th style="min-width: 68px;">昵称</th>
+                                <th style="min-width: 68px;">性别</th>
+                                <th style="min-width: 68px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="userRoleList">
+
+                            </tbody>
+                        </table>
+                        <p id="userRoleListPagination"></p>
+                        <table class="table table-bordered table-striped">
+                            <thead type="hidden">
+                            <tr>
+                                <th style="min-width: 68px;">用户名</th>
+                                <th style="min-width: 68px;">手机号</th>
+                                <th style="min-width: 68px;">昵称</th>
+                                <th style="min-width: 68px;">性别</th>
+                                <th style="min-width: 68px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="userNotRoleList">
+
+                            </tbody>
+                        </table>
+                        <p id="userNotRoleListPagination"></p>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 信息删除确认 -->
+    <div class="modal fade" id="delcfmModel">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="text-align: center;font-size: 30px;">您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="delid"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a onclick="urlSubmit()" class="btn true-color" style="color: #444444;" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>

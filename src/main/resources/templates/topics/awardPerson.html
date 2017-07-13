@@ -1,0 +1,117 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>发奖人管理</title>
+    <style type="text/css">
+        a:link {
+            color: black;
+        }
+
+        /* 未访问的链接 */
+    </style>
+    <script th:src="@{/js/topics/awardPresen.js}"></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            发奖人管理
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content" style="overflow: auto;">
+        <div class="row" style="min-width: 950px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <input type="button" name="create" id="create"
+                                       class='btn true-color' value="增加发奖人" onclick="showModel()"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>发奖人姓名</th>
+                                <th>手机</th>
+                                <th>官方负责人</th>
+                                <th>负责人手机</th>
+                                <th>备注</th>
+                                <th>发奖次数</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="presenList">
+                            </tbody>
+                        </table>
+                        <!--<p id="presenListPagination"></p>-->
+
+                        <div class="form-group">
+                            <p id="presenListPagination" class="col-sm-11"></p>
+                            <div class="col-sm-1 text-right" style="margin: 20px 0;">
+                                <form action="/export/awardPersonExport" method="post">
+                                    <button id="export" type="submit" class="btn true-color btn-sm">导出</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-sm-8">-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-2">-->
+                                <!--<form action="/export/awardPersonExport" method="post">-->
+                                    <!--<button type="submit" class="btn true-color">导出</button>-->
+                                <!--</form>-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-2">-->
+                                <!--<input type="button" name="create" id="create" style="font-size: 18px;"-->
+                                       <!--class='btn btn-block true-color btn-sm' value="增加发奖人" onclick="showModel()"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="delcfmModel">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">创建发奖人</h4>
+                </div>
+                <div class="modal-body" style="height: 400px">
+                    <label>姓名:</label>
+                    <input type="text" name="realName" id="realName" class="form-control " placeholder="请填写姓名"/>
+                    <label>电话:</label>
+                    <input type="text" name="mobile" id="mobile" class="form-control " maxlength="11"
+                           placeholder="请填写电话" onblur="checkPhone(this)"/>
+                    <label>官方负责人:</label>
+                    <input type="text" name="officialName" id="officialName" class="form-control "
+                           placeholder="请填写负责人姓名"/>
+                    <label>官方负责人电话:</label>
+                    <input type="text" name="officialMobile" id="officialMobile" class="form-control " maxlength="11"
+                           placeholder="请填写负责人电话" onblur="checkPhone(this)"/>
+                    <label>备注:</label>
+                    <input type="text" name="remarks" id="remarks" class="form-control " maxlength="255"
+                           placeholder="请填写备注"/>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="delid"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a onclick="createPresen()" class="btn true-color" style="color: #444444"
+                       data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>

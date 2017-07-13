@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>socket_demo</title>
+    <!--<script src="/js/sockjs-0.3.4.min.js"></script>-->
+    <script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+</head>
+<body>
+<div>
+    消息:
+    <script>
+
+        function connect() {
+            var s = new SockJS('http://localhost:8080/socket');
+            var stompClient = Stomp.over(s);
+            stompClient.connect({}, function () {
+                stompClient.subscribe('/topic/acceptMsg', function (data) {
+//                    $('.message span.content').html(data.body);
+                    console.info("接受消息:"+data.body);
+                });
+            });
+        };
+
+        connect();
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>首页</title>
+</head>
+<body>
+ <script type="text/javascript">
+     function secToTime(time) {
+         var timeStr;
+         var hour = 0;
+         var minute = 0;
+         var second = 0;
+         if (time <= 0)
+             return "00:00";
+         else {
+             minute = parseInt(time / 60);
+             if (minute < 60) {
+                 second = time % 60;
+                 timeStr = unitFormat(minute) + ":" + unitFormat(second);
+             } else {
+                 hour = parseInt(minute / 60);
+                 if (hour > 99)
+                     return "99:59:59";
+                 minute = minute % 60;
+                 second = time - hour * 3600 - minute * 60;
+                 timeStr = unitFormat(hour) + ":" + unitFormat(minute) + ":" + unitFormat(second);
+             }
+         }
+         return timeStr;
+     }
+
+     function unitFormat(i) {
+         var retStr;
+         if (i >= 0 && i < 10)
+             retStr = "0" + i;
+         else
+             retStr = "" + i;
+         return retStr;
+     }
+    console.info("9S: "+secToTime(9));
+    console.info("59S: "+secToTime(59));
+    console.info("61S: "+secToTime(61));
+    console.info("3599S: "+secToTime(3599));
+    console.info("3601S: "+secToTime(3601));
+
+ </script>
+</body>
+</html>

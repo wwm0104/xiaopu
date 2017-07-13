@@ -1,0 +1,166 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>社团合伙人审核</title>
+    <script th:src="@{/js/partner/groupPartnerLook.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            社团合伙人审核
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 1000px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="col-xs-4 col-xs-offset-8">
+                            <div class="row">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="搜索合伙人姓名" class="form-control" />
+                                    <span class="input-group-addon seachButton" id="seachBtn">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 50px;">社团</th>
+                                    <th>
+                                        <select name="schoolId" id="schoolList" style="width: 100%" class="form-control" onchange="initPartnerData(1,10)" >
+                                            <option value="">所有大学名称</option>
+                                            <option th:each="school : ${schools}"
+                                                    th:value="${school.id}"
+                                                    th:text="${school.name}"></option>
+                                        </select>
+                                    </th>
+                                    <th>社长</th>
+                                    <th>手机</th>
+                                    <th style="min-width: 85px;">申请时间</th>
+                                    <th style="min-width: 85px;">审核状态</th>
+                                    <th  style="min-width: 130px;">审核</th>
+                                </tr>
+                            </thead>
+                            <tbody id="partnerList">
+                            </tbody>
+                        </table>
+                        <p id="partnerListPagination"></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!--驳回Model-->
+
+        <div class="modal fade" id="turndownModelOver" role="dialog" aria-labelledby="groupModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">审核</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="noPass" class="form-horizontal" role="form" name="roleForm">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">驳回原因</label>
+                                    <div class="col-sm-10">
+                                        <input id="partnerId" type="hidden"/>
+                                        <input id="partnerStatus" type="hidden"/>
+                                        <textarea id="listDescription" name="listDescription" rows="5" style="resize: none" check-type="required" required-message="请填写驳回原因" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button id="down" type="button"  class="btn true-color">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--同意Model-->
+
+        <div class="modal fade" id="turndownModelPass" role="dialog" aria-labelledby="groupModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel1">审核</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="yesPass" class="form-horizontal" role="form" name="roleForm">
+                            <div class="box-body">
+
+                                <div class="col-xs-4">
+                                    <div class="input-group">
+                                        <label class="control-label">性别：</label>
+                                        <select class="form-control" id="sex">
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--<div class="col-xs-3">-->
+                                    <!--<div class="input-group">-->
+                                        <!--<label class="control-label">星级：</label>-->
+                                        <!--<select class="form-control" id="starRating">-->
+                                            <!--<option value="0">0</option>-->
+                                            <!--<option value="1">1</option>-->
+                                            <!--<option value="2">2</option>-->
+                                            <!--<option value="3">3</option>-->
+                                            <!--<option value="4">4</option>-->
+                                            <!--<option value="5">5</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="form-group">
+
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">备注信息</label>
+                                    <div class="col-sm-10">
+                                        <input id="partnerId1" type="hidden"/>
+                                        <input id="partnerStatus1" type="hidden"/>
+                                        <textarea id="remarks" name="remarks" rows="5" style="resize: none" check-type="required" required-message="请填写备注信息"  class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input id="starRating" type="hidden" value="0"/>
+                        <div id="star" class="pull-left" style="font-size: 24px; color: #cccccc;">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button id="success" type="button"  class="btn true-color">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

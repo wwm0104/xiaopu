@@ -1,0 +1,226 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>编辑频道字典</title>
+    <script th:src="@{/js/admin/channel/jquery.json.min.js}"></script>
+    <script th:src="@{/js/admin/channel/channelForm.js}"></script>
+
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            父频道管理
+        </h1>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="fanhui-icon">
+                        <a href="javascript:history.go(-1);"><i></i>返回</a>
+                    </div>
+                    <!-- form start -->
+                    <form id="inputForm" method="post" class="form-horizontal" th:action="@{/admin/channel/save}">
+                        <div class="box-body">
+                            <br/>
+                            <input name="id" type="hidden" th:name="id" id="_id" th:value="${e.id}"/>
+                            <!--<input name="channelList" id="channelList" type="hidden" value=""/>-->
+                            <input name="channelId" id="channelId" type="hidden" value=""/>
+                            <input name="channelSort" id="channelSort" type="hidden" value=""/>
+                            <input name="removeCid" id="removeCid" type="hidden" value=""/>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">名称:</label>
+                                <div class="col-sm-4">
+                                    <input name="value" type="text" class="form-control" th:name="name"
+                                           th:value="${e.name}" placeholder="请填写名称" required="required"
+                                           data-bv-notempty-message="请填写名称"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">描述:</label>
+                                <div class="col-sm-4">
+                                    <input name="lable" type="text" class="form-control" th:name="desc"
+                                           th:value="${e.desc}" placeholder="请填写描述" required="required"
+                                           data-bv-notempty-message="请填写描述"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">排序:</label>
+                                <div class="col-sm-4">
+                                    <input name="code" type="number" class="form-control" th:name="sort"
+                                           th:value="${e.sort}" placeholder="请填写排序" required="required"
+                                           data-bv-notempty-message="请填写排序"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">更多:</label>
+                                <div class="col-sm-4">
+                                    <input name="more" type="number" id="more" class="form-control" th:name="more"
+                                           th:value="${e.more==null}? 0: @{ ${e.more}} " placeholder="请填写更多值"
+                                           required="required" onchange="moreChange()"
+                                           data-bv-notempty-message="请填写更多值"/>
+                                </div>
+                                <label class="col-sm-4 control-label" style="color: red">注意 ：默认为0;1:不服来战;2：FM
+                                    3:其他未定义</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片:</label>
+                                <div class="col-sm-6 dropz">
+                                    <input type="hidden" name="posterImg" id="posterImg" value=""/>
+                                    <img id="uploadImage_1" class="dropzoneImgUpload"
+                                         th:src="${e.posterImg==null}?@{/img/cjhdtianjia.png}:@{${path}+${e.posterImg}}"
+                                         height="100"
+                                         width="100" data-val=""
+                                         data-toggle="tooltip" title="图片上传" th:value="${e.posterImg}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">添加子频道:</label>
+                                <div class="col-sm-3">
+                                    <div class="panel panel-default" >
+                                        <div class="panel-body" style="height:400px;overflow: auto;">
+                                            <table class="table table-bordered table-striped" id="table1">
+                                                <thead><tr><td width="5%"></td><td>频道</td><td>类型</td></tr></thead>
+                                                <tbody id="channnelList">
+                                                <tr th:each="channel,channelStat:${allChannelList}">
+                                                    <td><input type="checkbox" name="GID" th:value="${channel.id}"/></td><td  name="GNAME" th:text="${channel.name}"></td><td name="GTYPE" th:data="${channel.type}" th:text="${channel.type==1}? '图文': '音频'"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                             <!-- <div th:each="channel,channelStat:${allChannelList}" th:data="${channel.id}" th:text="${channel.name}+(${channel.type==1}? '（图文）': '（音频）')"></div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="panel panel-default" >
+                                        <div class="panel-body" style="height:400px;overflow: auto;text-align: center">
+                                          <div><h3><a class="btn btn-primary" data-toggle="tooltip" title="右边->左边" onclick="down()">‹</a></h3></div>
+                                          <div><h3><a class="btn btn-primary" data-toggle="tooltip" title="左边->右边" onclick="up()">›</a></h3></div>
+
+                                          <div><h3><a class="btn btn-primary" data-toggle="tooltip" title="全部->左边" onclick="allDown()">«</a></h3></div>
+                                          <div><h3><a class="btn btn-primary" data-toggle="tooltip" title="全部->右边" onclick="allUp()">»</a></h3></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="panel panel-default" >
+                                        <div class="panel-body" style="height:400px;overflow: auto;">
+                                           <!-- <div th:each="chan,chanStat:${userChannelList}" th:data="${chan.id}" th:text="${chan.name}+(${chan.type==1}? '（图文）': '（音频）')"></div>-->
+                                            <table class="table table-bordered table-striped" id="table2">
+                                                <thead><tr><td width="5%"></td><td>频道</td><td>类型</td><td width="15%">排序</td></tr></thead>
+                                                <tbody id="chanlList">
+                                                <tr th:each="chan,chanStat:${userChannelList}">
+                                                    <td><input type="checkbox" name="CID" th:value="${chan.id}"/></td><td name="CNAME" th:text="${chan.name}"></td><td name="CTYPE" th:data="${chan.type}" th:text="${chan.type==1}? '图文': '音频'"></td><td><input name="CSORT" class="form-control" type="text" th:value="${chan.status}"/></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 " align="center">
+                                    <input type="submit" id="submitId" value="保存" class="btn btn-block true-color"/>
+                                </div>
+                            </div>
+                           <!-- <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td style="text-align:right;width:100%;">
+                                        <input type="submit" id="submitId" value="提交" class="btn btn-primary"></input>
+                                    </td>
+                                    &lt;!&ndash;<td style="text-align:right;width:100%;">
+                                        <button type="button" class="btn btn-success" onclick="tr_add()">新增频道</button>
+                                    </td>&ndash;&gt;
+                                </tr>
+                            </table>-->
+                            <!-- <table class="table table-bordered table-striped" style="margin-top: 15px;">
+                                 <thead>
+                                 <tr>
+                                     <td>频道</td>
+                                     <td>排序</td>
+                                     <td>操作</td>
+                                 </tr>
+                                 </thead>
+                                 <tbody id="channnelList">
+                                 <tr th:each="ca,caStat:${caList}" th:data="${ca.pChannelId}" th:value="${ca.channelId}">
+                                     <td>
+                                         <select class="_select pkChannelList" style="width: 200px;" data-clm="channelId"
+                                                 data-bv-notempty-message="请选择频道">
+                                             <option value="">请选择频道</option>
+                                             <option th:each="channel : ${pkChannelList}"
+                                                     th:value="${channel.id}"
+                                                     th:text="${channel.name}+(${channel.type==1}? '（图文）': '（音频）')"
+                                                     th:selected="${ca.channelId == channel.id}" th:data="${channel.type}">
+                                             </option>
+                                         </select>
+                                     </td>
+                                     <td>
+                                         <input type="number" data-clm="sort" class="form-control"
+                                                style="width: 80px;text-align: center" th:value="${ca.sort}"
+                                                placeholder="排序" data-bv-notempty-message="请填写排序"/>
+                                     </td>
+                                     <td>
+                                         <button type="button" class="btn btn-danger" onclick="tr_delete(this)">删除
+                                         </button>
+                                     </td>
+                                 </tr>
+                                 </tbody>
+                             </table>-->
+                            <!-- <script th:inline="javascript">
+                                 /**
+                                  * 添加一行
+                                  */
+                                 /*<![CDATA[*/
+                                 function tr_add() {//添加一行
+                                     var more = $("#more").val();
+                                     var list = [[${pkChannelList}]];
+                                     //已添加的頻道數組
+                                     var data = [];
+                                     $('#channnelList tr').each(function (i, index) {
+                                         var tr = $(this);
+                                         var channelId = tr.find('select[data-clm]').val();
+                                         data.push(""+channelId+"");
+                                     });
+
+                                     var _s = "<tr data='' value=''> ";
+                                     _s += "<td><select class='_select pkChannelList' style='width: 200px;' data-clm='channelId'  data-bv-notempty-message='请选择频道'><option value=''>请选择频道</option>";
+                                     $.each(list, function (i, channel) {
+                                         var item = ""+channel.id+"";
+                                         var flag = $.inArray(item,$.unique(data));
+                                         if(flag<0){
+                                             if(more==1 && channel.type==1){
+                                                 _s += "<option value='" + channel.id + "' data='"+channel.type+"'>" + channel.name +"(图文)"+ "</option>";
+                                             }else if(more==2 && channel.type==2){
+                                                 _s += "<option value='" + channel.id + "' data='"+channel.type+"'>" + channel.name +"(音频)"+ "</option>";
+                                             }else if(more==0){
+                                                 if(channel.type==1){
+                                                     _s += "<option value='" + channel.id + "' data='"+channel.type+"'>" + channel.name +"(图文)"+ "</option>";
+                                                 }else{
+                                                     _s += "<option value='" + channel.id + "' data='"+channel.type+"'>" + channel.name +"(音频)"+ "</option>";
+                                                 }
+                                             }
+
+                                         }
+                                     });
+                                     _s += "<select></td>";
+                                     _s += "<td><input type='number' data-clm='sort' class='form-control' style='width: 80px;text-align: center' placeholder='排序'  data-bv-notempty-message='请填写排序'/></td>";
+                                     _s += "<td><button type='button' class='btn btn-danger' onclick='tr_delete(this)'>删除</button></td>";
+                                     _s += "</tr>";
+                                     $("#channnelList").append(_s)
+                                     $("._select").select2({minimumResultsForSearch: Infinity});
+                                     $('#inputForm').bootstrapValidator();
+                                 }
+                                 /*]]>*/
+                             </script>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>审核管理</title>
+    <link rel="stylesheet" th:href="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" th:href="@{/plugins/dropzone/dropzone.min.css}" />
+    <!-- datetimepicker -->
+    <script th:src="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+    <script th:src="@{/plugins/dropzone/dropzone.min.js}" charset="UTF-8"></script>
+    <script th:src="@{/js/admin/topicList.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            <!--管理员首页-->
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content" style="overflow: auto;">
+        <div class="row" style="min-width: 1000px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="col-xs-4 col-xs-offset-8">
+                            <div class="input-group">
+                                <script>
+                                    $(function () {
+                                        $('#dateTime').daterangepicker({
+                                            timePicker: true, //是否显示小时和分钟
+                                            startDate: moment().subtract('days', 7),
+                                            endDate: new Date(),
+                                            maxDate: new Date(),
+                                            locale: {
+                                                separator: '/',
+                                                applyLabel: '确认',
+                                                cancelLabel: '取消',
+                                                fromLabel: '从',
+                                                toLabel: '到',
+                                                weekLabel: 'W',
+                                                format: 'YYYY-MM-DD HH:mm:ss',
+                                                customRangeLabel: 'Custom Range',
+                                                daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+                                                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                                            }
+                                        }, function (start, end, label) {
+                                            $("#startTime").val(start.format('YYYY-MM-DD HH:mm:ss'));
+                                            $("#endTime").val(end.format('YYYY-MM-DD HH:mm:ss'));
+                                        }).on('cancel.daterangepicker', function (ev, picker) {
+                                            $("#startTime").val("");
+                                            $("#endTime").val("");
+                                            $('#dateTime').val("");
+                                            initTopicData(1,10);
+                                        }).on('apply.daterangepicker',function(ev, picker) {
+                                            initTopicData(1,10);
+                                        });
+                                        $('#dateTime').val("");
+                                    });
+                                </script>
+                                <div class="col-xs-6">
+                                    <input type="text" id="dateTime" class="form-control" placeholder="搜索时间" />
+                                </div>
+                                <input type="hidden" id="startTime"/>
+                                <input type="hidden" id="endTime"/>
+                                <!--<div class="col-xs-3">-->
+                                    <!--<input type="text" id="startTime" class="form-control" placeholder="开始时间" />-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-3">-->
+                                    <!--<input type="text" id="endTime" class="form-control" placeholder="结束时间" />-->
+                                <!--</div>-->
+                                <div class="col-xs-6">
+                                    <div class="input-group">
+                                        <input type="text" id="keyword" class="form-control" placeholder="昵称、姓名、标签" />
+                                        <span class="input-group-addon"><i id="search" class="glyphicon glyphicon-search"></i></span>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $("#startTime").datetimepicker({
+                            format: 'yyyy/mm/dd hh:ii',
+                            language: 'zh-CN', //汉化
+                            autoclose: true //选择日期后自动关闭
+                        });
+                        $("#endTime").datetimepicker({
+                            format: 'yyyy/mm/dd hh:ii',
+                            language: 'zh-CN', //汉化
+                            autoclose: true //选择日期后自动关闭
+                        });
+                    </script>
+
+                    <!-- /.box-header -->
+                    <!-- /.box-body -->
+                    <div class="box-body">
+                        <input type="text" style="display: none" th:value="${status}" id="statusDai" />
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="min-width: 85px;">昵称</th>
+                                <th style="min-width: 85px;">姓名</th>
+                                <th>学校</th>
+                                <th>社团</th>
+                                <th>
+                                    <select class="form-control" id="type" style="width: 120px">
+                                        <option value="">全部</option>
+                                        <option value="1">图片</option>
+                                        <option value="2">视频</option>
+                                    </select>
+                                </th>
+                                <th>
+                                    <!--<select class="form-control" id="timePeriod" style="width: 120px">-->
+                                        <!--<option value="">发布时间</option>-->
+                                    <!--</select>-->
+                                    发布时间
+                                </th>
+                                <th style="min-width: 115px;">参与人数要求(最少)</th>
+                                <th style="min-width: 85px;">申请奖励</th>
+                                <th>
+                                    <select class="form-control" id="status" style="width: 120px">
+                                        <option value="">所有状态</option>
+                                        <option value="2">未通过</option>
+                                        <option value="0">待审核</option>
+                                    </select>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="topicList">
+                            </tbody>
+                        </table>
+                        <p id="topicListPagination"></p>
+
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+
+        </div>
+
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

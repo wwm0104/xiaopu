@@ -1,0 +1,229 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>主题详情</title>
+    <script th:src="@{/js/topics/topicDetail.js}"></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-body">
+
+                        <div class="fanhui-icon">
+                            <a href="javascript:history.go(-1);"><i></i>返回</a>
+                        </div>
+                        <div class="details-content">
+                            <div>
+                                <span><strong>姓名：</strong> <span th:text="${vo.realName}"></span></span>
+                                <a th:if="${vo.isChallenger != -1}" th:href="@{'/admin/topics/goAllChanllengeList/'+${vo.id}}" class="pull-right color" style="font-size: 20px;">查看所有来战者 <span
+                                        style="margin-left: 4px;font-size: 16px;" class="fa fa-angle-right"></span></a>
+                            </div>
+                            <input type="hidden" id="topicId" th:value="${vo.id}"/>
+                            <div style="border-bottom: 1px solid #e9e9e9;">
+                                <span><strong>昵称：</strong><span th:text="${vo.creatorNickname}"></span></span>
+                                <span><strong>来战次数：</strong><span th:text="${vo.challengeNum}"></span></span>
+                                <span><strong>冠军次数：</strong><span th:text="${vo.rewardNum}"></span></span>
+                            </div>
+                            <div style="border-bottom: 1px solid #e9e9e9;" th:if="${vo.isOfficial==0}">
+                                <span><strong>学校：</strong><span th:text="${vo.schoolName}"></span></span>
+                                <span><strong>社团：</strong><span th:text="${vo.groupName}"></span></span>
+                                <span><strong>学号：</strong><span th:text="${vo.studentNo}"></span></span>
+                                <span><strong>手机：</strong><span th:text="${vo.mobile}"></span></span>
+                                <span><strong>Q Q：</strong><span th:text="${vo.qq}"></span></span>
+                            </div>
+
+                            <div class="row details-vs">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="col-md-12 col-sm-12 details-vs-img">
+                                        <!--<span class="col-sm-12" th:if="${vo.type==1}"><img
+                                                th:src="${vo.path+vo.contentMap.urls[0]}"
+                                                style="width:100%;height: 100%;max-height: 180px;min-width: 170px;"/></span>-->
+
+                                        <span class="col-sm-12" th:if="${vo.type==1}">
+                                            <input type="hidden" id="urls" th:value="${vo.contentMap.urls}"/>
+                                            <input type="hidden" id="path" th:value="${vo.path}"/>
+                                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                              <ol class="carousel-indicators" id="example"> </ol>
+                                              <div class="carousel-inner" role="listbox" id="images"></div>
+                                              <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                                <span id="left" style="display: none;" class="glyphicon glyphicon-chevron-left"></span>
+                                                <span class="sr-only">Previous</span>
+                                              </a>
+                                              <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                                <span id="right" style="display: none;" class="glyphicon glyphicon-chevron-right"></span>
+                                                <span class="sr-only">Next</span>
+                                              </a>
+                                            </div>
+                                        </span>
+                                        <span class="col-sm-12" th:if="${vo.type==2}"><embed
+                                                th:src="${vo.path+vo.contentMap.urls[0]}"
+                                                style="width:100%;height: 100%;max-height: 180px;min-width: 170px;"/></span>
+                                    </div>
+                                    <div class="col-md-12"><strong>标签：</strong> <span th:text="${vo.tagName}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div>当前推荐位</div>
+                                    <div><strong>推荐：
+                                        <span th:if="${vo.recommend ==5}">NO.1</span>
+                                        <span th:if="${vo.recommend ==4}">NO.2</span>
+                                        <span th:if="${vo.recommend ==3}">NO.3</span>
+                                        <span th:if="${vo.recommend ==2}">NO.4</span>
+                                        <span th:if="${vo.recommend ==1}">NO.5</span>
+                                        <span th:if="${vo.recommend ==0}">未推荐</span>
+                                    </strong></div>
+                                    <div th:text="${vo.contentMap.desc}" style="margin-top: 80px;"></div>
+                                </div>
+                                <div class="col-md-3 col-sm-6" th:if="${vo.isChallenger == 1 || vo.isChallenger == 0}">
+                                    <div th:if="${vo.isChallenger==1}">来战发起者</div>
+                                    <div th:if="${vo.isChallenger==0}">来战挑战者</div>
+                                    <div class="color">
+                                        <span th:if="${e.isOver == 0}">进行中</span>
+                                        <span th:if="${e.isOver == 1}">已结束</span>
+                                    </div>
+                                    <div><strong>《<span th:text="${vo.slogan}"></span>》</strong></div>
+                                    <div><strong>奖品：</strong><span th:text="${e.prizeName}"></span></div>
+                                    <div><strong>要求：</strong></div>
+                                    <div>
+                                        <small>来战人数至少<span th:text="${e.challengeCnt}"></span>人，当前<span><span
+                                                th:text="${e.challenteCount}"></span>人</span> <span
+                                                th:if="${e.isFinish ==0}" class="red-color">未达要求</span><span
+                                                th:if="${e.isFinish ==1}" class="red-color">已达要求</span></small>
+                                    </div>
+                                    <div>
+                                        <small>投票人数至少<span
+                                                th:text="${e.vCote}"></span>人，当前<span><span
+                                                th:text="${e.voteCnt}"></span>人</span></small>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-1 col-sm-1">
+                                    <div   style= "width: 2px;;   height:200px;   background-color:black"> </div>
+                                </div>-->
+                                <div class="col-md-3 col-sm-6" th:if="${vo.isChallenger == -1}">
+
+                                    <span>未发起来战</span>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div th:if="${e.isOver == 1}">
+                                        <span th:if="${vo.isChallenger != -1}">
+                                            <div>结果</div>
+                                            <div>
+                                                <h2><span th:if="${e.isSuccess ==0}">来战失败</span>
+                                                <span th:if="${e.isSuccess ==1}">来战成功</span></h2>
+                                            </div>
+                                            <div>原因
+                                               <span class="red-color" th:if="${e.isSuccess ==0 }">未达要求</span>
+                                               <span class="red-color" th:if="${e.isSuccess ==1}">已达要求</span>
+                                            </div>
+                                        </span>
+
+                                    </div>
+                                    <button type="button" class="btn col-sm-8 delete-btn delete-btn-bg"
+                                            th:onclick="'javascript:openDelete(1,'+${vo.id}+',0);'">删除
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div><strong>评论：<span th:text="${vo.commentCnt}"></span></strong></div>
+
+                            <div class="details-report row" th:each="comment,commentStat:${commentList}">
+                                <div class="col-md-8" th:text="${comment.comment}"></div>
+                                <div class="pull-right cont-right">
+                                    <button type="button" class="btn  btn-danger pull-right" id="commentClick"
+                                            th:onclick="'javascript:openDelete(2,'+${comment.id}+','+${comment.topicId}+');'">删除
+                                    </button>
+                                    <button type="button" class="btn btn-primary pull-right"
+                                            th:onclick="'javascript:openhide('+${comment.id}+');'">不显示
+                                    </button>
+                                    <div class="pull-right">
+                                        <small>评论人：<span th:text="${comment.userNickname}"></span> <span
+                                                class="span-margleft">日期：<span
+                                                th:text="${#dates.format(comment.actionTime, 'yyyy/MM/dd HH:mm')}"></span></span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div><strong>举报：<span th:text="${vo.tipOffCount}"></span></strong></div>
+
+                            <div class="details-report row" th:each="tipoff,tipoffStat:${tipoffLsit}">
+                                <div class="col-md-8" th:text="${tipoff.desc}"></div>
+                                <div class="pull-right cont-right">
+                                    <button type="button" class="btn btn-danger pull-right"
+                                            th:onclick="'javascript:openDelete(3,'+${tipoff.id}+',0);'">删除
+                                    </button>
+                                    <div class="pull-right">
+                                        <small>举报人：<span th:text="${tipoff.realName}"></span> <span
+                                                class="span-margleft">日期：<span th:text="${#dates.format(tipoff.times, 'yyyy/MM/dd HH:mm:ss')}"></span></span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 删除 -->
+        <div class="modal fade" id="deltopicModel">
+            <div class="modal-dialog">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p style="text-align: center;font-size: 30px;">您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <input type="hidden" id="tid"/>
+                        <input type="hidden" id="cid"/>
+                        <input type="hidden" id="ctid"/>
+                        <input type="hidden" id="tfid"/>
+                        <a id="deltopic" onclick="deleteTopic()" class="btn true-color" style="color: #444444" data-dismiss="modal">确定</a>
+                        <a id="delcomment" onclick="deleteComment()" class="btn true-color" style="color: #444444" data-dismiss="modal">确定</a>
+                        <a id="deltopoff" onclick="deleteTipOff()" class="btn true-color" style="color: #444444" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <!-- 不显示 -->
+        <div class="modal fade" id="hideModel">
+            <div class="modal-dialog">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p style="text-align: center;font-size: 30px;">您确认不显示吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="hideid"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="updateComment()" class="btn true-color" style="color: #444444" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </section>
+</div>
+</body>
+</html>

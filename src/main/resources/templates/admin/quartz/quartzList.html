@@ -1,0 +1,84 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>定时器管理</title>
+    <script th:src="@{/js/admin/quartzList.js}"></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            <!--管理员首页-->
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content" style="overflow: auto;">
+        <div class="row" style="min-width: 1000px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+
+                            <div class="input-group col-sm-12">
+
+                                    <div class="col-sm-8" style="line-height: 34px;">
+                                        <label><input type="checkbox"  class="input_bor2 m_l_10" id="All"/>全选 &nbsp;&nbsp;</label>
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="1"  name="parameter"/>活动日 &nbsp;&nbsp;</label>
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="2"  name="parameter"/>活动周 &nbsp;&nbsp;</label>
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="3"  name="parameter"/>活动月 &nbsp;&nbsp;</label>
+
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="4" name="parameter"/>投票日 &nbsp;&nbsp;</label>
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="5" name="parameter"/>投票周 &nbsp;&nbsp;</label>
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="6" name="parameter"/>投票月 &nbsp;&nbsp;</label>
+
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="7" name="parameter"/>不服榜 &nbsp;&nbsp;</label>
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="8" name="parameter"/>达人榜 &nbsp;&nbsp;</label>
+                                        <label><input type="checkbox" class="input_bor2 m_l_10" value="9" name="parameter"/>投票汇总 &nbsp;&nbsp;</label>
+                                        <script>
+                                            $("#All").click(function () {
+                                                $("input[name='parameter']").prop("checked", this.checked);
+                                            });
+                                            $("input[name='parameter']").click(function () {
+                                                var $subs = $("input[name='parameter']");
+                                                $("#All").prop("checked", $subs.length == $subs.filter(":checked").length ? true : false);
+                                            });
+                                        </script>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="button" class="btn true-color" onclick="run()" value="榜单手动调度"/>
+                                        <input type="button" id="start" class="btn tinyong-color"  onclick="start()" value="开启调度"/>
+                                        <input type="button" id="shutDown"  class="btn qiyong-color"  onclick="_shutDown()" value="停止调度"/>
+                                    </div>
+                            </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- /.box-body -->
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>job名称</th>
+                                <th>下次执行时间</th>
+                                <th>优先级</th>
+                                <th>执行状态</th>
+                                <th>执行类型</th>
+                                <th>创建时间</th>
+                                <th>表达式</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="quartzList">
+                            </tbody>
+                        </table>
+                        <p id="quartzListPagination"></p>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

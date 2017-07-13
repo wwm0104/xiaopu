@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.PresidentMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.President">
+        <id column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+        <result column="mobile" jdbcType="BIGINT" property="mobile" />
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
+        <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+        <result column="qq" jdbcType="VARCHAR" property="qq" />
+        <result column="valid" jdbcType="TINYINT" property="valid" />
+        <result column="is_president" jdbcType="TINYINT" property="isPresident" />
+        <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    </resultMap>
+    <select id="selectPresident" parameterType="com.chinaxiaopu.xiaopuMobi.model.President" resultMap="BaseResultMap">
+        select p.* from
+        (select * from user_info where is_president = 1
+        <if test="schoolId != null">
+            AND school_id = #{schoolId}
+        </if>
+        ) p
+        <where>
+            <if test="realName != null">
+                OR p.real_name like CONCAT('%','${realName}','%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPresidentBySchool" parameterType="com.chinaxiaopu.xiaopuMobi.model.President" resultMap="BaseResultMap">
+        SELECT * FROM user_info WHERE user_id in
+        (SELECT DISTINCT u.user_id
+        FROM
+        user_info u
+        LEFT JOIN groups g ON g.president_id = u.user_id
+        WHERE 1=1
+        <if test="schoolId != null">
+            AND u.school_id = #{schoolId}
+        </if>
+        <if test ="realName != null">
+            AND CONCAT(u.real_name,g.name) like CONCAT('%','${realName}','%')
+        </if>
+         AND u.is_president = 1
+        )
+    </select>
+</mapper>

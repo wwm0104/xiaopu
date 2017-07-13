@@ -1,0 +1,112 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>创建社团</title>
+    <script th:src="@{/js/createGroup.js}" ></script>
+
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            创建社团
+        </h1>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <script>
+                        $(function () {
+                            $("#inputForm").validation({icon: true});
+                            $("#submit1").on('click', function (event) {
+                                if ($("#inputForm").valid(this) == false) {
+                                    return false;
+                                } else {
+                                    createGroup()
+                                }
+                            })
+                        });
+                    </script>
+                    <!-- form start -->
+                    <form id="inputForm" method="post" class="form-horizontal" action="">
+                        <div class="box-body">
+                            <br/>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">学校:</label>
+                                <input type="text" id="schoolNameDis" style="display: none" name="schoolName"/>
+                                <div class="col-sm-4">
+                                    <select name="schoolId" id="schoolList" style="width: 100%" class="form-control" onchange="schoolfz()">
+                                        <option th:each="school : ${schools}"
+                                                th:value="${school.id}"
+                                                th:text="${school.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">社团名称:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="groupName" id="groupName" class="form-control " maxlength="10" check-type="required" required-message="请填写社团名称" placeholder="请填写社团名称"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">社团口号:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="slogan" id="groupSlogan" class="form-control " check-type="required" required-message="请填写社团口号" placeholder="请填写社团口号" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">社团分类:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="categoryNameDis" style="display: none" name="categoryName"/>
+                                    <select name="categoryId" id="categoryList" style="width: 100%" class="form-control " onchange="categoryfz()">
+                                        <option th:each="category : ${categorys}"
+                                                th:value="${category.id}"
+                                                th:text="${category.categoryName}"></option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">社团介绍:</label>
+                                <div class="col-sm-6">
+                                    <textarea name="description" id="listDescription" rows="5" style="resize: none" class="form-control " check-type="required" required-message="请填写社团介绍"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">社团logo:</label>
+                                <div class="col-sm-6 dropz">
+                                        <img id="uploadImage1" class="dropzoneImgUpload" name="logoImgUrl" th:src="@{/img/cjhdtianjia.png}" height="164" width="177"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">社团图片:</label>
+                                <input type="text" id="imgDisplay" style="display: none" th:value="${imgsDomain}"/>
+                                <div class="col-sm-3 dropz">
+                                    <img id="uploadImage2" class="dropzoneImgUpload" name="img1" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" />
+                                </div>
+                                <div class="col-sm-3 dropz">
+                                    <img id="uploadImage3" class="dropzoneImgUpload" name="img2" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" />
+                                </div>
+                                <div class="col-sm-3 dropz">
+                                    <img id="uploadImage4" class="dropzoneImgUpload" name="img3"  th:src="@{/img/cjhdtianjia.png}" height="164" width="177"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-3 col-sm-offset-3">
+                                    <input id="submit1" type="button" class="btn btn-block true-color" style="margin: 20px 0;" th:value="确认发布"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

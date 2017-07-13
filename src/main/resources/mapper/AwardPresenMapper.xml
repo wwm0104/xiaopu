@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.AwardPresenMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.AwardPresen">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="mobile" jdbcType="BIGINT" property="mobile" />
+    <result column="official_name" jdbcType="VARCHAR" property="officialName" />
+    <result column="official_mobile" jdbcType="BIGINT" property="officialMobile" />
+    <result column="award_cnt" jdbcType="INTEGER" property="awardCnt" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="available" jdbcType="TINYINT" property="available" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, real_name, mobile, official_name, official_mobile, award_cnt, create_time, 
+    available, remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresenExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from award_presens
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from award_presens
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from award_presens
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresenExample">
+    delete from award_presens
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresen">
+    insert into award_presens (id, user_id, real_name, 
+      mobile, official_name, official_mobile, 
+      award_cnt, create_time, available, 
+      remarks)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=BIGINT}, #{officialName,jdbcType=VARCHAR}, #{officialMobile,jdbcType=BIGINT}, 
+      #{awardCnt,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{available,jdbcType=TINYINT}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresen">
+    insert into award_presens
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="officialName != null">
+        official_name,
+      </if>
+      <if test="officialMobile != null">
+        official_mobile,
+      </if>
+      <if test="awardCnt != null">
+        award_cnt,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="available != null">
+        available,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=BIGINT},
+      </if>
+      <if test="officialName != null">
+        #{officialName,jdbcType=VARCHAR},
+      </if>
+      <if test="officialMobile != null">
+        #{officialMobile,jdbcType=BIGINT},
+      </if>
+      <if test="awardCnt != null">
+        #{awardCnt,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="available != null">
+        #{available,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresenExample" resultType="java.lang.Long">
+    select count(*) from award_presens
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update award_presens
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.realName != null">
+        real_name = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=BIGINT},
+      </if>
+      <if test="record.officialName != null">
+        official_name = #{record.officialName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officialMobile != null">
+        official_mobile = #{record.officialMobile,jdbcType=BIGINT},
+      </if>
+      <if test="record.awardCnt != null">
+        award_cnt = #{record.awardCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.available != null">
+        available = #{record.available,jdbcType=TINYINT},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update award_presens
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      real_name = #{record.realName,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=BIGINT},
+      official_name = #{record.officialName,jdbcType=VARCHAR},
+      official_mobile = #{record.officialMobile,jdbcType=BIGINT},
+      award_cnt = #{record.awardCnt,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      available = #{record.available,jdbcType=TINYINT},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresen">
+    update award_presens
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=BIGINT},
+      </if>
+      <if test="officialName != null">
+        official_name = #{officialName,jdbcType=VARCHAR},
+      </if>
+      <if test="officialMobile != null">
+        official_mobile = #{officialMobile,jdbcType=BIGINT},
+      </if>
+      <if test="awardCnt != null">
+        award_cnt = #{awardCnt,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="available != null">
+        available = #{available,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresen">
+    update award_presens
+    set user_id = #{userId,jdbcType=INTEGER},
+      real_name = #{realName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=BIGINT},
+      official_name = #{officialName,jdbcType=VARCHAR},
+      official_mobile = #{officialMobile,jdbcType=BIGINT},
+      award_cnt = #{awardCnt,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      available = #{available,jdbcType=TINYINT},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllPerson" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresen" resultMap="BaseResultMap">
+    SELECT * FROM award_presens
+    WHERE 1=1
+    <if test="realName != null">
+      real_name = #{realName}
+    </if>
+  </select>
+
+  <select id="checkUserInfo" resultType="java.lang.Integer" parameterType="map">
+    SELECT user_id FROM user_info
+    WHERE mobile = #{mobile}
+    AND real_name = #{realName}
+  </select>
+
+  <update id="updatePresen" parameterType="com.chinaxiaopu.xiaopuMobi.model.AwardPresen">
+    UPDATE award_presens SET
+    available = #{available}
+    WHERE id = #{id}
+  </update>
+
+  <select id="checkPhone" resultType="java.lang.Integer" parameterType="map">
+    SELECT count(*) FROM user_info
+    WHERE mobile = #{mobile}
+    AND real_name = #{realName}
+  </select>
+
+  <select id="checkIsAwardPerson" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+      SELECT count(*) FROM award_presens
+      WHERE user_id = #{userId}
+      AND available =1
+  </select>
+  
+  <update id="updateAwardCnt" parameterType="java.lang.Integer">
+       UPDATE award_presens SET
+       award_cnt = award_cnt + 1
+       WHERE user_id = #{userId}
+  </update>
+</mapper>

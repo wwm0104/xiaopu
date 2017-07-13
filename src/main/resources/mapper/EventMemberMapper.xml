@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.EventMemberMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+    <result column="event_id" jdbcType="INTEGER" property="eventId" />
+    <result column="event_name" jdbcType="VARCHAR" property="eventName" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="is_join" jdbcType="TINYINT" property="isJoin" />
+    <result column="is_follow" jdbcType="TINYINT" property="isFollow" />
+    <result column="join_time" jdbcType="TIMESTAMP" property="joinTime" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    event_id, event_name, group_id, member_id, status, memo, is_join, is_follow, join_time
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from event_members
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMemberExample">
+    delete from event_members
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+    insert into event_members (event_id, event_name, group_id, 
+      member_id, status, memo, 
+      is_join, is_follow, join_time)
+    values (#{eventId,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, 
+      #{memberId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{memo,jdbcType=VARCHAR}, 
+      #{isJoin,jdbcType=TINYINT}, #{isFollow,jdbcType=TINYINT}, #{joinTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+    insert into event_members
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eventId != null">
+        event_id,
+      </if>
+      <if test="eventName != null">
+        event_name,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="isJoin != null">
+        is_join,
+      </if>
+      <if test="isFollow != null">
+        is_follow,
+      </if>
+      <if test="joinTime != null">
+        join_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eventId != null">
+        #{eventId,jdbcType=INTEGER},
+      </if>
+      <if test="eventName != null">
+        #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="isJoin != null">
+        #{isJoin,jdbcType=TINYINT},
+      </if>
+      <if test="isFollow != null">
+        #{isFollow,jdbcType=TINYINT},
+      </if>
+      <if test="joinTime != null">
+        #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMemberExample" resultType="java.lang.Long">
+    select count(*) from event_members
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update event_members
+    <set>
+      <if test="record.eventId != null">
+        event_id = #{record.eventId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventName != null">
+        event_name = #{record.eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupId != null">
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.memo != null">
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isJoin != null">
+        is_join = #{record.isJoin,jdbcType=TINYINT},
+      </if>
+      <if test="record.isFollow != null">
+        is_follow = #{record.isFollow,jdbcType=TINYINT},
+      </if>
+      <if test="record.joinTime != null">
+        join_time = #{record.joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update event_members
+    set event_id = #{record.eventId,jdbcType=INTEGER},
+      event_name = #{record.eventName,jdbcType=VARCHAR},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      memo = #{record.memo,jdbcType=VARCHAR},
+      is_join = #{record.isJoin,jdbcType=TINYINT},
+      is_follow = #{record.isFollow,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="selectByUserOpt" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember" resultType="int">
+  SELECT COUNT(*) FROM `event_members` WHERE member_id=#{memberId} 
+    <if test="eventId != null">
+      AND event_id=#{eventId} 
+    </if>
+    <if test="isJoin != null">
+      AND is_join=#{isJoin} AND status!=3
+    </if>
+    <if test="isFollow!= null">
+      AND is_follow=#{isFollow}
+    </if>
+  </select>
+
+  <select id="selectByIsFollow" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember" resultMap="BaseResultMap">
+  SELECT * FROM `event_members` WHERE member_id=#{memberId}  AND event_id=#{eventId} AND is_follow IS NOT NULL
+  </select>
+
+  <update id="updateByEventMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+    update event_members
+      set is_follow = #{isFollow,jdbcType=TINYINT}
+    where event_id = #{eventId,jdbcType=INTEGER}
+      and member_id = #{memberId,jdbcType=INTEGER}
+      and is_follow IS NOT NULL
+  </update>
+
+  <update id="updateStatusByEventMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+    update event_members
+      set status = #{status,jdbcType=TINYINT},memo = #{memo,jdbcType=VARCHAR}
+    where event_id = #{eventId,jdbcType=INTEGER}
+      and member_id = #{memberId,jdbcType=INTEGER}
+      and is_join = 1
+  </update>
+
+  <select id="getApplyCount" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM `event_members` em
+    LEFT JOIN `events` e ON em.event_id=e.id
+    LEFT JOIN `groups` g ON e.organize_id = g.id
+    WHERE g.president_id=#{userId} AND em.is_join = 1 AND e.status = 1 AND g.status = 1
+    <if test="eventId != null">
+      AND em.event_id = #{eventId}
+    </if>
+    <if test="status != null">
+      AND em.status = #{status}
+    </if>
+  </select>
+
+  <select id="selectByEventMemberAndKeyword" parameterType="map" resultMap="BaseResultMap">
+    SELECT em.*,ui.* FROM `event_members` em
+    LEFT JOIN `events` e ON em.event_id=e.id
+    LEFT JOIN `groups` g ON e.organize_id = g.id
+    LEFT JOIN user_info ui ON em.member_id = ui.user_id
+    WHERE g.president_id=#{userId} AND em.is_join = 1 AND e.status = 1 AND g.status = 1
+    <if test="eventMember.eventId != null">
+      AND em.event_id = #{eventMember.eventId,jdbcType=INTEGER}
+    </if>
+    <if test="eventMember.status != null">
+      AND em.status = #{eventMember.status,jdbcType=INTEGER}
+    </if>
+    <if test="keyword != null">
+      AND (ui.real_name LIKE CONCAT('%','${keyword}','%') OR ui.mobile LIKE CONCAT('%','${keyword}','%'))
+    </if>
+    ORDER BY em.join_time DESC
+  </select>
+
+  <select id="selectByEventMember" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM event_members
+    WHERE event_id=#{eventId}
+    AND member_id=#{memberId}
+    AND is_join=#{isJoin}
+    AND status=#{status}
+  </select>
+
+  <update id="confirmEventMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+    UPDATE event_members
+    SET status = #{status,jdbcType=TINYINT},memo = #{memo,jdbcType=VARCHAR}
+    WHERE event_id = #{eventId,jdbcType=INTEGER}
+    AND member_id = #{memberId,jdbcType=INTEGER}
+    AND is_join = #{isJoin,jdbcType=TINYINT}
+    AND status = 2
+  </update>
+
+  <select id="getUntreatedApplyCountByEventId" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM `event_members`
+    WHERE `status` = 2 AND is_join = 1 AND event_id = #{eventId}
+  </select>
+
+  <select id="selectUserInfoByEventIdAndStatus" parameterType="map" resultType="com.chinaxiaopu.xiaopuMobi.vo.UserInfoVo">
+  SELECT uv.*,CASE gm.`status` WHEN 1 THEN 1 ELSE 0 END as isGroupMember FROM
+    (SELECT  ui.user_id as userId,ui.school_id as schoolId,ui.school_name as schoolName,ui.mobile,ui.nick_name as nickName,ui.real_name as realName,
+                          ui.user_sex as userSex,ui.student_no as studentNo,ui.qq,ui.valid,ui.is_president as isPresident,ui.avatar_url as avatarUrl,
+                          em.join_time as joinTime,e.organize_id as groupId,ut.`status` as isSignIn
+        FROM user_info ui
+        LEFT JOIN event_members em ON ui.user_id = em.member_id
+        LEFT JOIN `events` e ON em.event_id = e.id
+        LEFT JOIN user_ticket ut ON ut.business_id = e.id AND ut.business_type = 2 AND ut.user_id = ui.user_id
+        WHERE em.is_join = 1
+        AND em.event_id = #{eventId}
+        AND em.status = #{status}
+    ) uv
+  LEFT JOIN group_members gm ON gm.group_id = uv.groupId AND gm.member_id = uv.userId
+  </select>
+
+</mapper>

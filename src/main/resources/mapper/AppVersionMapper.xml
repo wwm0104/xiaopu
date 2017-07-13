@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.AppVersionMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.AppVersion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="verison" jdbcType="VARCHAR" property="verison" />
+    <result column="useragent" jdbcType="VARCHAR" property="useragent" />
+    <result column="useragent_name" jdbcType="VARCHAR" property="useragentName" />
+    <result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="is_update" jdbcType="TINYINT" property="isUpdate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, app_id, app_name, verison, useragent, useragent_name, download_url, description,
+    is_update
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from app_versions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByAppNameOrAppIdGetList" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersion" resultMap="BaseResultMap">
+      SELECT * FROM  app_versions
+      where 1=1
+      <if test="appId!=null">
+          AND app_id = #{appId}
+      </if>
+      <if test="description!=null">
+          AND description LIKE  CONCAT('%','${description}','%')
+      </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_versions
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from app_versions
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersionExample">
+    delete from app_versions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersion">
+    insert into app_versions (id, app_id, app_name,
+      verison, useragent, useragent_name,
+      download_url, description, is_update
+      )
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR},
+      #{verison,jdbcType=VARCHAR}, #{useragent,jdbcType=VARCHAR}, #{useragentName,jdbcType=VARCHAR},
+      #{downloadUrl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{isUpdate,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersion">
+    insert into app_versions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="appName != null">
+        app_name,
+      </if>
+      <if test="verison != null">
+        verison,
+      </if>
+      <if test="useragent != null">
+        useragent,
+      </if>
+      <if test="useragentName != null">
+        useragent_name,
+      </if>
+      <if test="downloadUrl != null">
+        download_url,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="isUpdate != null">
+        is_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="verison != null">
+        #{verison,jdbcType=VARCHAR},
+      </if>
+      <if test="useragent != null">
+        #{useragent,jdbcType=VARCHAR},
+      </if>
+      <if test="useragentName != null">
+        #{useragentName,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isUpdate != null">
+        #{isUpdate,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersionExample" resultType="java.lang.Long">
+    select count(*) from app_versions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update app_versions
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.appId != null">
+        app_id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appName != null">
+        app_name = #{record.appName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verison != null">
+        verison = #{record.verison,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useragent != null">
+        useragent = #{record.useragent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useragentName != null">
+        useragent_name = #{record.useragentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downloadUrl != null">
+        download_url = #{record.downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isUpdate != null">
+        is_update = #{record.isUpdate,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update app_versions
+    set id = #{record.id,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=VARCHAR},
+      app_name = #{record.appName,jdbcType=VARCHAR},
+      verison = #{record.verison,jdbcType=VARCHAR},
+      useragent = #{record.useragent,jdbcType=VARCHAR},
+      useragent_name = #{record.useragentName,jdbcType=VARCHAR},
+      download_url = #{record.downloadUrl,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      is_update = #{record.isUpdate,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersion">
+    update app_versions
+    <set>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="verison != null">
+        verison = #{verison,jdbcType=VARCHAR},
+      </if>
+      <if test="useragent != null">
+        useragent = #{useragent,jdbcType=VARCHAR},
+      </if>
+      <if test="useragentName != null">
+        useragent_name = #{useragentName,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        download_url = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isUpdate != null">
+        is_update = #{isUpdate,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.AppVersion">
+    update app_versions
+    set app_id = #{appId,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      verison = #{verison,jdbcType=VARCHAR},
+      useragent = #{useragent,jdbcType=VARCHAR},
+      useragent_name = #{useragentName,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      is_update = #{isUpdate,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--根据appId获取最新版本信息-->
+  <select id="selectLastVersionByAppId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from app_versions where app_id=#{appId} ORDER BY id desc LIMIT 0,1
+  </select>
+
+</mapper>

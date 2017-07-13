@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.QuartzMapper">
+    <select id="findList"  resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.quartz.QuartzVo">
+    SELECT
+        qr.TRIGGER_NAME triggerName,
+        qr.TRIGGER_NAME triggerGroupName,
+        qr.JOB_NAME jobName,
+        FROM_UNIXTIME(qr.NEXT_FIRE_TIME/1000,'%Y-%m-%d %H:%i:%s') nextFireTime,
+        FROM_UNIXTIME(qr.PREV_FIRE_TIME/1000,'%Y-%m-%d %H:%i:%s') prevFireTime,
+        qr.PRIORITY privrity,
+        qr.TRIGGER_STATE triggerState,
+        qr.TRIGGER_TYPE triggerType,
+        FROM_UNIXTIME(qr.START_TIME/1000,'%Y-%m-%d %H:%i:%s') startTime,
+        qr.MISFIRE_INSTR misfireInstr,
+        qc.CRON_EXPRESSION cronExpression,
+        qr.JOB_GROUP groupName
+    FROM
+        QRTZ_TRIGGERS qr
+    LEFT JOIN QRTZ_CRON_TRIGGERS qc on qc.TRIGGER_NAME = qr.TRIGGER_NAME
+    </select>
+</mapper>

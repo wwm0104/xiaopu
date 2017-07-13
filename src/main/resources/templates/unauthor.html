@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>校谱后台管理系统</title>
+
+    <link th:href="@{/css/unauthor.css}" rel="stylesheet" type="text/css" />
+
+    <style>
+        html,body,.no-access{
+            width: 100%;
+            height: 100%;
+        }
+        html,body,div,img{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: #fff;
+            overflow: hidden;
+        }
+        .no-access-img{
+            width: 180px;
+            height: 250px;
+            background: url(../static/img/noAccess.png) no-repeat;
+            background-size: 100% 100%;
+            position: relative;
+            top: 100px;
+            margin: 0 auto;
+        }
+        .no-access-text{
+            font-size: 32px;
+            line-height: 1;
+            color: #929090;
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        @media (max-width: 1920px){
+        	body {
+			    transform: scale(0.75);
+			    -webkit-transform: scale(0.75);
+			    -moz-transform: scale(0.71);
+			    -ms-transform: scale(0.75);
+			}
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="no-access">
+    <div class="no-access-img">
+
+    </div>
+    <div class="no-access-text">无权限访问</div>
+</div>
+
+<!--<div class="login_wirp">-->
+    <!--<div class="get_back">-->
+        <!--<div class="back_img">-->
+
+        <!--</div>-->
+        <!--<h3>抱歉您没有权限访问！</h3>-->
+        <!--<div class="back_but">-->
+            <!--<a th:href="@{/user/login}">-->
+                <!--<i></i>返回登录页-->
+            <!--</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<script src="js/jQuery-2.2.0.min.js"></script>-->
+
+</body>
+</html>

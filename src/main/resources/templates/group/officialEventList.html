@@ -1,0 +1,64 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>校普活动</title>
+    <script th:src="@{/js/officeEvent.js}" ></script>
+    <script type="text/javascript">
+        $(getOfficeEventList);
+    </script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            校普活动
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 900px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-8">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="活动名称" class="form-control" onkeydown="seachList(event)"/>
+                                    <span class="input-group-addon seachButton" onclick="getOfficeEventList()">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>活动名称</th>
+                                <th>活动地点</th>
+                                <th style="width: 30%">社团名称</th>
+                                <th>活动时间</th>
+                                <th style="width: 140px;"><select class="form-control" id="timeStatus" onchange ="getOfficeEventList()">
+                                    <option value="" >所有状态</option>
+                                    <option value="1">进行中</option>
+                                    <option value="2">未开始</option>
+                                    <option value="3">已结束</option>
+                                </select></th>
+                            </tr>
+                            </thead>
+                            <tbody id="eventList">
+                            </tbody>
+                        </table>
+                        <p id="groupListPagination"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>活动列表</title>
+    <style type="text/css">
+        a:link {color: black;} /* 未访问的链接 */
+    </style>
+    <script th:src="@{/js/event.js}" ></script>
+    <script type="text/javascript">
+        $(toList);
+    </script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            活动列表
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="overflow-x: auto;">
+        <!--<div>学校:<select id="schoolList" onchange="getEventList()"></select> <input type="text" id="seachText"/><input type="button" value="搜索" onclick="getEventList()"/></div>-->
+        <div class="row" style="min-width: 900px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <!--<div class="col-xs-4">-->
+                                <!--<div class="input-group">-->
+                                    <!--&lt;!&ndash;<label>学校:</label>&ndash;&gt;-->
+                                    <!--<select class="form-control" id="schoolList" onchange="getEventList()"></select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <div class="col-xs-4 col-xs-offset-8">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="活动名称" class="form-control" onkeydown="seachList(event)"/>
+                                    <span class="input-group-addon seachButton" onclick="getEventList()">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <input type="text" id="statusDai" th:value="${status}" style="display: none"/>
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th style="width: 30%">活动名称</th>
+                                <th style="width: 200px;"><select class="form-control" id="schoolList" onchange="getEventList()">
+                                    <option value="">所有大学名称</option>
+                                    <option th:each="school : ${schools}"
+                                            th:value="${school.id}"
+                                            th:text="${school.name}"></option>
+                                </select></th>
+                                <th>社团名称</th>
+                                <th>活动时间</th>
+                                <th style="width: 200px;"><select id="status" class="form-control" onchange ="getEventList()">
+                                    <option value="">所有审核状态</option>
+                                    <option value="1">审核通过</option>
+                                    <option value="0">待审核</option>
+                                    <option value="2">审核未通过</option>
+                                </select></th>
+                                <th style="width: 140px;"><select id="timeStatus" class="form-control" onchange ="getEventList()">
+                                    <option value="" >所有状态</option>
+                                    <option value="1">进行中</option>
+                                    <option value="2">未开始</option>
+                                    <option value="3">已结束</option>
+                                </select></th>
+                            </tr>
+                            </thead>
+                            <tbody id="eventList">
+                            </tbody>
+                        </table>
+                        <p id="groupListPagination"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+
+<generatorConfiguration>
+    <!--数据库驱动jar -->
+    <classPathEntry location="/Users/daer/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar" />
+    <!--<classPathEntry location="D:/mysql-connector-java-5.1.5-bin.jar" />-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--去除注释  -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!--数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://10.25.18.254:3306/xiaopu?tinyInt1isBit=false"
+                        userId="xiaopu"
+                        password="Weiyin@2016">
+        </jdbcConnection>
+        <!--默认false
+           Java type resolver will always use java.math.BigDecimal if the database column is of type DECIMAL or NUMERIC.
+         -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--生成实体类 指定包名 以及生成的地址 （可以自定义地址，但是路径不存在不会自动创建  使用Maven生成在target目录下，会自动创建） -->
+        <javaModelGenerator targetPackage="com.chinaxiaopu.xiaopuMobi.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!--生成SQLMAP文件 -->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!--生成Dao文件 可以配置 type="XMLMAPPER"生成xml的dao实现  context id="DB2Tables" 修改targetRuntime="MyBatis3"  -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.chinaxiaopu.xiaopuMobi.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->
+
+        <!--<table tableName="partners" domainObjectName="Partner" />-->
+        <!--<table tableName="event_groups" domainObjectName="EventGroup" />-->
+        <!--<table tableName="event_members" domainObjectName="EventMember" />-->
+        <!--<table tableName="events" domainObjectName="Event" />-->
+        <!--<table tableName="group_category" domainObjectName="GroupCategory" />-->
+        <!--<table tableName="group_members" domainObjectName="GroupMember" />-->
+        <!--<table tableName="groups" domainObjectName="Group" />-->
+        <!--<table tableName="imgs" domainObjectName="Img" />-->
+        <!--<table tableName="schools" domainObjectName="School" />-->
+        <!--<table tableName="sms_logs" domainObjectName="SmsLog" />-->
+        <!--<table tableName="user_info" domainObjectName="UserInfo" />-->
+        <!--<table tableName="users" domainObjectName="User" />-->
+        <!--<table tableName="user_weixin" domainObjectName="UserWeixin" />-->
+
+        <!--<table tableName="roles" domainObjectName="Role" />-->
+        <!--<table tableName="resources" domainObjectName="Resource" />-->
+
+        <!--<table tableName="tipoffs" domainObjectName="Tipoff" />-->
+        <!--<table tableName="user_vr_activitys" domainObjectName="UserVrActivity" />-->
+        <!--<table tableName="vr_activitys" domainObjectName="VrActivity" />-->
+        <!--<table tableName="pk_prize_result" domainObjectName="PkPrizeResult" />-->
+        <!--<table tableName="pk_prize_take_log" domainObjectName="PkPrizeTakeLog" />-->
+        <!--<table tableName="pk_result" domainObjectName="PkResult" />-->
+        <!--<table tableName="pk_vote_result" domainObjectName="PkVoteResult" />-->
+        <!--<table tableName="pk_votes" domainObjectName="PkVote" />-->
+        <!--<table tableName="prizes" domainObjectName="Prize" />-->
+        <!--<table tableName="prizes_imprest" domainObjectName="PrizeImprest" />-->
+        <!--<table tableName="recommend_event" domainObjectName="RecommendEvent" />-->
+        <!--<table tableName="topic_comment" domainObjectName="TopicComment" />-->
+        <!--<table tableName="topic_fav" domainObjectName="TopicFav" />-->
+        <!--<table tableName="topic_hot" domainObjectName="TopicHot" />-->
+        <!--<table tableName="topic_like" domainObjectName="TopicLike" />-->
+        <!--<table tableName="topic_ranking" domainObjectName="TopicRanking" />-->
+        <!--<table tableName="topic_tags" domainObjectName="TopicTag" />-->
+        <!--<table tableName="topics" domainObjectName="Topic" />-->
+        <!--<table tableName="topic_new" domainObjectName="TopicNew" />-->
+        <!--<table tableName="dict" domainObjectName="Dict" />-->
+        <!--<table tableName="event_ranking" domainObjectName="EventRanking" />-->
+        <!--<table tableName="topic_pk" domainObjectName="TopicPk" />-->
+        <!--<table tableName="user_ranking" domainObjectName="UserRanking" />-->
+        <!--<table tableName="partners" domainObjectName="Partner" />-->
+        <!--<table tableName="prizes" domainObjectName="Prize" />-->
+        <table tableName="tickets" domainObjectName="Ticket" />
+        <table tableName="user_ticket" domainObjectName="UserTicket" />
+
+    </context>
+</generatorConfiguration>

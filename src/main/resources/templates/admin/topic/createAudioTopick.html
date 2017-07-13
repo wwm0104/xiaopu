@@ -1,0 +1,136 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>Audio Publish</title>
+    <link rel="stylesheet" th:href="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.css}" />
+    <!-- datetimepicker -->
+    <script th:src="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+    <script th:src="@{/js/createAudio.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            发布音频
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <script>
+                        $(function () {
+                            $("#startTime").val(new Date().Format("yyyy/MM/dd hh:mm"));
+                            $("#inputForm").validation({icon: true});
+                            $("#submit11").on('click', function (event) {
+                                if ($("#inputForm").valid(this) == false) {
+                                    return false;
+                                } else {
+                                    createAudio()
+                                }
+                            })
+                        });
+                    </script>
+                    <form id="inputForm" method="post" class="form-horizontal" action="">
+
+                        <div class="box-body">
+                            <br/>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">音频名称:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="slogan" id="slogan" class="form-control "  check-type="required" required-message="请填写音频名称" placeholder="请填写音频名称"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属频道:</label>
+                                <div class="col-sm-4">
+                                    <select name="channel" id="channel" style="width: 100%" class="form-control">
+                                        <option th:each="channel : ${channelsList}"
+                                                th:value="${channel.id}"
+                                                th:text="${channel.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">音频文件:</label>
+                                <div class="col-sm-2 dropz">
+                                    <audio id="uploadAudio"  controls="controls" name="logoImgUrl"   height="164" width="177"/>
+                                </div>
+                                <div id="groupJoinDiv" class="col-sm-1 dropz" style="margin-left:15px;cursor:pointer;"><img class="dropzoneAudioUpload" th:src="@{/img/cjhdtianjia.png}"  height="30" width="30" /></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">音频封面:</label>
+                                <div class="col-sm-5 dropz">
+                                    <img id="uploadImage5"  name="logoImgUrl" class="dropzoneImgUpload"  th:src="@{/img/cjhdtianjia.png}"  height="164" width="177"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">内页banner:</label>
+                                <div class="col-sm-2 dropz">
+                                    <img id="uploadImage1" class="dropzoneImgUpload" name="img1" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" />
+                                </div>
+                                <div class="col-sm-2 dropz">
+                                    <img id="uploadImage2" class="dropzoneImgUpload" name="img2" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" />
+                                </div>
+                                <div class="col-sm-2 dropz">
+                                    <img id="uploadImage3" class="dropzoneImgUpload" name="img3"  th:src="@{/img/cjhdtianjia.png}" height="164" width="177"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">音频介绍:</label>
+                                <div class="col-sm-6">
+                                    <textarea name="description" id="listDescription" rows="5" style="resize: none" class="form-control " check-type="required" required-message="请填写具体内容"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">介绍图片:</label>
+                                <div class="col-sm-5 dropz">
+                                    <img id="uploadImage4"  name="logoImgUrl" class="dropzoneImgUpload"  th:src="@{/img/cjhdtianjia.png}"  height="164" width="177"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否立即上线:</label>
+                                <div class="col-sm-6">
+                                    <input type="radio" value="1" onclick="changeCheckBox()" name="isDelete" checked="checked"/>
+                                    是&nbsp;
+                                    <input type="radio" value="-1" onclick="changeCheckBox()" name="isDelete" />
+                                    否
+                                </div>
+                            </div>
+                            <div class="form-group" id="onLineTimeDiv" style="display: none;padding-top: 10px;cursor:pointer;">
+                                <label class="col-sm-2 control-label">上线时间:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="startTime"  placeholder="请选择开始时间"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-3" style="margin-top: 20px;">
+                                    <input id="submit11" type="button" style=""  class="btn btn-block true-color" th:value="上传审核"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        $("#startTime").datetimepicker({
+                            format: 'yyyy/mm/dd hh:ii',
+                            language: 'zh-CN', //汉化
+                            autoclose: true //选择日期后自动关闭
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

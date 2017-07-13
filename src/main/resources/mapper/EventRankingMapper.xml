@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.EventRankingMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.EventRanking">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="event_id" jdbcType="INTEGER" property="eventId"/>
+        <result column="topic_cnt" jdbcType="INTEGER" property="topicCnt"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="parent_type" jdbcType="INTEGER" property="parentType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, event_id, topic_cnt, type, parent_type, create_time, status
+  </sql>
+    <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventRankingExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from event_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from event_ranking
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from event_ranking
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventRankingExample">
+        delete from event_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventRanking">
+    insert into event_ranking (id, event_id, topic_cnt, 
+      type, parent_type, create_time, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{eventId,jdbcType=INTEGER}, #{topicCnt,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{parentType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventRanking">
+        insert into event_ranking
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="eventId != null">
+                event_id,
+            </if>
+            <if test="topicCnt != null">
+                topic_cnt,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="parentType != null">
+                parent_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="eventId != null">
+                #{eventId,jdbcType=INTEGER},
+            </if>
+            <if test="topicCnt != null">
+                #{topicCnt,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="parentType != null">
+                #{parentType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventRankingExample"
+            resultType="java.lang.Long">
+        select count(*) from event_ranking
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update event_ranking
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.eventId != null">
+                event_id = #{record.eventId,jdbcType=INTEGER},
+            </if>
+            <if test="record.topicCnt != null">
+                topic_cnt = #{record.topicCnt,jdbcType=INTEGER},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=INTEGER},
+            </if>
+            <if test="record.parentType != null">
+                parent_type = #{record.parentType,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update event_ranking
+        set id = #{record.id,jdbcType=INTEGER},
+        event_id = #{record.eventId,jdbcType=INTEGER},
+        topic_cnt = #{record.topicCnt,jdbcType=INTEGER},
+        type = #{record.type,jdbcType=INTEGER},
+        parent_type = #{record.parentType,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventRanking">
+        update event_ranking
+        <set>
+            <if test="eventId != null">
+                event_id = #{eventId,jdbcType=INTEGER},
+            </if>
+            <if test="topicCnt != null">
+                topic_cnt = #{topicCnt,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="parentType != null">
+                parent_type = #{parentType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventRanking">
+    update event_ranking
+    set event_id = #{eventId,jdbcType=INTEGER},
+      topic_cnt = #{topicCnt,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      parent_type = #{parentType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <!--活动排行榜日，月，周榜-->
+    <select id="getEventRankList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.EventRankDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.EventRankVo">
+    <![CDATA[
+
+
+
+
+      SELECT @row := @row + 1 as row,t0.* from (
+            SELECT t.event_id as eventId,t.topic_cnt as topicCnt,DATE_FORMAT(e.start_time,'%Y/%m/%d %H:%i') as startTime,DATE_FORMAT(e.end_time,'%Y/%m/%d %H:%i') as endTime,e.subject,e.organize_id as groupId,e.organize_name as groupName,e.poster_img as posterImg FROM event_ranking t
+            LEFT JOIN events e on e.id=t.event_id
+            where t.status=1 and t.type=1  and e.status=1 and t.parent_type= #{parentType}
+            ORDER BY t.topic_cnt DESC
+       ) as t0,(SELECT @row := 0)as r
+
+
+
+
+        ]]>
+  </select>
+
+    <!--活动排行榜日，新数据查询-->
+    <select id="getEventDayList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.EventRankVo">
+        <![CDATA[
+
+
+
+
+        SELECT tt.target_id as groupId,count(t.id) as row  FROM topics t
+        LEFT JOIN topic_tags tt on tt.topic_id = t.id
+        where  t.is_delete=1 and t.is_challenger !=0 and  date_format(t.create_time,'%Y-%c-%d') =date_format(now(),'%Y-%c-%d')  and tt.tag_type = 2 and t.`status` = 1 and (t.type=1 or t.type=2)
+        GROUP BY tt.target_id  ORDER BY count(t.id) DESC LIMIT 0,20
+
+
+
+
+        ]]>
+    </select>
+    <!--活动排行榜周，新数据查询-->
+    <select id="getEventWeekList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.EventRankVo">
+        <![CDATA[
+
+
+
+
+        SELECT tt.target_id as groupId,count(t.id) as row  FROM topics t
+        LEFT JOIN topic_tags tt on tt.topic_id = t.id
+        where  t.is_delete=1 and t.is_challenger !=0 and  YEARWEEK(date_format(t.create_time,'%Y-%m-%d')) = YEARWEEK(now())  and tt.tag_type = 2 and t.`status` = 1 and (t.type=1 or t.type=2)
+        GROUP BY tt.target_id  ORDER BY count(t.id) DESC LIMIT 0,20
+
+
+
+
+        ]]>
+    </select>
+    <!--活动排行榜月，新数据查询-->
+    <select id="getEventMonthList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.EventRankVo">
+        <![CDATA[
+
+
+
+
+        SELECT tt.target_id as groupId,count(t.id) as row  FROM topics t
+        LEFT JOIN topic_tags tt on tt.topic_id = t.id
+        where  t.is_delete=1 and t.is_challenger !=0 and  date_format(t.create_time,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 0 MONTH),'%Y-%m')   and tt.tag_type = 2 and t.`status` = 1 and (t.type=1 or t.type=2)
+        GROUP BY tt.target_id  ORDER BY count(t.id) DESC LIMIT 0,20
+
+
+
+
+        ]]>
+    </select>
+    <!--活动排行榜日，老数据修改-->
+    <update id="updateOldEventDay">
+        update event_ranking set status = 0 where type=1 and parent_type = 1 and status = 1
+    </update>
+
+    <!--活动排行榜周，老数据修改-->
+    <update id="updateOldEventWeek">
+        update event_ranking set status = 0 where type=1 and parent_type = 2 and status = 1
+    </update>
+
+    <!--活动排行榜月，老数据修改-->
+    <update id="updateOldEventMonth">
+        update event_ranking set status = 0 where type=1 and parent_type = 3 and status = 1
+    </update>
+
+    <!--添加 活动排行榜 日信息-->
+    <insert id="insertNewEventDay" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into event_ranking (event_id, topic_cnt,type, parent_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.groupId},#{item.row},1,1)
+        </foreach>
+    </insert>
+    <!--删除两天前的 活动日数据/*DELETE from event_ranking WHERE datediff(curdate(),date_format(create_time,'%Y-%c-%d %h:%m:%s'))>=2 and type = 1 and parent_type=1 and status = 0*/-->
+    <delete id="deleteOldEventDay">
+
+       DELETE FROM event_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM event_ranking t WHERE t.type = 1 AND t.parent_type = 1 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM event_ranking a WHERE a.type = 1 AND a.parent_type = 1 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	)
+    </delete>
+
+    <!--添加 活动排行榜 周信息-->
+    <insert id="insertNewEventWeek" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into event_ranking (event_id, topic_cnt,type, parent_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.groupId},#{item.row},1,2)
+        </foreach>
+    </insert>
+    <!--删除上周的 活动周数据/* DELETE from event_ranking WHERE YEARWEEK(date_format(create_time,'%Y-%m-%d')) = YEARWEEK(now())-1 and type = 1 and parent_type=2 and status = 0*/-->
+    <delete id="deleteOldEventWeek">
+
+       DELETE FROM event_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM event_ranking t WHERE t.type = 1 AND t.parent_type = 2 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM event_ranking a WHERE a.type = 1 AND a.parent_type = 2 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+
+    <!--添加 活动排行榜 月信息-->
+    <insert id="insertNewEventMonth" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into event_ranking (event_id, topic_cnt,type, parent_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.groupId},#{item.row},1,3)
+        </foreach>
+    </insert>
+    <!--删除上月的 活动月数据/*DELETE from event_ranking WHERE date_format(create_time,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m') and type = 1 and parent_type=3 and status = 0*/-->
+    <delete id="deleteOldEventMonth">
+
+        DELETE FROM event_ranking WHERE id IN (
+		SELECT b.* FROM(
+				SELECT t.id FROM event_ranking t WHERE t.type = 1 AND t.parent_type = 3 AND t.`status` = 0 AND NOT EXISTS (
+					SELECT a.id FROM event_ranking a WHERE a.type = 1 AND a.parent_type = 3 and a.`status`=0 ORDER BY a.create_time DESC LIMIT 0,100
+				)
+			) as b
+	   )
+    </delete>
+</mapper>

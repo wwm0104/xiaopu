@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.PartnerGroupMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.PartnerGroup">
+    <result column="partner_id" jdbcType="INTEGER" property="partnerId" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.PartnerGroup">
+    insert into partner_group (partner_id, group_id)
+    values (#{partnerId,jdbcType=INTEGER},#{groupId,jdbcType=INTEGER})
+  </insert>
+
+
+
+
+
+</mapper>

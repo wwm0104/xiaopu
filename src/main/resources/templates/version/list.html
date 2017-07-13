@@ -1,0 +1,165 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>版本列表</title>
+    <script th:src="@{/js/appversion.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+
+    <section class="content-header">
+        <h1>
+            版本信息列表
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 1100px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!--<div class="box-header">-->
+                    <!-- /.box-header -->
+                    <div class="box-header">
+                            <div class="col-xs-4">
+                                <button style="width: 150px;" type="button" onclick="add()" class="btn true-color">添加版本</button>
+                            </div>
+                            <div class="col-xs-4 col-xs-offset-4">
+                                <div class="input-group">
+                                    <input type="text" id="description1" placeholder="更新详情查找" class="form-control" />
+                                    <span class="input-group-addon seachButton" onclick="initAppVersion()">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <select class="form-control" id="AppId_list" onchange="initAppVersion()">
+                                        <option value="">所有平台</option>
+                                        <option value="1">Android</option>
+                                        <option value="2">Ios</option>
+                                    </select>
+                                </th>
+                                <th style="min-width: 68px;">版本号</th>
+                                <th style="min-width: 68px;">代理点</th>
+                                <th style="min-width: 85px;">代理名称</th>
+                                <th style="min-width: 85px;">下载地址</th>
+                                <th style="min-width: 50px;">详情</th>
+                                <th style="min-width: 85px;">是否强制更新</th>
+                                <th style="min-width: 130px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="versionList">
+                            </tbody>
+                        </table>
+                        <p id="versionListPagination"></p>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+        </div>
+    </section>
+    <!-- 修改，添加 Modal -->
+    <div class="modal fade" id="selectGroup" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加版本信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="versionForm" class="form-horizontal" role="form" novalidate="novalidate" name="roleForm">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">平台：<i style="color: red">*</i></label>
+                                <div class="col-sm-6" >
+                                    <select id="appId" name="appId"   class="form-control required">
+                                        <option value="-1">--请选择--</option>
+                                        <option value="1">Android</option>
+                                        <option value="2">ios</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">版本号:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="version" id="version" check-type="required" required-message="请填写版本号" class="form-control" maxlength="10" placeholder="请填写版本号"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">代理点：<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="useragent" name="useragent" check-type="required" required-message="请填写代理点" class="form-control" placeholder="请填写代理点" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">代理名称：<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="useragentName" name="useragentName" check-type="required" required-message="请填写代理名称" class="form-control" placeholder="请填写代理名称" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">下载地址:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="downloadUrl" id="downlodUrl" check-type="required" required-message="请填写下载地址" class="form-control"  placeholder="请填写下載地址"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">强制更新：<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <select id="isUpdate" name="isUpdate" class="form-control">
+                                        <option value="-1">--请选择--</option>
+                                        <option value="0">不强制</option>
+                                        <option value="1">强制更新</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">详细信息:<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <textarea id="description" name="description" check-type="required" required-message="请填写版详细信息"  class="form-control"  placeholder="请填写详细信息"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <input type="hidden" id="id" value=""/>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button id="add" type="button" class="btn true-color">添加</button>
+                    <button id="update" type="button" class="btn true-color">修改</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.content -->
+    <!-- 信息删除确认 -->
+    <div class="modal fade" id="delcfmModel">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="text-align: center;font-size: 30px;">您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="delid"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a  onclick="urlSubmit()" class="btn true-color" style="color: #444444;" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>

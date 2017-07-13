@@ -1,0 +1,145 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>音频列表</title>
+    <style type="text/css">
+        a:link {color: black;} /* 未访问的链接 */
+    </style>
+    <script th:src="@{/js/admin/audio/audioList.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            音频列表
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 900px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-6 col-xs-offset-4">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="音频名称" class="form-control" onkeydown="seachList(event)"/>
+                                    <span class="input-group-addon seachButton" onclick="getAudioList()">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-xs-1">
+                                <input type="button" class="btn btn-default" id="topSort" data-val=""
+                                       value="轮播置顶查询"
+                                       onclick="orderBy(5)"/>
+                            </div>
+                            <div class="col-xs-1">
+                                <input type="button" class="btn btn-default" id="recommentSort" data-val=""
+                                       value="精彩推荐查询"
+                                       onclick="orderBy(4)"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <input type="hidden" th:value="${imgsDomain}" id="imgsDomain"/>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>音频</th>
+                                <th>名称</th>
+                                <th>所属频道</th>
+                                <th>主播</th>
+                                <th>上线时间</th>
+                                <th style="width: 200px;"><select id="status" class="form-control" onchange="getAudioList();">
+                                    <option value="">全部状态</option>
+                                    <option value="1">审核通过</option>
+                                    <option value="0">待审核</option>
+                                    <option value="2">审核未通过</option>
+                                </select></th>
+                                <th>是否上线</th>
+                                <th>操作</th>
+                                <th>轮播置顶</th>
+                                <th>精彩推荐</th>
+                            </tr>
+                            </thead>
+                            <tbody id="audioList">
+                            </tbody>
+                        </table>
+                        <p id="audioListPagination"></p>
+                        <div style="display: none;background-color: inherit;" id="tuijianBox" class="form-group">
+                            <div class="form-group">
+                                <input type="hidden" id="pid" value=""/>
+                                <input type="hidden" id="reId" value=""/>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top5" class="btn btn-default col-sm-10 buttonClass5" value="top1"
+                                            onclick="voluation(5)"/>　　
+                                </div>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top4" class="btn btn-default col-sm-10 buttonClass4" value="top2"
+                                            onclick="voluation(4)"/>　　
+                                </div>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top3" class="btn btn-default col-sm-10 buttonClass3" value="top3"
+                                            onclick="voluation(3)"/>　　
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    　<input type="button" id="top2" class="btn btn-default col-sm-10 buttonClass2" value="top4"
+                                            onclick="voluation(2)"/>　　
+                                </div>
+                                <div class="col-sm-4">
+                                    　<input type="button" id="top1" class="btn btn-default col-sm-10 buttonClass1" value="top5"
+                                            onclick="voluation(1)"/>　　
+                                </div>
+                                <div class="col-sm-4">
+                                    　<input type="button" class="btn true-color col-sm-10" onclick="submitTj()" value="确定"/>　　
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div style="display: none;background-color: inherit;" id="recommentBox" class="form-group">
+                            <div class="form-group">
+                                <input type="hidden" id="p_id" value=""/>
+                                <input type="hidden" id="re_Id" value=""/>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top_5" class="btn btn-default col-sm-10 buttonClass5" value="top1"
+                                            onclick="_voluation(5)"/>　　
+                                </div>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top_4" class="btn btn-default col-sm-10 buttonClass4" value="top2"
+                                            onclick="_voluation(4)"/>　　
+                                </div>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top_3" class="btn btn-default col-sm-10 buttonClass3" value="top3"
+                                            onclick="_voluation(3)"/>　　
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    　<input type="button" id="top_2" class="btn btn-default col-sm-10 buttonClass2" value="top4"
+                                            onclick="_voluation(2)"/>　　
+                                </div>
+                                <div class="col-sm-4">
+                                    　<input type="button" id="top_1" class="btn btn-default col-sm-10 buttonClass1" value="top5"
+                                            onclick="_voluation(1)"/>　　
+                                </div>
+                                <div class="col-sm-4">
+                                    　<input type="button" class="btn true-color col-sm-10" onclick="_submitTj()" value="确定"/>　　
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

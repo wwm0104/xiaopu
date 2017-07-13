@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.RecommendEventMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.RecommendEvent">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="event_id" jdbcType="INTEGER" property="eventId" />
+    <result column="organize_id" jdbcType="INTEGER" property="organizeId" />
+    <result column="organize_name" jdbcType="VARCHAR" property="organizeName" />
+    <result column="event_subject" jdbcType="VARCHAR" property="eventSubject" />
+    <result column="poster_img" jdbcType="VARCHAR" property="posterImg" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="recommend_time" jdbcType="TIMESTAMP" property="recommendTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, event_id, organize_id, organize_name, event_subject, poster_img, sort, recommend_time
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.RecommendEventExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from recommend_event
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from recommend_event
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recommend_event
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.RecommendEventExample">
+    delete from recommend_event
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.RecommendEvent">
+    insert into recommend_event (id, event_id, organize_id, 
+      organize_name, event_subject, poster_img, 
+      sort, recommend_time)
+    values (#{id,jdbcType=INTEGER}, #{eventId,jdbcType=INTEGER}, #{organizeId,jdbcType=INTEGER}, 
+      #{organizeName,jdbcType=VARCHAR}, #{eventSubject,jdbcType=VARCHAR}, #{posterImg,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{recommendTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.RecommendEvent">
+    insert into recommend_event
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="eventId != null">
+        event_id,
+      </if>
+      <if test="organizeId != null">
+        organize_id,
+      </if>
+      <if test="organizeName != null">
+        organize_name,
+      </if>
+      <if test="eventSubject != null">
+        event_subject,
+      </if>
+      <if test="posterImg != null">
+        poster_img,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="recommendTime != null">
+        recommend_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="eventId != null">
+        #{eventId,jdbcType=INTEGER},
+      </if>
+      <if test="organizeId != null">
+        #{organizeId,jdbcType=INTEGER},
+      </if>
+      <if test="organizeName != null">
+        #{organizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventSubject != null">
+        #{eventSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="posterImg != null">
+        #{posterImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="recommendTime != null">
+        #{recommendTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.RecommendEventExample" resultType="java.lang.Long">
+    select count(*) from recommend_event
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update recommend_event
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventId != null">
+        event_id = #{record.eventId,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizeId != null">
+        organize_id = #{record.organizeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizeName != null">
+        organize_name = #{record.organizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventSubject != null">
+        event_subject = #{record.eventSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posterImg != null">
+        poster_img = #{record.posterImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.recommendTime != null">
+        recommend_time = #{record.recommendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update recommend_event
+    set id = #{record.id,jdbcType=INTEGER},
+      event_id = #{record.eventId,jdbcType=INTEGER},
+      organize_id = #{record.organizeId,jdbcType=INTEGER},
+      organize_name = #{record.organizeName,jdbcType=VARCHAR},
+      event_subject = #{record.eventSubject,jdbcType=VARCHAR},
+      poster_img = #{record.posterImg,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      recommend_time = #{record.recommendTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.RecommendEvent">
+    update recommend_event
+    <set>
+      <if test="eventId != null">
+        event_id = #{eventId,jdbcType=INTEGER},
+      </if>
+      <if test="organizeId != null">
+        organize_id = #{organizeId,jdbcType=INTEGER},
+      </if>
+      <if test="organizeName != null">
+        organize_name = #{organizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventSubject != null">
+        event_subject = #{eventSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="posterImg != null">
+        poster_img = #{posterImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="recommendTime != null">
+        recommend_time = #{recommendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.RecommendEvent">
+    update recommend_event
+    set event_id = #{eventId,jdbcType=INTEGER},
+      organize_id = #{organizeId,jdbcType=INTEGER},
+      organize_name = #{organizeName,jdbcType=VARCHAR},
+      event_subject = #{eventSubject,jdbcType=VARCHAR},
+      poster_img = #{posterImg,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      recommend_time = #{recommendTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="hotEvent" resultMap="BaseResultMap">
+    SELECT * FROM recommend_event ORDER BY sort DESC LIMIT 0,5
+  </select>
+  <select id="selectByEventId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM recommend_event WHERE event_id = #{eventId}
+  </select>
+  <select id="selectMaxSort" resultType="java.lang.Integer">
+    SELECT IFNULL(MAX(sort),0) FROM recommend_event
+  </select>
+  <select id="isTop" resultType="java.lang.Integer">
+    SELECT COUNT(0) FROM
+    ( SELECT * FROM recommend_event ORDER BY sort DESC LIMIT 0,5 ) t
+    WHERE t.event_id = #{eventId};
+  </select>
+
+</mapper>

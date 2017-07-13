@@ -1,0 +1,141 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>查看所有来战者</title>
+    <style type="text/css">
+        a:link {color: black;} /* 未访问的链接 */
+    </style>
+    <link rel="stylesheet" th:href="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.css}"/>
+    <!-- datetimepicker -->
+    <script th:src="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+    <script th:src="@{/js/topics/AllChallengeList.js}" ></script>
+    <script>
+        $(function () {
+
+            $('#reservationtime').daterangepicker({
+                timePicker: true, //是否显示小时和分钟
+                startDate: moment().subtract('days', 7),
+                endDate: new Date(),
+                maxDate: new Date(),
+                locale: {
+                    separator: '/',
+                    applyLabel: '确认',
+                    cancelLabel: '取消',
+                    fromLabel: '从',
+                    toLabel: '到',
+                    weekLabel: 'W',
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    customRangeLabel: 'Custom Range',
+                    daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+                    monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                }
+            }, function (start, end, label) {
+                $("#startTime").val(start.format('YYYY-MM-DD HH:mm:ss.SSSS'));
+                $("#endTime").val(end.format('YYYY-MM-DD HH:mm:ss.SSSS'));
+            }).on('cancel.daterangepicker', function (ev, picker) {
+                $('#reservationtime').val("");
+                $("#startTime").val("");
+                $("#endTime").val("");
+                getAllChanllengeList();
+            }).on('apply.daterangepicker',function(ev, picker) {
+                getAllChanllengeList();
+            });
+            $('#reservationtime').val("");
+        });
+    </script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            查看所有来战者
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="form-group">
+                                <!--<div class="col-sm-2">-->
+                                    <!--<a href="javascript:history.go(-1)">-->
+                                        <!--<button type="button"  class="btn btn-success">返回</button>-->
+                                    <!--</a>-->
+                                <!--</div>-->
+                                <div class="fanhui-icon col-sm-2">
+                                    <a href="javascript:history.go(-1);"><i></i>返回</a>
+                                </div>
+                                    <input type="hidden"  id="startTime"  placeholder="请选择开始时间" />
+                                    <input type="hidden"  id="endTime" placeholder="请选择结束时间" />
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="startTime"
+                                           id="reservationtime"
+                                           placeholder="请选择开始时间和结束时间"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h4><strong><span  th:text="发起者：+${faqiName}"></span></strong></h4>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h4><strong>当前参加人数：<span  id="joinCnt" th:text="${joinCnt}"></span></strong></h4>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h4><strong><span  th:text="${status}"></span></strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <input id="topicId" th:value="${topicId}" style="display: none"/>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>昵称</th>
+                                <th>姓名</th>
+                                <th style="width: 120px;"><select class="form-control" id="typeList" onchange="getAllChanllengeList()">
+                                    <option value="">全部</option>
+                                    <option value="1">图片</option>
+                                    <option value="2">视频</option>
+                                </select></th>
+                                <th>举报</th>
+                                <th>发布时间</th>
+                                <th>标签</th>
+                                <th>评论数</th>
+                                <th>当前投票数</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="challengeList">
+                            </tbody>
+                        </table>
+                        <p id="challengeListPagination"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="delcfmModel">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 30px;text-align: center;">您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="delid"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a  onclick="deleteTopic()" class="btn true-color" style="color: #444444" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>

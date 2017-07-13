@@ -1,0 +1,28 @@
+html,body,.no-access{
+    width: 100%;
+    height: 100%;
+}
+html,body,div{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #fff;
+    /*overflow: hidden;*/
+}
+.no-access-img{
+    width: 300px;
+    height: 380px;
+    background: url(../img/noAccess.png) no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
+}
+.no-access-text{
+    font-size: 56px;
+    line-height: 1;
+    color: #929090;
+    text-align: center;
+    margin-top: 200px;
+}

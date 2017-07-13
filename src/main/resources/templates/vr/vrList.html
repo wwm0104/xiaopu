@@ -1,0 +1,78 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>VR预约列表</title>
+    <style type="text/css">
+        a:link {color: black;} /* 未访问的链接 */
+    </style>
+    <script th:src="@{/js/vr/vrList.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            VR预约列表
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <form method="post" action="/export/vrUserInfoExport">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <!--<div class="col-xs-4">-->
+                            <!--<button id="prizeCreate" onclick="toAddBanner()" type="button" style="width: 150px; background-color: #3c8dbc;" class="btn true-color">新增图片</button>-->
+                        <!--</div>-->
+                        <div class="col-xs-4 col-xs-offset-8">
+                            <div class="row">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="搜索用户" class="form-control" />
+                                    <span class="input-group-addon seachButton" name="seachBtn" id="seachBtn">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>手机</th>
+                                <th>
+                                    <select name="schoolId" id="schoolList" style="width: 100%" class="form-control" onchange="getVrList(1,10)" >
+                                    <option value="">所有大学名称</option>
+                                    <option th:each="school : ${schools}"
+                                            th:value="${school.id}"
+                                            th:text="${school.name}"></option>
+                                    </select>
+                                </th>
+                                <th>学号</th>
+                                <th>预约时间</th>
+                                <th>体验次数</th>
+                            </tr>
+                            </thead>
+                            <tbody id="vrList">
+                            </tbody>
+                        </table>
+
+                        <div class="form-group">
+                            <p id="vrListPagination" class="col-sm-11"></p>
+                            <div class="col-sm-1 text-right" style="margin: 20px 0;">
+                                <button id="export" type="submit" class="btn true-color btn-sm">导出</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>

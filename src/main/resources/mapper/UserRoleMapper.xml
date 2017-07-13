@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.UserRole">
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRole">
+    insert into user_role (user_id, role_id)
+    values (#{userId,jdbcType=INTEGER},#{roleId,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertUserRoleList" useGeneratedKeys="true" parameterType="java.util.List">
+    insert into user_role (user_id, role_id)values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.userId},#{item.roleId})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_role
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+    delete from user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+
+
+</mapper>

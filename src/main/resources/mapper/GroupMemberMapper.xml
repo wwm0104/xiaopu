@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.GroupMemberMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.GroupMember">
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="join_time" jdbcType="TIMESTAMP" property="joinTime" />
+    <result column="is_president" jdbcType="TINYINT" property="isPresident" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    group_id, member_id, status, memo, join_time, is_president
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from group_members
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMemberExample">
+    delete from group_members
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember">
+    insert into group_members (group_id, member_id, status, 
+      memo, join_time, is_president)
+    values (#{groupId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{memo,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP}, #{isPresident,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember">
+    insert into group_members
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="joinTime != null">
+        join_time,
+      </if>
+      <if test="isPresident != null">
+        is_president,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="joinTime != null">
+        #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPresident != null">
+        #{is_president,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMemberExample" resultType="java.lang.Long">
+    select count(*) from group_members
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update group_members
+    <set>
+      <if test="record.groupId != null">
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.memo != null">
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.joinTime != null">
+        join_time = #{record.joinTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isPresident != null">
+        is_president = #{record.isPresident,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update group_members
+    set group_id = #{record.groupId,jdbcType=INTEGER},
+    member_id = #{record.memberId,jdbcType=INTEGER},
+    status = #{record.status,jdbcType=TINYINT},
+    memo = #{record.memo,jdbcType=VARCHAR},
+    join_time = #{record.joinTime,jdbcType=TIMESTAMP},
+    is_president = #{record.isPresident,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <select id="selectByGroupMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember" resultMap="BaseResultMap">
+  SELECT * FROM group_members WHERE group_id=#{groupId} AND member_id=#{memberId} AND status!=3
+  </select>
+  <select id="selectByGroupMemberAndStatus" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember" resultMap="BaseResultMap">
+  SELECT * FROM group_members WHERE group_id=#{groupId} AND member_id=#{memberId} AND status = #{status}
+  </select>
+
+  <update id="updateByGroupMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember">
+    UPDATE group_members
+    SET 
+      status = #{status,jdbcType=TINYINT}
+    WHERE 
+      group_id = #{groupId,jdbcType=INTEGER} 
+    AND
+      member_id = #{memberId,jdbcType=INTEGER}
+    AND
+      status != 3
+  </update>
+  <select id="selectByUserOpt" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember" resultType="int">
+    SELECT COUNT(*) FROM group_members WHERE 1=1
+    <if test="memberId != null">
+      AND member_id=#{memberId}
+    </if>
+    <if test="groupId != null">
+      AND group_id=#{groupId}
+    </if>
+    <if test="status != null">
+      <if test="status!=3">
+      AND status=#{status}
+      </if>
+      <if test="status==3">
+        AND status!=#{status}
+      </if>
+    </if>
+  </select>
+
+  <select id="getApplyCount" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM `group_members` gm
+    LEFT JOIN `groups` g ON gm.group_id = g.id
+    WHERE g.president_id=#{userId} AND g.status = 1
+    <if test="groupId!=null">
+      AND g.id=#{groupId}
+    </if>
+    <if test="status!=null">
+      AND gm.status=#{status}
+    </if>
+  </select>
+
+  <select id="selectByGroupMemberAndKeyword" parameterType="map" resultMap="BaseResultMap">
+    SELECT gm.* FROM group_members gm
+    LEFT JOIN groups g ON gm.group_id = g.id
+    LEFT JOIN user_info ui ON gm.member_id = ui.user_id
+    WHERE g.president_id=#{userId} AND g.status = 1
+    <if test="keyword != null">
+      AND (ui.real_name LIKE CONCAT('%','${keyword}','%') OR ui.mobile LIKE CONCAT('%','${keyword}','%'))
+    </if>
+    <if test="groupMember.groupId != null">
+      AND gm.group_id = #{groupMember.groupId}
+    </if>
+    <if test="groupMember.status != null">
+      AND gm.status = #{groupMember.status}
+    </if>
+    ORDER BY gm.join_time DESC
+  </select>
+
+  <select id="selectByGroupIdAndMemberId" resultMap="BaseResultMap">
+    SELECT * FROM group_members
+    WHERE group_id=#{groupId}
+    AND member_id=#{memberId}
+    AND status=2
+  </select>
+  <update id="confirmGroupMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember">
+    UPDATE group_members
+    SET status = #{status,jdbcType=TINYINT},memo = #{memo,jdbcType=VARCHAR}
+    WHERE group_id = #{groupId,jdbcType=INTEGER}
+    AND member_id = #{memberId,jdbcType=INTEGER}
+    AND status = 2
+  </update>
+
+  <select id="selectStatusByGroupMember" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM group_members WHERE group_id=#{groupId} AND member_id=#{memberId} AND status=#{status}
+  </select>
+  <select id="selectStatusByGroupMemberAndStatus" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM group_members WHERE group_id=#{groupId} AND member_id=#{memberId} AND (status = 2 OR status = 3)
+  </select>
+
+  <update id="updateStatusByGroupMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember">
+    UPDATE group_members
+    SET status = #{status,jdbcType=TINYINT},memo = #{memo,jdbcType=VARCHAR},join_time = #{joinTime}
+    WHERE group_id = #{groupId,jdbcType=INTEGER}
+    AND member_id = #{memberId,jdbcType=INTEGER}
+    AND (status = 2 OR status = 3)
+  </update>
+
+  <resultMap id="BaseResultMapDto" type="com.chinaxiaopu.xiaopuMobi.dto.topic.TopicUserInfoDto">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="mobile" jdbcType="BIGINT" property="mobile" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="user_sex" jdbcType="TINYINT" property="userSex" />
+    <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="valid" jdbcType="TINYINT" property="valid" />
+    <result column="is_president" jdbcType="TINYINT" property="isPresident" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
+    <result column="reviewStatus" jdbcType="TINYINT" property="reviewStatus"/>
+    <result column="group_id" jdbcType="INTEGER" property="groupId"/>
+  </resultMap>
+
+  <select id="selectYSHGroupMemberByGroupId" resultMap="BaseResultMapDto" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.TopicGroupDto">
+    SELECT gm.join_time,gm.status as reviewStatus,gm.group_id,ui.* FROM group_members gm
+    LEFT JOIN user_info ui ON ui.user_id = gm.member_id
+    WHERE gm.group_id = #{groupId}
+    AND gm.status = 1
+  </select>
+
+  <select id="selectWSHGroupMemberByGroupId" resultMap="BaseResultMapDto" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.TopicGroupDto">
+     SELECT gm.join_time,gm.status as reviewStatus,gm.group_id,ui.* FROM group_members gm
+     LEFT JOIN user_info ui ON ui.user_id = gm.member_id
+     WHERE gm.group_id = #{groupId}
+     AND gm.status = 2
+  </select>
+
+  <select id="checkIsPresident" parameterType="map" resultType="java.lang.Integer">
+      select count(*) from group_members
+      WHERE group_id = #{groupId}
+      AND member_id = #{memberId}
+      AND is_president =1
+  </select>
+</mapper>

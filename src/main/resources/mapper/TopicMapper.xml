@@ -1,0 +1,1400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.TopicMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.Topic">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="creator_id" jdbcType="INTEGER" property="creatorId"/>
+        <result column="creator_nickname" jdbcType="VARCHAR" property="creatorNickname"/>
+        <result column="creator_avatar" jdbcType="VARCHAR" property="creatorAvatar"/>
+        <result column="school_id" jdbcType="INTEGER" property="schoolId"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="challenge_topic_id" jdbcType="INTEGER" property="challengeTopicId"/>
+        <result column="is_challenger" jdbcType="TINYINT" property="isChallenger"/>
+        <result column="challenge_id" jdbcType="INTEGER" property="challengeId"/>
+        <result column="challenge_nickname" jdbcType="VARCHAR" property="challengeNickname"/>
+        <result column="challenge_avatar" jdbcType="VARCHAR" property="challengeAvatar"/>
+        <result column="channel_id" jdbcType="INTEGER" property="channelId"/>
+        <result column="channel_name" jdbcType="VARCHAR" property="channelName"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="recommend" jdbcType="TINYINT" property="recommend"/>
+        <result column="like_cnt" jdbcType="INTEGER" property="likeCnt"/>
+        <result column="favorite_cnt" jdbcType="INTEGER" property="favoriteCnt"/>
+        <result column="comment_cnt" jdbcType="INTEGER" property="commentCnt"/>
+        <result column="is_official" jdbcType="TINYINT" property="isOfficial"/>
+        <result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime"/>
+        <result column="is_pk" jdbcType="TINYINT" property="isPk"/>
+        <result column="further" jdbcType="VARCHAR" property="further"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, creator_id, creator_nickname, creator_avatar, school_id, school_name, challenge_topic_id, 
+    is_challenger, challenge_id, challenge_nickname, challenge_avatar, channel_id, channel_name, 
+    type, slogan, content, recommend, like_cnt, favorite_cnt, comment_cnt, is_official, 
+    is_delete, create_time, update_time, expire_time, is_pk, further, status
+  </sql>
+    <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from topics
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from topics
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from topics
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicExample">
+        delete from topics
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.chinaxiaopu.xiaopuMobi.model.Topic">
+    insert into topics (id, creator_id, creator_nickname,
+      creator_avatar, school_id, school_name, 
+      challenge_topic_id, is_challenger, challenge_id, 
+      challenge_nickname, challenge_avatar, channel_id, 
+      channel_name,`type`, slogan,
+      content, recommend, like_cnt, 
+      favorite_cnt, comment_cnt, is_official, 
+      is_delete, create_time, update_time, 
+      expire_time, is_pk, further, 
+      `status`)
+    values (#{id,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER}, #{creatorNickname,jdbcType=VARCHAR}, 
+      #{creatorAvatar,jdbcType=VARCHAR}, #{schoolId,jdbcType=INTEGER}, #{schoolName,jdbcType=VARCHAR}, 
+      #{challengeTopicId,jdbcType=INTEGER}, #{isChallenger,jdbcType=TINYINT}, #{challengeId,jdbcType=INTEGER}, 
+      #{challengeNickname,jdbcType=VARCHAR}, #{challengeAvatar,jdbcType=VARCHAR}, #{channelId,jdbcType=INTEGER}, 
+      #{channelName,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{slogan,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{recommend,jdbcType=TINYINT}, #{likeCnt,jdbcType=INTEGER}, 
+      #{favoriteCnt,jdbcType=INTEGER}, #{commentCnt,jdbcType=INTEGER}, #{isOfficial,jdbcType=TINYINT}, 
+      #{isDelete,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{expireTime,jdbcType=TIMESTAMP}, #{isPk,jdbcType=TINYINT}, #{further,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.Topic">
+        insert into topics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="creatorNickname != null">
+                creator_nickname,
+            </if>
+            <if test="creatorAvatar != null">
+                creator_avatar,
+            </if>
+            <if test="schoolId != null">
+                school_id,
+            </if>
+            <if test="schoolName != null">
+                school_name,
+            </if>
+            <if test="challengeTopicId != null">
+                challenge_topic_id,
+            </if>
+            <if test="isChallenger != null">
+                is_challenger,
+            </if>
+            <if test="challengeId != null">
+                challenge_id,
+            </if>
+            <if test="challengeNickname != null">
+                challenge_nickname,
+            </if>
+            <if test="challengeAvatar != null">
+                challenge_avatar,
+            </if>
+            <if test="channelId != null">
+                channel_id,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="slogan != null">
+                slogan,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="recommend != null">
+                recommend,
+            </if>
+            <if test="likeCnt != null">
+                like_cnt,
+            </if>
+            <if test="favoriteCnt != null">
+                favorite_cnt,
+            </if>
+            <if test="commentCnt != null">
+                comment_cnt,
+            </if>
+            <if test="isOfficial != null">
+                is_official,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="expireTime != null">
+                expire_time,
+            </if>
+            <if test="isPk != null">
+                is_pk,
+            </if>
+            <if test="further != null">
+                further,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=INTEGER},
+            </if>
+            <if test="creatorNickname != null">
+                #{creatorNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorAvatar != null">
+                #{creatorAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolId != null">
+                #{schoolId,jdbcType=INTEGER},
+            </if>
+            <if test="schoolName != null">
+                #{schoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="challengeTopicId != null">
+                #{challengeTopicId,jdbcType=INTEGER},
+            </if>
+            <if test="isChallenger != null">
+                #{isChallenger,jdbcType=TINYINT},
+            </if>
+            <if test="challengeId != null">
+                #{challengeId,jdbcType=INTEGER},
+            </if>
+            <if test="challengeNickname != null">
+                #{challengeNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="challengeAvatar != null">
+                #{challengeAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="slogan != null">
+                #{slogan,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="likeCnt != null">
+                #{likeCnt,jdbcType=INTEGER},
+            </if>
+            <if test="favoriteCnt != null">
+                #{favoriteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="commentCnt != null">
+                #{commentCnt,jdbcType=INTEGER},
+            </if>
+            <if test="isOfficial != null">
+                #{isOfficial,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expireTime != null">
+                #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPk != null">
+                #{isPk,jdbcType=TINYINT},
+            </if>
+            <if test="further != null">
+                #{further,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicExample"
+            resultType="java.lang.Long">
+        select count(*) from topics
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update topics
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.creatorId != null">
+                creator_id = #{record.creatorId,jdbcType=INTEGER},
+            </if>
+            <if test="record.creatorNickname != null">
+                creator_nickname = #{record.creatorNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.creatorAvatar != null">
+                creator_avatar = #{record.creatorAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.schoolId != null">
+                school_id = #{record.schoolId,jdbcType=INTEGER},
+            </if>
+            <if test="record.schoolName != null">
+                school_name = #{record.schoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.challengeTopicId != null">
+                challenge_topic_id = #{record.challengeTopicId,jdbcType=INTEGER},
+            </if>
+            <if test="record.isChallenger != null">
+                is_challenger = #{record.isChallenger,jdbcType=TINYINT},
+            </if>
+            <if test="record.challengeId != null">
+                challenge_id = #{record.challengeId,jdbcType=INTEGER},
+            </if>
+            <if test="record.challengeNickname != null">
+                challenge_nickname = #{record.challengeNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.challengeAvatar != null">
+                challenge_avatar = #{record.challengeAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.channelId != null">
+                channel_id = #{record.channelId,jdbcType=INTEGER},
+            </if>
+            <if test="record.channelName != null">
+                channel_name = #{record.channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=TINYINT},
+            </if>
+            <if test="record.slogan != null">
+                slogan = #{record.slogan,jdbcType=VARCHAR},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recommend != null">
+                recommend = #{record.recommend,jdbcType=TINYINT},
+            </if>
+            <if test="record.likeCnt != null">
+                like_cnt = #{record.likeCnt,jdbcType=INTEGER},
+            </if>
+            <if test="record.favoriteCnt != null">
+                favorite_cnt = #{record.favoriteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="record.commentCnt != null">
+                comment_cnt = #{record.commentCnt,jdbcType=INTEGER},
+            </if>
+            <if test="record.isOfficial != null">
+                is_official = #{record.isOfficial,jdbcType=TINYINT},
+            </if>
+            <if test="record.isDelete != null">
+                is_delete = #{record.isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.expireTime != null">
+                expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.isPk != null">
+                is_pk = #{record.isPk,jdbcType=TINYINT},
+            </if>
+            <if test="record.further != null">
+                further = #{record.further,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update topics
+        set id = #{record.id,jdbcType=INTEGER},
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+        creator_nickname = #{record.creatorNickname,jdbcType=VARCHAR},
+        creator_avatar = #{record.creatorAvatar,jdbcType=VARCHAR},
+        school_id = #{record.schoolId,jdbcType=INTEGER},
+        school_name = #{record.schoolName,jdbcType=VARCHAR},
+        challenge_topic_id = #{record.challengeTopicId,jdbcType=INTEGER},
+        is_challenger = #{record.isChallenger,jdbcType=TINYINT},
+        challenge_id = #{record.challengeId,jdbcType=INTEGER},
+        challenge_nickname = #{record.challengeNickname,jdbcType=VARCHAR},
+        challenge_avatar = #{record.challengeAvatar,jdbcType=VARCHAR},
+        channel_id = #{record.channelId,jdbcType=INTEGER},
+        channel_name = #{record.channelName,jdbcType=VARCHAR},
+        type = #{record.type,jdbcType=TINYINT},
+        slogan = #{record.slogan,jdbcType=VARCHAR},
+        content = #{record.content,jdbcType=VARCHAR},
+        recommend = #{record.recommend,jdbcType=TINYINT},
+        like_cnt = #{record.likeCnt,jdbcType=INTEGER},
+        favorite_cnt = #{record.favoriteCnt,jdbcType=INTEGER},
+        comment_cnt = #{record.commentCnt,jdbcType=INTEGER},
+        is_official = #{record.isOfficial,jdbcType=TINYINT},
+        is_delete = #{record.isDelete,jdbcType=TINYINT},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+        is_pk = #{record.isPk,jdbcType=TINYINT},
+        further = #{record.further,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.Topic">
+        update topics
+        <set>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=INTEGER},
+            </if>
+            <if test="creatorNickname != null">
+                creator_nickname = #{creatorNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorAvatar != null">
+                creator_avatar = #{creatorAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolId != null">
+                school_id = #{schoolId,jdbcType=INTEGER},
+            </if>
+            <if test="schoolName != null">
+                school_name = #{schoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="challengeTopicId != null">
+                challenge_topic_id = #{challengeTopicId,jdbcType=INTEGER},
+            </if>
+            <if test="isChallenger != null">
+                is_challenger = #{isChallenger,jdbcType=TINYINT},
+            </if>
+            <if test="challengeId != null">
+                challenge_id = #{challengeId,jdbcType=INTEGER},
+            </if>
+            <if test="challengeNickname != null">
+                challenge_nickname = #{challengeNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="challengeAvatar != null">
+                challenge_avatar = #{challengeAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="slogan != null">
+                slogan = #{slogan,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="likeCnt != null">
+                like_cnt = #{likeCnt,jdbcType=INTEGER},
+            </if>
+            <if test="favoriteCnt != null">
+                favorite_cnt = #{favoriteCnt,jdbcType=INTEGER},
+            </if>
+            <if test="commentCnt != null">
+                comment_cnt = #{commentCnt,jdbcType=INTEGER},
+            </if>
+            <if test="isOfficial != null">
+                is_official = #{isOfficial,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expireTime != null">
+                expire_time = #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPk != null">
+                is_pk = #{isPk,jdbcType=TINYINT},
+            </if>
+            <if test="further != null">
+                further = #{further,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.Topic">
+    update topics
+    set creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_nickname = #{creatorNickname,jdbcType=VARCHAR},
+      creator_avatar = #{creatorAvatar,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=INTEGER},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      challenge_topic_id = #{challengeTopicId,jdbcType=INTEGER},
+      is_challenger = #{isChallenger,jdbcType=TINYINT},
+      challenge_id = #{challengeId,jdbcType=INTEGER},
+      challenge_nickname = #{challengeNickname,jdbcType=VARCHAR},
+      challenge_avatar = #{challengeAvatar,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=INTEGER},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      slogan = #{slogan,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=TINYINT},
+      like_cnt = #{likeCnt,jdbcType=INTEGER},
+      favorite_cnt = #{favoriteCnt,jdbcType=INTEGER},
+      comment_cnt = #{commentCnt,jdbcType=INTEGER},
+      is_official = #{isOfficial,jdbcType=TINYINT},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      is_pk = #{isPk,jdbcType=TINYINT},
+      further = #{further,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="getSearchList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.TopicSearchDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicSearchVo">
+        <![CDATA[
+           SELECT
+            t.id topicId,
+            DATE_FORMAT(t.create_time,'%Y/%m/%d %H:%i:%s') AS createTime,
+            t.creator_id AS creatorId,
+            t5.avatar_url creatorAvatar,
+            t5.nick_name AS creatorNickname,
+            t5.user_sex userSex,
+            t.type,
+            t.slogan,
+            t.is_pk isPk,
+            t.content,
+            t.recommend,
+            t.like_cnt AS likeCnt,
+            t.favorite_cnt AS favoriteCnt,
+            t.comment_cnt AS commentCnt,
+            t.is_official AS isOfficial,
+            t.expire_time AS expireTime,
+            case when t3.topic_id is null then 0 else 1 end isLike,
+            case when t4.topic_id is null then 0 else 1 end isFav,
+            case when t.expire_time<NOW() && is_pk = 1 then 0 else 1 end isOver,
+            p.id as prizeId,p.name as prizeName
+        FROM
+            topics t
+        LEFT JOIN (
+            SELECT  tl.topic_id FROM topic_like tl WHERE tl.user_id =#{userId}
+        ) AS t3 ON t3.topic_id = t.id
+        LEFT JOIN (
+            SELECT tf.topic_id FROM topic_fav tf WHERE tf.user_id =#{userId}
+        ) AS t4 ON t4.topic_id = t.id
+        LEFT JOIN user_info t5 on t5.user_id  = t.creator_id
+        LEFT JOIN topic_pk tp ON t.challenge_topic_id = tp.topic_id
+        LEFT JOIN prizes p ON tp.prize_id = p.id
+        WHERE
+            t.is_delete = 1
+        AND t.`status` = 1  and t.content like CONCAT('%',#{slogan},'%' ) and (t.type=1 or t.type=2)
+          ]]>
+        <if test="timePoint != null and timePoint != ''">
+            and t. create_time &lt; #{timePoint}
+        </if>
+        ORDER BY t.create_time DESC
+    </select>
+
+    <select id="newList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.TopicListDtos"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicVo">
+        SELECT t.id AS topicId, t.creator_id AS creatorId, ui.nick_name AS creatorNickname, ui.avatar_url AS
+        creatorAvatar, t.content, t.is_pk AS isPk, t.type, t.challenge_topic_id AS challengeTopicId,
+        t.is_official AS isOfficial, t.create_time AS createTime, t.favorite_cnt AS favoriteCnt, t.like_cnt AS likeCnt,
+        t.comment_cnt AS commentCnt, t.expire_time AS expireTime, t.slogan,
+        ui.user_sex AS userSex, CASE WHEN tl.id IS NULL THEN 0 ELSE 1 END AS isLike, CASE WHEN tf.id IS NULL THEN 0 ELSE
+        1 END AS isFav,p.id as prizeId,p.name as prizeName
+        FROM topics t
+        LEFT JOIN topic_new tn ON t.id = tn.topic_id
+        LEFT JOIN user_info ui ON t.creator_id = ui.user_id
+        LEFT JOIN topic_like tl ON t.id = tl.topic_id AND tl.user_id = #{userId}
+        LEFT JOIN topic_fav tf ON t.id = tf.topic_id AND tf.user_id = #{userId}
+        LEFT JOIN topic_pk tp ON t.challenge_topic_id = tp.topic_id
+        LEFT JOIN prizes p ON tp.prize_id = p.id
+        WHERE t.is_delete = 1 AND t.`status` = 1 AND (t.type = 1 OR t.type = 2)
+        <if test="timePoint != null">
+            <![CDATA[
+      AND t.create_time < #{timePoint}
+    ]]>
+        </if>
+        ORDER BY t.create_time DESC
+    </select>
+    <select id="latestTopic" parameterType="map" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicVo">
+    SELECT t.id AS topicId, t.creator_id AS creatorId, ui.nick_name AS creatorNickname, ui.avatar_url AS creatorAvatar, t.content, t.is_pk AS isPk, t.type, t.challenge_topic_id AS challengeTopicId,
+      t.is_official AS isOfficial, t.create_time AS createTime, t.favorite_cnt AS favoriteCnt, t.like_cnt AS likeCnt, t.comment_cnt AS commentCnt, t.expire_time AS expireTime, t.slogan,
+      ui.user_sex AS userSex, CASE WHEN tl.id IS NULL THEN 0 ELSE 1 END AS isLike, CASE WHEN tf.id IS NULL THEN 0 ELSE 1 END AS isFav,p.id as prizeId,p.name as prizeName
+    FROM topics t
+    LEFT JOIN topic_new tn ON t.id = tn.topic_id
+    LEFT JOIN user_info ui ON t.creator_id = ui.user_id
+    LEFT JOIN topic_like tl ON t.id = tl.topic_id AND tl.user_id = #{userId}
+    LEFT JOIN topic_fav tf ON t.id = tf.topic_id AND tf.user_id = #{userId}
+    LEFT JOIN topic_pk tp ON t.challenge_topic_id = tp.topic_id
+    LEFT JOIN prizes p ON tp.prize_id = p.id
+    WHERE t.id = #{topicId}
+  </select>
+
+    <select id="hotList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicVo">
+    SELECT t.id as topicId,t.creator_id as creatorId,ui.nick_name as creatorNickname,ui.avatar_url as creatorAvatar,t.content,t.is_pk as isPk,t.type,t.challenge_topic_id as challengeTopicId,
+    t.is_official as isOfficial,t.create_time as createTime,t.favorite_cnt as favoriteCnt,t.like_cnt as likeCnt,t.comment_cnt as commentCnt,t.expire_time as expireTime,t.slogan,
+    ui.user_sex as userSex, CASE WHEN tl.id IS NULL THEN 0 ELSE 1 END AS isLike, CASE WHEN tf.id IS NULL THEN 0 ELSE 1 END AS isFav,p.id as prizeId,p.name as prizeName
+    FROM topics t
+    LEFT JOIN user_info ui ON creator_id = ui.user_id
+    LEFT JOIN topic_like tl ON t.id = tl.topic_id AND tl.user_id = #{userId}
+    LEFT JOIN topic_fav tf ON t.id = tf.topic_id AND tf.user_id = #{userId}
+    LEFT JOIN topic_pk tp ON t.id = tp.topic_id
+    LEFT JOIN prizes p ON tp.prize_id = p.id
+    WHERE t.is_delete=1 AND t.`status` = 1 AND (t.type = 1 OR t.type = 2)
+    ORDER BY (t.like_cnt+t.comment_cnt)  DESC ,t.update_time ASC
+  </select>
+
+    <select id="topicListByPrizeId" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.TopicByPrizeDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicVo">
+        SELECT
+        IFNULL(joinCnt,0) joinCnt,
+        tp.prize_id as prizeId,
+        p.`name` as prizeName,t.id AS topicId, t.creator_id AS creatorId, ui.nick_name AS creatorNickname, ui.avatar_url
+        AS creatorAvatar, t.content, t.is_pk AS isPk, t.type, t.challenge_topic_id AS challengeTopicId,
+        t.is_official AS isOfficial, t.create_time AS createTime, t.favorite_cnt AS favoriteCnt, t.like_cnt AS likeCnt,
+        t.comment_cnt AS commentCnt, t.expire_time AS expireTime, t.slogan,
+        ui.user_sex AS userSex, CASE WHEN tl.id IS NULL THEN 0 ELSE 1 END AS isLike, CASE WHEN tf.id IS NULL THEN 0 ELSE
+        1 END AS isFav
+        FROM topic_pk tp
+        LEFT JOIN topics t ON t.id = tp.topic_id
+        left join
+        (SELECT
+        count(1) AS joinCnt,pr.pk_id
+        FROM
+        pk_vote_result pr
+        GROUP BY pr.pk_id
+        ) prt on prt.pk_id = tp.id
+        left join prizes p on p.id =tp.prize_id
+        LEFT JOIN user_info ui ON t.creator_id = ui.user_id
+        LEFT JOIN topic_like tl ON t.id = tl.topic_id AND tl.user_id = #{userId}
+        LEFT JOIN topic_fav tf ON t.id = tf.topic_id AND tf.user_id = #{userId}
+        WHERE t.is_delete = 1 AND t.`status` = 1 and tp.prize_id=#{prizeId}
+        <if test="timePoint != null">
+
+            AND t.create_time &lt; #{timePoint}
+
+        </if>
+        <if test="topicType!=null and topicType!=''">
+            and t.type=#{topicType}
+        </if>
+        <choose>
+            <when test="isOver == 1">
+                and t.expire_time &gt; NOW()
+            </when>
+            <when test="isOver == 2">
+                and t.expire_time &lt; NOW()
+            </when>
+        </choose>
+        <choose>
+            <when test="orderType == 1">
+                ORDER BY joinCnt asc
+            </when>
+            <when test="orderType == 2">
+                ORDER BY joinCnt desc
+            </when>
+            <when test="orderType == 3">
+                ORDER BY t.expire_time asc
+            </when>
+            <when test="orderType == 4">
+                ORDER BY t.expire_time desc
+            </when>
+            <otherwise>
+                ORDER BY t.create_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+  <select id="VoteTop5" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.LatestTopicVo">
+    SELECT t.id as topicId,t.slogan,t.type,t.creator_id as creatorId,ui.nick_name as creatorName,t.content,t.is_official as isOfficial,t.recommend,t.expire_time as expireTime,
+		    p.id as prizeId,p.name as prizeName
+    FROM topics t
+    LEFT JOIN user_info ui ON ui.user_id = creator_id
+	LEFT JOIN topic_pk tp ON t.challenge_topic_id = tp.topic_id
+	LEFT JOIN prizes p ON tp.prize_id = p.id
+    WHERE is_pk = 1 AND is_challenger = 1 AND is_delete = 1 AND `status` = 1
+    ORDER BY recommend DESC LIMIT 0,5
+  </select>
+  <select id="VoteTop5_recommend" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.LatestTopicVo">
+    SELECT t.id as topicId,t.slogan,t.type,t.creator_id as creatorId,ui.nick_name as creatorName,t.content,t.is_official as isOfficial,r.sort as recommend,t.expire_time as expireTime,
+		    p.id as prizeId,p.name as prizeName
+    FROM recommend r
+    LEFT JOIN topics t ON r.pid = t.id
+    LEFT JOIN user_info ui ON ui.user_id = creator_id
+	LEFT JOIN topic_pk tp ON t.challenge_topic_id = tp.topic_id
+	LEFT JOIN prizes p ON tp.prize_id = p.id
+    WHERE is_pk = 1 AND is_challenger = 1 AND is_delete = 1 AND `status` = 1 AND r.parent_type = 6
+    ORDER BY r.sort DESC LIMIT 0,5
+  </select>
+
+    <select id="voteContext" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicVo">
+    SELECT t.id as topicId,t.creator_id as creatorId,ui.nick_name as creatorNickname,ui.avatar_url as creatorAvatar,t.content,t.is_pk as isPk,t.challenge_topic_id as challengeTopicId,
+    t.type,t.is_official as isOfficial,t.create_time as createTime,pvr.vote_cnt as voteCnt,t.favorite_cnt as favoriteCnt,t.like_cnt as likeCnt,t.comment_cnt as commentCnt,t.slogan
+    FROM topics t
+    LEFT JOIN pk_vote_result pvr ON t.id = pvr.topic_id
+    LEFT JOIN user_info ui ON t.creator_id = ui.user_id
+    WHERE t.challenge_topic_id = #{challengeTopicId}
+    AND t.is_delete = 1
+  </select>
+    <select id="voteContextMovie" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicVo">
+    SELECT t.id as topicId,t.creator_id as creatorId,ui.nick_name as creatorNickname,ui.avatar_url as creatorAvatar,t.content,t.is_pk as isPk,t.challenge_topic_id as challengeTopicId,
+			t.type,t.is_official as isOfficial,t.create_time as createTime,pvr.vote_cnt as voteCnt,t.favorite_cnt as favoriteCnt,t.like_cnt as likeCnt,t.comment_cnt as commentCnt,t.slogan
+    FROM topics t
+	LEFT JOIN pk_vote_result pvr ON t.id = pvr.topic_id
+	LEFT JOIN user_info ui ON t.creator_id = ui.user_id
+    WHERE t.challenge_topic_id = #{challengeTopicId}
+    AND t.is_delete = 1
+    ORDER BY pvr.vote_cnt DESC,pvr.update_time ASC
+  </select>
+
+    <select id="selectUerTopic" resultMap="BaseResultMap" parameterType="com.chinaxiaopu.xiaopuMobi.dto.MyTopicParam">
+    SELECT ts.id, ts.creator_id, ui.nick_name as creator_nickname, ui.avatar_url as creator_avatar, ts.school_id, ts.school_name, ts.challenge_topic_id,
+    ts.is_challenger, ts.challenge_id, ts.challenge_nickname, ts.challenge_avatar, ts.channel_id, ts.channel_name,
+    ts.type, ts.slogan, ts.content, ts.recommend, ts.like_cnt, ts.favorite_cnt, ts.comment_cnt, ts.is_official,
+    is_delete, create_time, update_time, expire_time, is_pk, further, status FROM topics ts
+    LEFT JOIN user_info ui ON  ui.user_id = ts.creator_id
+    WHERE ts.creator_id = #{userId}
+    AND ts.is_delete = 1
+    AND (ts.type = 1 OR ts.type = 2)
+    ORDER BY ts.create_time DESC
+  </select>
+
+    <update id="updateMyTopic" parameterType="com.chinaxiaopu.xiaopuMobi.dto.DeleteMyTopicDto">
+    UPDATE topics
+    SET is_delete =0
+    WHERE  creator_id = #{userId}
+    AND id = #{topicId}
+    AND is_challenger != 1
+  </update>
+
+    <select id="getPkDetail" parameterType="com.chinaxiaopu.xiaopuMobi.dto.topic.PKResultDetailDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.PKResultDetailVo">
+    SELECT @row := @row + 1 as row,t0.* from (
+    SELECT t.*,case when t1.topic_id is null then 0 else 1 end as isLike,case when t2.topic_id is null then 0 else 1 end as isFav,case when ppr.prize_name is null then 0 else 1 end isGet,t3.id pkId,case when t4.topic_id is NULL then 0 else 1 end as isVotes,p.id as prizeId,p.name as prizeName
+    from (
+    SELECT
+    t.id,t.creator_id as userId,t5.nick_name as userName,t5.avatar_url as userImages,t5.user_sex userSex,t.type,t.content,t.slogan,t.favorite_cnt  favoriteCnt,t.challenge_topic_id,
+    t.like_cnt AS likeCnt,t.comment_cnt  commentCnt,t.is_challenger isChallenger,t1.vote_cnt voteCnt,t.update_time
+    from topics t
+    LEFT JOIN pk_vote_result t1 on t1.topic_id = t.id
+    LEFT JOIN user_info t5 on t5.user_id =t.creator_id
+    where t.challenge_topic_id = #{topicId} and t.`status` = 1 and t.is_delete = 1 and (t.type=1 or t.type=2)
+    ) as t LEFT JOIN (
+       SELECT t.topic_id from topic_like t where t.user_id = #{userId}
+    ) as t1 on t.id = t1.topic_id
+    LEFT JOIN (
+       SELECT t.topic_id from topic_fav t where t.user_id = #{userId}
+    ) as t2 on t.id = t2.topic_id
+    LEFT JOIN pk_prize_result ppr on ppr.challenge_topic_id =t.challenge_topic_id and t.userId = ppr.reward_user_id
+    LEFT JOIN topic_pk t3 on t3.topic_id =t.challenge_topic_id
+    LEFT JOIN (
+       SELECT t.topic_id FROM pk_votes t where t.user_id = #{userId}
+    ) as t4 on t4.topic_id = t.id
+    LEFT JOIN topic_pk tp ON t.challenge_topic_id = tp.topic_id
+    LEFT JOIN prizes p ON tp.prize_id = p.id
+    ORDER BY t.voteCnt DESC, t.update_time
+    ) as t0,(SELECT @row := 0)as r
+  </select>
+
+    <update id="updateChallengeTopicIdAsId" parameterType="java.lang.Integer">
+    UPDATE topics SET challenge_topic_id = id WHERE id =#{id}
+  </update>
+
+    <update id="deleteTopic" parameterType="java.lang.Integer">
+        UPDATE topics SET is_delete = 0
+        WHERE id = #{id}
+    </update>
+
+    <select id="isAttend" parameterType="map" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM topics t
+    LEFT JOIN topic_pk tp ON t.challenge_topic_id = tp.topic_id
+    WHERE tp.id = #{pkId} AND t.creator_id = #{userId}
+  </select>
+
+    <select id="selectTopicById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT * from topics WHERE id = #{topicId}
+  </select>
+    <!--后台 ：查询 图文视频列表-->
+    <select id="selectTopicsList" resultType="com.chinaxiaopu.xiaopuMobi.dto.admin.topics.TopicsListDto"
+            parameterType="com.chinaxiaopu.xiaopuMobi.dto.admin.topics.TopicsListDto">
+        <![CDATA[
+                SELECT
+	a.*
+FROM
+	(
+		SELECT
+			t.id,
+			t.creator_id userId,
+			t.creator_nickname userName,
+			t.creator_avatar userImages,
+			ui.real_name realName,
+			t.type,
+			r1.sort recommend,
+			t.slogan,
+			t.content,
+			ifnull(t0.tipOffCount, 0) AS tipOffCount,
+			date_format(t.create_time,'%Y-%m-%d %H:%i:%s') AS createTime,
+			t4.expire_time,
+			t1.tagName,
+			ifnull(t.channel_name, '') AS channelName,
+			t.comment_cnt commentCnt,
+			t.is_challenger isChallenge,
+			t.channel_id,
+			t4.channel_id channelId,
+			t3.visitSum,
+			t2.allVotes,
+			t.is_official isOfficial,
+			t.is_challenger,
+			IFNULL(r.sort,0) sort,
+			CASE
+		WHEN t4.expire_time >= NOW() && t4.expire_time IS NOT NULL THEN 0 WHEN t4.expire_time < NOW() && t4.expire_time IS NOT NULL THEN 1 ELSE 2  END over,
+		CASE WHEN pr.reward_user_id IS NOT NULL && t.is_challenger !=- 1 THEN 1 WHEN pr.reward_user_id IS NULL && t.is_challenger !=- 1 THEN 0 ELSE - 1 END AS isSuccess
+	FROM
+		topics t
+	LEFT JOIN user_info ui ON ui.user_id = t.creator_id
+	LEFT JOIN recommend r on t.id = r.pid and r.parent_type = 2
+	LEFT JOIN recommend r1 on t.id = r1.pid and r1.parent_type = 6
+	LEFT JOIN (
+		SELECT
+			t.tipoff_id,
+			count(1) AS tipOffCount
+		FROM
+			tipoffs t
+		where tipoff_type=1
+		GROUP BY
+			t.tipoff_id
+	) AS t0 ON t0.tipoff_id = t.id
+	LEFT JOIN (
+		SELECT
+			t.topic_id,
+			group_concat(t.target_name) tagName
+		FROM
+			topic_tags t
+		WHERE
+			t.`status` = 1
+		GROUP BY
+			t.topic_id
+	) AS t1 ON t1.topic_id = t.id
+	LEFT JOIN (
+		SELECT
+			*
+		FROM
+			pk_result pr
+		WHERE
+			pr.is_finish = 1
+	) pr ON t.challenge_topic_id = pr.challenge_topic_id
+	AND t.creator_id = pr.reward_user_id
+	AND t.creator_id = pr.reward_user_id
+	LEFT JOIN (
+		SELECT
+			t.topic_id,
+			count(1) AS visitSum,
+			sum(t.vote_cnt) AS allVotes
+		FROM
+			pk_vote_result t
+		GROUP BY
+			t.topic_id
+	) AS t2 ON t2.topic_id = t.id
+	LEFT JOIN (
+		SELECT
+			t.challenge_topic_id,
+			count(1) visitSum
+		FROM
+			topics t
+		WHERE
+			t.is_delete = 1
+		AND t.`status` = 1
+		AND t.is_pk = 1 and t.is_official !=1 and (t.type=1 or t.type=2)
+		GROUP BY
+			t.challenge_topic_id
+	) t3 ON t3.challenge_topic_id = t.challenge_topic_id
+	LEFT JOIN (
+		SELECT
+			t.expire_time,
+			t.challenge_topic_id,
+			t.channel_id
+		FROM
+			topics t
+		WHERE
+			t.is_delete = 1
+		AND t.`status` = 1
+		AND t.is_pk = 1
+		AND t.is_challenger = 1 and (t.type=1 or t.type=2)
+	) t4 ON t4.challenge_topic_id = t.challenge_topic_id
+	WHERE
+		t.is_delete = 1
+	AND t.`status` = 1 and (t.type=1 or t.type=2)
+	) AS a
+WHERE
+	1 = 1
+
+   ]]>
+        <if test="isOfficial != null and isOfficial != ''">
+            and a. isOfficial =#{isOfficial}
+        </if>
+        <if test="recommend != null and recommend != ''">
+            and a. recommend !=0
+        </if>
+        <if test="sort != null and sort != ''">
+            and a. sort !=0
+        </if>
+        <if test="type != null and type != ''">
+            and a.type =#{type}
+        </if>
+        <if test="startTime != null and startTime != '' ">
+            and a.createTime &gt; #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and a.createTime &lt; #{endTime}
+        </if>
+
+        <if test="channelId != null and channelId != ''">
+            and a.channel_id =#{channelId}
+        </if>
+        <if test="isOver != null and isOver != ''">
+            and a.Over =#{isOver}
+        </if>
+        <if test="userName != null and userName != ''">
+            and a.userName like CONCAT('%',#{userName},'%') or a.realName like CONCAT('%',#{userName},'%') or a.content
+            like CONCAT('%',#{userName},'%')
+        </if>
+        <!--<if test="isChallenge != null and isChallenge != ''">
+            and a.isChallenge =#{isChallenge}
+        </if>-->
+        <choose>
+            <when test="isChallenge==-1">
+                and a. isChallenge =-1
+            </when>
+            <when test="isChallenge==1">
+                and a. isChallenge = 1
+            </when>
+            <when test="isChallenge==0">
+                and a. isChallenge = 0
+            </when>
+        </choose>
+        <choose>
+            <when test="tipOffCount==1 ">
+                and a. tipOffCount >0
+            </when>
+            <when test="tipOffCount==2 ">
+                and a. tipOffCount =0
+            </when>
+        </choose>
+        <choose>
+            <when test="orderType !=null and orderType==3">
+                ORDER BY a.visitSum DESC
+            </when>
+            <when test="orderType !=null and orderType==2">
+                ORDER BY a.allVotes DESC
+            </when>
+            <when test="orderType !=null and orderType==1">
+                ORDER BY a.commentCnt DESC
+            </when>
+            <otherwise>
+                ORDER BY a.createTime DESC
+            </otherwise>
+        </choose>
+
+    </select>
+
+    <!--查询 频道列表-->
+    <select id="channelList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.admin.topics.ChannelListDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.dto.admin.topics.ChannelListDto">
+        SELECT * FROM (
+        SELECT
+        pc.id,
+        pc. name,
+        pc.poster_img images,
+        ifnull(t0.num, 0) AS num,
+        pc.is_official isOfficial,
+        pc.`status`,
+        pc.`desc`,
+        IFNULL(t1.sort,0) sort,
+        pc.type
+        FROM
+        pk_channel pc
+        LEFT JOIN (
+        SELECT t.channel_id, count(1) AS num FROM topics t WHERE t.is_delete = 1 AND t.is_pk = 1 AND t.is_challenger = 1
+        and (t.type=1 or t.type=2)
+        GROUP BY t.channel_id
+        ) AS t0 ON t0.channel_id = pc.id
+        LEFT JOIN recommend t1 on t1.pid = pc.id and t1.parent_type = 1
+        ) t
+        WHERE 1 = 1
+        <if test="name != null and name != '' ">
+            AND t.name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type!='' ">
+            AND t.type =#{type}
+        </if>
+        <choose>
+            <when test="sort !=null and sort==1">
+                AND t.sort &gt;0
+            </when>
+        </choose>
+    </select>
+    <select id="topicList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.admin.topics.TopicListDto"
+            resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.topics.TopicListVo">
+        SELECT distinct t.id,t.creator_nickname as nickName,ui.real_name as realName,t.school_name as
+        schoolName,t.type,t.create_time as createTime,tp.rule,p.name,t.status FROM topics t
+        LEFT JOIN user_info ui ON t.creator_id = ui.user_id
+        LEFT JOIN topic_pk tp ON t.id = tp.topic_id
+        LEFT JOIN prizes p ON tp.prize_id = p.id
+        LEFT JOIN topic_tags tt ON tt.topic_id = t.id
+        WHERE t.is_challenger = 1 AND t.is_delete = 1 AND t.is_pk = 1 AND t.status != 1 AND t.is_official = 0 AND
+        (t.type = 1 OR t.type = 2)
+        <if test="type != null">
+            AND t.type = #{type}
+        </if>
+        <if test="status != null">
+            AND t.status = #{status}
+        </if>
+        <if test="keyword != null">
+            AND (t.creator_nickname like CONCAT('%',#{keyword},'%') OR ui.real_name like CONCAT('%',#{keyword},'%') OR
+            (tt.target_name like CONCAT('%',#{keyword},'%') AND tt.tag_type = 1) )
+        </if>
+        <if test="startTime != null">
+            <if test="endTime != null">
+                <![CDATA[
+            AND t.create_time < #{endTime} AND t.create_time >= #{startTime}
+            ]]>
+            </if>
+        </if>
+        ORDER BY t.create_time DESC
+    </select>
+    <select id="topicDetail" resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.topics.TopicDetailVo">
+    SELECT t.id,t.creator_nickname as nickName,ui.real_name as realName,t.status,ui.school_name as schoolName,ui.student_no as studentNo,
+            ui.mobile,ui.qq,t.slogan,t.content,p.type as prizeType,p.name as prizeName,tp.period_type as periodType,t.channel_name as channelName,
+            tp.rule,tp.reward_type as rewardType,t.further,t.creator_id as creatorId,t.type
+    FROM topics t
+    LEFT JOIN user_info ui ON t.creator_id = ui.user_id
+    LEFT JOIN topic_pk tp ON t.id = tp.topic_id
+    LEFT JOIN prizes p ON tp.prize_id = p.id
+    WHERE t.id = #{id}
+  </select>
+    <select id="selectPkCntByUserId" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM topics
+    WHERE is_pk = 1 AND is_delete = 1 AND is_challenger != -1 AND creator_id = #{creatorId}
+  </select>
+    <select id="selectWinCntByUserId" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT pk_id) FROM pk_result
+    WHERE is_finish = 1 AND reward_user_id = #{creatorId}
+  </select>
+    <!--更新原有的推荐为0-->
+    <update id="updateOldrecommend" parameterType="com.chinaxiaopu.xiaopuMobi.model.Topic">
+        UPDATE topics SET recommend = 0 WHERE recommend =#{recommend}
+    </update>
+
+    <!--查询详情-->
+    <select id="selectTopicsDetail" resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.topics.TopicDetaVo"
+            parameterType="java.lang.Integer">
+     SELECT
+        t.id,
+        t.creator_id creatorId,
+        t.creator_avatar creatorAvatar,
+        t.creator_nickname creatorNickname,
+        t.school_id schoolId,
+        t.school_name schoolName,
+        t.comment_cnt commentCnt,
+        t.recommend,
+        t.slogan,
+        t.content,
+        t.is_challenger  isChallenger,
+        t.type,
+        t.is_official isOfficial,
+        t0.mobile,
+        t0.qq,
+        t0.student_no,
+        t0.real_name realName,
+        ifnull(t4.tipOffCount,0) tipOffCount,
+        ifnull(t5.challengeNum,0) challengeNum,
+        ifnull(t6.rewardNum,0) rewardNum
+    FROM
+        topics t
+    LEFT JOIN user_info t0 ON t.creator_id = t0.user_id
+    LEFT JOIN users t1 ON t1.id = t0.user_id
+    LEFT JOIN (
+        SELECT t.tipoff_id, count(1) AS tipOffCount FROM tipoffs t where t.tipoff_type=1 GROUP BY t.tipoff_id
+    ) t4 ON t4.tipoff_id = t.id
+    LEFT JOIN (
+        SELECT t.creator_id,count(1) as challengeNum from topics t where t.is_delete = 1 and t.is_pk = 1 and t.`status` = 1 and (t.type=1 or t.type=2)
+    GROUP BY t.creator_id
+    ) t5 on t5.creator_id =t.creator_id
+    LEFT JOIN(
+       SELECT t.reward_user_id,count(1) as rewardNum from pk_result t where t.is_finish = 1 GROUP BY t.reward_user_id
+    ) t6 on t6.reward_user_id = t.creator_id
+    WHERE
+	t.id = #{topicId}
+    </select>
+    <!--查询详情-->
+    <select id="selectTopicsDetail1" resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.topics.TopicDetaVo"
+            parameterType="java.lang.Integer">
+        <![CDATA[
+
+
+    SELECT
+	    t.*
+    FROM
+	(
+		SELECT
+			t.id,
+			t.challenge_topic_id,
+			CASE WHEN t3.expire_time >= NOW() THEN 0 ELSE 1 END AS isOver,
+		t2.`name` prizeName,
+		t2.type,
+		t2.prize,
+
+		t1.is_finish isFinish,
+		case when t4.is_finish is not null && t4.is_finish =1 then 1 else 0 end isSuccess
+	FROM
+		topics t
+	LEFT JOIN topic_pk t1 ON t1.topic_id = t.challenge_topic_id
+	LEFT JOIN prizes t2 ON t2.id = t1.prize_id
+	LEFT JOIN (
+		SELECT
+			t.expire_time,
+			t.challenge_topic_id
+		FROM
+			topics t
+		WHERE
+			t.is_delete = 1
+		AND t.`status` = 1
+		AND t.is_pk = 1
+		AND t.is_challenger = 1 and (t.type=1 or t.type=2)
+	) t3 on t3.challenge_topic_id = t.challenge_topic_id
+	LEFT JOIN pk_result t4 on t4.challenge_topic_id = t.challenge_topic_id and t4.reward_user_id = t.creator_id
+	WHERE
+		t.id = #{topicId}
+	) t
+
+
+
+        ]]>
+
+
+    </select>
+
+
+    <select id="selectUserIdByTopicId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT  creator_id FROM topics
+        WHERE id=#{topicId}
+    </select>
+
+    <select id="selectWaitReviewTopicCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM topics
+        WHERE status = 0
+        AND is_delete = 1
+        AND type != 3
+    </select>
+    <!--修改评论数-->
+    <update id="updateCommentCnt" parameterType="java.lang.Integer">
+        UPDATE topics set comment_cnt = comment_cnt -1 where id = #{id} and comment_cnt != 0
+    </update>
+
+    <select id="selectIsChallenge" parameterType="com.chinaxiaopu.xiaopuMobi.dto.DeleteMyTopicDto"
+            resultType="java.lang.Integer">
+        SELECT is_challenger FROM topics
+        WHERE  creator_id = #{userId}
+        AND id = #{topicId}
+    </select>
+    <!--首页主题推荐-->
+    <select id="getIndexList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicIndexVo">
+        SELECT
+            t.recommend_time,
+            t.parent_type parentType,
+            t1.id topicId,
+            t1.is_pk isPk,
+            t1.type,
+            t1.slogan,
+            t1.content,
+            date_format(t1.expire_time,'%Y-%m-%d %H:%i:%s')  expireTime,
+            t2.nick_name userName,
+            t4.name prizeName
+        FROM
+            recommend t
+          LEFT JOIN topics t1 on t1.id = t.pid
+          LEFT JOIN user_info t2 on t2.user_id = t1.creator_id
+          LEFT JOIN topic_pk t3 on t3.topic_id = t1.id
+          LEFT JOIN prizes t4 on t4.id = t3.prize_id
+        WHERE
+            t1.expire_time > NOW() and t1.is_challenger =1 and t1.is_delete = 1 and t1.`status` = 1 and t.parent_type = 2 and (t1.type=1 or t1.type=2)
+          ORDER BY t.sort DESC
+
+    </select>
+
+    <select id="selectTopicsByUserId" resultMap="BaseResultMap"
+            parameterType="com.chinaxiaopu.xiaopuMobi.dto.MyTopicParam">
+        SELECT ts.id, ts.creator_id, ui.nick_name as creator_nickname, ui.avatar_url as creator_avatar, ts.school_id, ts.school_name, ts.challenge_topic_id,
+                ts.is_challenger, ts.challenge_id, ts.challenge_nickname, ts.challenge_avatar, ts.channel_id, ts.channel_name,
+                ts.type, ts.slogan, ts.content, ts.recommend, ts.like_cnt, ts.favorite_cnt, ts.comment_cnt, ts.is_official,
+                ts.is_delete, ts.create_time, ts.update_time, ts.expire_time, ts.is_pk, ts.further, ts.status
+        FROM topics ts
+        LEFT JOIN user_info ui ON ui.user_id = ts.creator_id
+        WHERE is_delete = 1
+        AND status = 1
+        AND (ts.type = 1 OR ts.type = 2)
+        AND creator_id = #{userId}
+        ORDER BY create_time DESC
+    </select>
+
+    <!--根据主题ID查询社团-->
+    <select id="selectTopicsGroupById" resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.topics.TopicDetaVo"
+            parameterType="java.lang.Integer">
+
+         SELECT
+            t.member_id,
+            group_concat(t0.`name`) AS groupName
+        FROM
+            group_members t
+        LEFT JOIN groups t0 ON t.group_id = t0.id
+        WHERE
+            t.`status` = 1
+        AND t0.`status` = 1 and t.member_id =#{creatorId}
+        GROUP BY
+            t.member_id
+    </select>
+    <!--根据主题ID 查询标签-->
+    <select id="selectTopicsTagById" resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.topics.TopicDetaVo"
+            parameterType="java.lang.Integer">
+        SELECT
+            t.topic_id,
+            group_concat(t.target_name) tagName
+        FROM
+            topic_tags t
+        WHERE
+            t.`status` = 1 AND  t.topic_id =#{id}
+        GROUP BY
+            t.topic_id
+    </select>
+    <!--查询当前主题的所有挑战人数-->
+    <select id="selectChallergeCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+            SELECT
+				count(1)
+			FROM
+				topics t
+			WHERE
+				t.challenge_topic_id = (
+					SELECT
+						t.challenge_topic_id
+					FROM
+						topics t
+					WHERE
+						t.id = #{topicId}
+				)
+			AND t.is_delete = 1
+			AND t.`status` = 1 and t.is_official !=1 and (t.type=1 or t.type=2)
+    </select>
+    <!--查询当前主题的投票数-->
+    <select id="selectVoteCnt" resultType="com.chinaxiaopu.xiaopuMobi.vo.admin.topics.TopicDetaVo"
+            parameterType="java.lang.Integer">
+    SELECT
+        sum(t1.vote_cnt) voteCnt
+    FROM
+        topics t
+    LEFT JOIN pk_vote_result t1 ON t1.topic_id = t.id
+     WHERE
+    t.challenge_topic_id = (
+       SELECT
+           t.challenge_topic_id
+       FROM
+          topics t
+    WHERE
+          t.id = #{topicId}
+    )
+    AND t.is_delete = 1
+    AND t.`status` = 1 and (t.type=1 or t.type=2)
+    </select>
+
+
+    <select id="selectAudioList" resultMap="BaseResultMap" parameterType="com.chinaxiaopu.xiaopuMobi.model.Topic">
+        SELECT t.* FROM topics t WHERE t.type = 3 AND is_delete != 0
+        <if test="creatorId != null">
+            AND creator_id = #{creatorId}
+        </if>
+        <if test="slogan != null">
+            AND t.slogan like CONCAT('%',#{slogan},'%')
+        </if>
+        <if test="status != null">
+            AND t.status = #{status}
+        </if>
+        ORDER BY create_time DESC
+
+    </select>
+
+    <select id="selectAudioList1" resultType="com.chinaxiaopu.xiaopuMobi.vo.audio.AudioDetailVo"
+            parameterType="com.chinaxiaopu.xiaopuMobi.dto.audio.AudioConfirmDto">
+        SELECT
+        t.id
+        ,t.status,t.creatorNickname,t.channelName,t.content,t.expireTime,t.slogan,t.topSort,t.recommentSort,t.isDelete
+        from (
+        SELECT
+        t.id as id,t.status as status,t.creator_nickname as creatorNickname,t.channel_name as channelName,t.content as
+        content,t.expire_time as expireTime,slogan as slogan,IFNULL(t1.sort,0) topSort,IFNULL(t2.sort,0)
+        recommentSort,t.is_delete isDelete
+        FROM
+        topics t
+        LEFT JOIN recommend t1 on t1.pid = t.id and t1.parent_type=5
+        LEFT JOIN recommend t2 on t2.pid = t.id and t2.parent_type=4
+        WHERE
+        t.type = 3
+        ) t where 1=1
+        <if test="slogan != null and slogan != '' ">
+            AND t.slogan like CONCAT('%',#{slogan},'%')
+        </if>
+        <if test="status != null">
+            AND t.status = #{status}
+        </if>
+        <if test="topSort != null and topSort!=''">
+            AND t.topSort &gt;0
+        </if>
+        <if test="recommentSort != null and recommentSort!=''">
+            AND t.recommentSort &gt;0
+        </if>
+        order by t.id DESC
+
+    </select>
+
+    <update id="updateIsDeleteById" parameterType="java.lang.Integer">
+        UPDATE topics SET is_delete = 1
+        WHERE id = #{id}
+    </update>
+
+    <!--根据主贴Id 查询奖品信息-->
+    <select id="selectPrizeByTopicId" resultType="com.chinaxiaopu.xiaopuMobi.model.Prize" parameterType="java.lang.Integer">
+        SELECT
+        t1.id,t1.`name`
+        FROM
+        topic_pk t
+        LEFT JOIN prizes t1 on t1.id = t.prize_id
+        WHERE
+        t.topic_id =#{topicId}
+    </select>
+</mapper>

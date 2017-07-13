@@ -1,0 +1,256 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <script th:src="@{/js/eventDetials.js}" ></script>
+    <title>活动详情</title>
+    <style>
+        .greenSpan{
+            color: green;
+        }
+        .redSpan{
+            color: red;
+        }
+        .yellowSpan{
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content"><!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            活动详情
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <!--<a href="javascript:history.go(-1)">-->
+                                        <!--<button type="button"  class="btn btn-success">返回</button>-->
+                                    <!--</a>-->
+                                    <div class="fanhui-icon">
+                                        <a href="javascript:history.go(-1);"><i></i>返回</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input id = "eventId" th:value="${event.id}" style="display: none"/>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <h4><strong><span  th:text="${event.subject}"></span> </strong></h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4><small class="text-success"> <span id="statusName" style="font-size: 25px;" th:text="校普官方"></span></small></h4>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4><small> <span th:text="${event.timeStatusName}"></span> </small></h4>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span th:if="${isTop==1}"> 已置顶 </span>
+                                    <input  type="button" value="置顶" id="gotop" class="btn true-color btn-sm" onclick="officialPlacedTop()"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div style="border-bottom: 1px solid #e9e9e9">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4 th:each="eventGroup:${event.eventGroupList}"><strong><span  th:text="${eventGroup.schoolName}"></span> </strong> | <strong> <span  th:text="${eventGroup.groupName}"></span> </strong></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong> 活动地点：</strong><small><span  th:text="${event.address}"></span></small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong>活动时间： </strong><small> <span  th:text="${#dates.format(event.startTime,'yyyy/MM/dd HH:mm:ss')}"></span> </small><small></small><small> - </small><small><span  th:text="${#dates.format(event.startTime,'yyyy/MM/dd HH:mm:ss')}"></span></small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h4><strong>活动内容 </strong></h4>
+                                    <small class="text-muted"><span style="word-break:break-all;" th:text="${event.description}"></span></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="row">
+
+                                        <div class="col-xs-6 col-md-4">
+                                            <a href="#" class="thumbnail">
+                                                <img id="img1" th:src="${imgsDomain+event.posterImg}" alt="..." />
+                                                <!--<img id="img1" th:src="@{/img/activity01.jpg}" alt="..." />-->
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6 col-md-3" th:each="img:${imgs}" th:if="${img!=''}">
+                                            <a href="#" class="thumbnail">
+                                                <img th:src="${imgsDomain+img}" alt="..." />
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div style="border-bottom: 1px solid #e9e9e9">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!---->
+        <!--<div class="row">-->
+        <!--<div class="col-xs-12">-->
+        <!--<div class="box">-->
+        <!--<form class="form-horizontal">-->
+        <!--<div class="box-body">-->
+        <!--<div class="form-group">-->
+        <!--<button type="button" class="btn btn-success">返回</button>-->
+        <!--<div style="border-bottom: 1px solid #333">-->
+        <!--<h4><strong>书画社书法大赛 </strong><small class="text-success"> 审核通过 </small><small> 未开始 </small></h4>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-md-6">-->
+        <!--<div>-->
+        <!--<h4><strong>华东师范大学 </strong><small> 书画社 </small></h4>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<h4><strong>活动时间： </strong><small> 2016/01/01 </small><small> 12:00 </small><small> - </small><small> 2016/01/02 </small><small> 12:00 </small></h4>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<h4><strong>活动内容 </strong></h4>-->
+        <!--<small class="text-muted">给对方的风格的风格的广泛的改革的后果和规范化股份规范化和规范合法规范和发给法规规范化和刚刚好符合规范化股份规划法规和规范和高峰过后。给对方的风格的风格的广泛的改革的后果和规范化股份规范化和规范合法规范和发给法规规范化和刚刚好符合规范化股份规划法规和规范和高峰过后。给对方的风格的风格的广泛的改革的后果和规范化股份规范化和规范合法规范和发给法规规范化和刚刚好符合规范化股份规划法规和规范和高峰过后。</small>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<h4><strong>活动图片 </strong></h4>-->
+        <!--<div class="row">-->
+        <!--<div class="col-xs-6 col-md-4">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+        <!--<div class="col-xs-6 col-md-3">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div class="col-xs-6 col-md-3">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div class="col-xs-6 col-md-3">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-md-12" style="border-top: 1px solid #333;">-->
+        <!--<h4><strong>社长信息</strong></h4>-->
+        <!--<div class="col-md-12">-->
+        <!--<small class="col-md-2 text-muted">姓名：张三</small><small class="col-md-2 text-muted">学校：华东师范大学</small>-->
+        <!--</div>-->
+        <!--<div class="col-md-12">-->
+        <!--<small class="col-md-2 text-muted">手机号：22222222</small><small class="col-md-2 text-muted">学号：2222222</small>-->
+        <!--</div>-->
+        <!--<div class="col-md-12">-->
+        <!--<small class="col-md-2 text-muted">QQ号：22222222</small><small class="col-md-2 text-muted">所属社团：篮球社、书法社</small>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<button type="button" class="btn btn-success">返回</button>-->
+        <!--<div style="border-bottom: 1px solid #333">-->
+        <!--<h4><strong>书画社书法大赛 </strong><small class="text-success"> 审核通过 </small><small> 未开始 </small></h4>-->
+        <!--</div>-->
+
+        <!--<div class="col-md-6">-->
+        <!--<div>-->
+        <!--<h4><strong>华东师范大学 </strong><small> 书画社 </small></h4>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<h4><strong>活动时间： </strong><small> 2016/01/01 </small><small> 12:00 </small><small> - </small><small> 2016/01/02 </small><small> 12:00 </small></h4>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<h4><strong>活动内容 </strong></h4>-->
+        <!--<small class="text-muted">给对方的风格的风格的广泛的改革的后果和规范化股份规范化和规范合法规范和发给法规规范化和刚刚好符合规范化股份规划法规和规范和高峰过后。给对方的风格的风格的广泛的改革的后果和规范化股份规范化和规范合法规范和发给法规规范化和刚刚好符合规范化股份规划法规和规范和高峰过后。给对方的风格的风格的广泛的改革的后果和规范化股份规范化和规范合法规范和发给法规规范化和刚刚好符合规范化股份规划法规和规范和高峰过后。</small>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<h4><strong>活动图片 </strong></h4>-->
+        <!--<div class="row">-->
+        <!--<div class="col-xs-6 col-md-4">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+        <!--<div class="col-xs-6 col-md-3">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div class="col-xs-6 col-md-3">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div class="col-xs-6 col-md-3">-->
+        <!--<a href="#" class="thumbnail">-->
+        <!--<img src="activity01.jpg" alt="..." />-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col-md-12" style="border-top: 1px solid #333;">-->
+        <!--<h4><strong>社长信息</strong></h4>-->
+        <!--<div class="col-md-12">-->
+        <!--<small class="col-md-2 text-muted">姓名：张三</small><small class="col-md-2 text-muted">学校：华东师范大学</small>-->
+        <!--</div>-->
+        <!--<div class="col-md-12">-->
+        <!--<small class="col-md-2 text-muted">手机号：22222222</small><small class="col-md-2 text-muted">学号：2222222</small>-->
+        <!--</div>-->
+        <!--<div class="col-md-12">-->
+        <!--<small class="col-md-2 text-muted">QQ号：22222222</small><small class="col-md-2 text-muted">所属社团：篮球社、书法社</small>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--modal-->
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

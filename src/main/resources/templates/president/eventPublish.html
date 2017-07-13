@@ -1,0 +1,244 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>创建活动</title>
+    <link rel="stylesheet" th:href="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" th:href="@{/plugins/dropzone/dropzone.min.css}" />
+    <!-- datetimepicker -->
+    <script th:src="@{/plugins/datetimepicker/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+    <script th:src="@{/plugins/dropzone/dropzone.min.js}" charset="UTF-8"></script>
+    <script th:src="@{/js/president/eventPublish.js}" ></script>
+
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+
+    <section class="content-header">
+        <h1>
+            <!--创建活动-->
+        </h1>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form class="form-horizontal" id="form">
+                        <div class="box-body">
+                            <br/>
+                            <input type="hidden" id="schoolId" name="schoolId" th:value="${schoolId}"/>
+                            <input type="hidden" id="schoolName" name="schoolName" th:value="${schoolName}"/>
+                            <input type="hidden" id="imgsHostDomain" th:value="${imgsHostDomain}"/>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动组织方:</label>
+                                <div class="col-sm-6">
+                                    <select id="group" style="width: 100%;" check-type="required" required-message="请选择社团">
+                                        <option th:each="group : ${groupList}"
+                                                th:value="${group.id}"
+                                                th:text="${group.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动标题:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="subject" class="form-control" placeholder="请填写活动标题" check-type="required" required-message="请填写活动标题"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动地点:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="address" class="form-control" placeholder="活动地点" check-type="required" required-message="请填写活动地点"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动时间:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="startTime" placeholder="请选择开始时间"/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="endTime" placeholder="请选择结束时间"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">参与要求:</label>
+                                <div class="col-sm-6">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="joinClaim" value="2" name="joinClaim" checked="checked"/>
+                                            无
+                                        </label>
+                                        <br />
+                                        <label>
+                                            <input type="radio" class="joinClaim" value="1" name="joinClaim" />
+                                            社团成员
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">电子门票:</label>
+                                <div class="col-sm-6">
+                                    <input type="checkbox" id="electronicTicket" value="0" onclick="changeCheckBox()" name="electronicTicket" />
+                                    需要
+                                </div>
+                            </div>
+                            <div class="form-group" id="ticketNumShow" style="display: none;padding-top: 10px;cursor:pointer;">
+                                <label class="col-sm-2 control-label">活动人数:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" check-type="required" required-message="请填写活动人数" placeholder="请填写活动人数" id="ticketNum" value="100"
+                                           onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动介绍:</label>
+                                <div class="col-sm-6">
+                                    <textarea id="description" rows="5" style="resize: none" class="form-control" check-type="required" required-message="请填写活动介绍"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动海报:</label>
+                                <div class="col-sm-6 dropz">
+                                    <img id="uploadImage1" class="dropzoneImgUpload" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" data-val=""
+                                         data-toggle="tooltip"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动图片:</label>
+                                <div class="col-sm-3 dropz">
+                                    <img id="uploadImage2" class="dropzoneImgUpload" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" data-val="" data-img-val="2"
+                                         data-toggle="tooltip"/>
+                                </div>
+                                <div class="col-sm-3 dropz">
+                                    <img id="uploadImage3" class="dropzoneImgUpload" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" data-val="" data-img-val="3"
+                                         data-toggle="tooltip"/>
+                                </div>
+                                <div class="col-sm-3 dropz">
+                                    <img id="uploadImage4" class="dropzoneImgUpload" th:src="@{/img/cjhdtianjia.png}" height="164" width="177" data-val="" data-img-val="4"
+                                         data-toggle="tooltip"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-3 col-sm-offset-3">
+                                    <button id="publish" type="button" style="margin-top: 20px;font-size: 14px;" class="btn btn-block true-color">确认发布</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <script type="text/javascript">
+                        $("#startTime").datetimepicker({
+                            format: 'yyyy/mm/dd hh:ii',
+                            language: 'zh-CN', //汉化
+                            autoclose: true //选择日期后自动关闭
+                        });
+                        $("#endTime").datetimepicker({
+                            format: 'yyyy/mm/dd hh:ii',
+                            language: 'zh-CN', //汉化
+                            autoclose: true //选择日期后自动关闭
+                        });
+//                        function file_click(){
+//                            $('#inp_fileToUpload').click();
+//                        }
+
+//                        $(function () {
+//                            $('#inp_fileToUpload').change(function () {
+//                                var v_this = $(this);
+//                                var fileObj = v_this.get(0).files;
+//                                uploadtest(fileObj,"file_image");
+//                                console.info("11111");
+//                                return false;
+//                            });
+//                        });
+//                        function uploadtest(fileObj,file_image){
+//                            layer.load(0, {shade: false});
+//                            var url = "/file/fileUpload";
+//                            var formdata = new FormData();
+//                            formdata.append("file", fileObj[0]);
+//                            jQuery.ajax({
+//                                url: url,
+//                                type: 'post',
+//                                data: formdata,
+//                                cache: false,
+//                                contentType: false,
+//                                processData: false,
+//                                dataType: "json",
+//                                success: function (data) {
+//                                    layer.closeAll();
+//                                    $("#"+file_image).attr("src","http://imgs1.chinaxiaopu.com/"+data.obj);
+//                                }
+//                            });
+//                            return false;
+//                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="selectGroup" role="dialog" aria-labelledby="groupModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">选择社团</h4>
+                    </div>
+                    <div class="modal-body" style="">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-6 col-xs-offset-3">
+                                    <div class="input-group">
+                                        <input type="text" id="searchGroupText" class="form-control" placeholder="" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" onclick="search();" type="button">
+                                                <i class="fa fa-fw fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- /input-group -->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <select style="width: 100%">
+                                        <option value="1">11</option>
+                                        <option value="2">22</option>
+                                        <option value="3">33</option>
+                                        <option value="4">44</option>
+                                        <option value="5">55</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <div class="panel panel-default" >
+                                        <div class="panel-body" style="height:400px;overflow: auto;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="panel panel-default" >
+                                        <div class="panel-body" style="height:400px;overflow: auto;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" ng-click="grantFun()" class="btn true-color">授权</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

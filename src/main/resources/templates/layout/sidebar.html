@@ -1,0 +1,225 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+</head>
+<body>
+<aside class="main-sidebar" th:fragment="sidebar">
+
+    <script>
+            $(function(){
+                $('.treeview-menu').find('li').on('click',function(){
+                    $('.treeview').find('li').removeClass('act');
+                    $(this).addClass('act');
+                    window.localStorage.setItem('key',$(this).index())
+                });
+                var a = window.localStorage.getItem('key');
+                $('.treeview').find('li').removeClass('act');
+                $('.menu-open').find('li:eq('+a+')').addClass('act');
+
+            });
+    </script>
+
+    <section class="sidebar">
+        <ul class="sidebar-menu" shiro:hasRole="admin">
+            <li class="active treeview _active">
+                <a th:href="@{/admin/index}" >
+                    <i class="glyphicon glyphicon-home icon-back-col"></i> <span>管理员首页</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-university icon-back-col"></i> <span>社团管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/admin/reviewgroup/}"><i class="fa fa-circle-o"></i>审核社团</a></li>
+                    <li><a th:href="@{/admin/reviewgroup/unclaimed}"><i class="fa fa-circle-o"></i>未认领社团</a></li>
+                    <li><a th:href="@{/admin/reviewgroup/create}"><i class="fa fa-circle-o"></i>创建社团</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user icon-back-col"></i> <span>社长管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu icon-back-col">
+                    <li><a th:href="@{/admin/reviewgroup/presidentList}"><i class="fa fa-circle-o"></i>社长信息</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-flag icon-back-col"></i> <span>活动管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/admin/event/}"><i class="fa fa-circle-o"></i>活动列表</a></li>
+                    <li><a th:href="@{/admin/event/official}"><i class="fa fa-circle-o"></i>校谱官方</a></li>
+                    <li><a th:href="@{/admin/event/eventMember}"><i class="fa fa-circle-o"></i>官方活动人员申请审核</a></li>
+                    <li><a th:href="@{/admin/event/create}"><i class="fa fa-circle-o"></i>发布活动</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-flag icon-back-col"></i> <span>活动抽奖</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/eventLottery/event/listUI}"><i class="fa fa-circle-o"></i>活动抽奖列表</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="glyphicon glyphicon-th-large icon-back-col"></i> <span>内容管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/admin/topics/toList}"><i class="fa fa-circle-o"></i>图文视频</a></li>
+                    <li><a th:href="@{/admin/topics/toBannerList}"><i class="fa fa-circle-o"></i>轮播图管理</a></li>
+                    <li><a th:href="@{/admin/topics/toCreate}"><i class="fa fa-circle-o"></i>官方发布</a></li>
+                    <!--<li><a th:href="@{/admin/channel/toChannelList}"><i class="fa fa-circle-o"></i>频道管理</a></li>-->
+                    <li><a th:href="@{/admin/channel/toList}"><i class="fa fa-circle-o"></i>频道管理</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-hand-o-right icon-back-col"></i> <span>来战管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/admin/fight/prizeList}"><i class="fa fa-circle-o"></i>奖品设置</a></li>
+                    <li><a th:href="@{/admin/fight/topicList}"><i class="fa fa-circle-o"></i>审核管理</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="glyphicon glyphicon-th-large icon-back-col"></i> <span>音频管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/adminAudio/toAudioList}"><i class="fa fa-circle-o"></i>音频审核</a></li>
+                    <li><a th:href="@{/adminAudio/toPersonnelList}"><i class="fa fa-circle-o"></i>人员管理</a></li>
+                    <li><a th:href="@{/adminAudio/toPositionList}"><i class="fa fa-circle-o"></i>职位管理</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="glyphicon glyphicon-gift icon-back-col"></i> <span>奖励管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/admin/PrizeTake/topkLinShiFinsh}"><i class="fa fa-circle-o"></i>临时结算管理</a></li>
+                    <li><a th:href="@{/admin/PrizeTake/gopresenList}"><i class="fa fa-circle-o"></i>发奖人管理</a></li>
+                    <li><a th:href="@{/admin/PrizeTake/list}"><i class="fa fa-circle-o"></i>获奖记录</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-gamepad icon-back-col"></i> <span>VR管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/admin/vrList}"><i class="fa fa-circle-o"></i>用户体验列表</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-mortar-board icon-back-col"></i> <span>校园合伙人</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/partnerManage/schoolLook}"><i class="fa fa-circle-o"></i>校园合伙人审核</a></li>
+                    <li><a th:href="@{/partnerManage/school}"><i class="fa fa-circle-o"></i>校园合伙人列表</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user-plus icon-back-col"></i> <span>社团合伙人</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/partnerManage/groupLook}"><i class="fa fa-circle-o"></i>社团合伙人审核</a></li>
+                    <li><a th:href="@{/partnerManage/group}"><i class="fa fa-circle-o"></i>社团合伙人列表</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-laptop icon-back-col"></i> <span>系统管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/admin/appVersion/}"><i class="fa fa-circle-o"></i>版本管理</a></li>
+                    <li><a th:href="@{/admin/AdminUserInfo/}"><i class="fa fa-circle-o"></i>管理员列表</a></li>
+                    <li><a th:href="@{/admin/quartz/toList}"><i class="fa fa-circle-o"></i>定时器管理</a></li>
+                    <li><a th:href="@{/resource/index}"><i class="fa fa-circle-o"></i>资源管理</a></li>
+                    <li><a th:href="@{/role/index}"><i class="fa fa-circle-o"></i>角色管理</a></li>
+                    <li><a th:href="@{/userInfo/manage/index}"><i class="fa fa-circle-o"></i>用户管理</a></li>
+                </ul>
+            </li>
+
+
+        </ul>
+
+        <ul class="sidebar-menu" shiro:hasRole="president">
+            <li class="active treeview _active">
+                <a th:href="@{/president/index}" >
+                    <i class="fa fa-home"></i> <span>社长首页</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-flag"></i> <span>活动管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/president/event/list}"><i class="fa fa-circle-o"></i>活动列表</a></li>
+                    <li><a th:href="@{/president/eventMember/listInit/0/0}"><i class="fa fa-circle-o"></i>活动申请人审核</a></li>
+                    <li><a th:href="@{/president/event/publishContext}"><i class="fa fa-circle-o"></i>发布活动</a></li>
+                </ul>
+            </li>
+            <li class="treeview ">
+                <a href="#">
+                    <i class="fa fa-university"></i> <span>社员管理</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/president/groupMember/listInit/0}"><i class="fa fa-circle-o"></i>社员管理</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="sidebar-menu" shiro:hasRole="partnerManage">
+            <li class="active treeview _active">
+                <a th:href="@{/partnerManage/index}" >
+                    <i class="fa fa-home"></i> <span>合伙人首页</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user"></i> <span>校园合伙人</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/partnerManage/schoolLook}"><i class="fa fa-circle-o"></i>校园合伙人审核</a></li>
+                    <li><a th:href="@{/partnerManage/school}"><i class="fa fa-circle-o"></i>校园合伙人列表</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user"></i> <span>社团合伙人</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/partnerManage/groupLook}"><i class="fa fa-circle-o"></i>社团合伙人审核</a></li>
+                    <li><a th:href="@{/partnerManage/group}"><i class="fa fa-circle-o"></i>社团合伙人列表</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="sidebar-menu" shiro:hasRole="anchor">
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user icon-back-col"></i> <span>主播</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/anchorManage/toCreate}"><i class="fa fa-circle-o"></i>创建音频</a></li>
+                    <li><a th:href="@{/anchorManage/toAnchorAudioList}"><i class="fa fa-circle-o"></i>音频列表</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </section>
+    <!-- /.sidebar -->
+</aside>
+</body>
+</html>

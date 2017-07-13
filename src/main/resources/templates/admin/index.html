@@ -1,0 +1,115 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>管理员首页</title>
+
+</head>
+<body style="overflow: hidden;">
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            管理员首页
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body code-content">
+                        <div class="col-md-offset-2 col-md-8 code">
+
+
+                            <div class="col-md-5" style="background: #85ceec;">
+                                <a th:href="@{/admin/reviewgroup/goreviewList}">
+                                    <div class="code-nub"><p style="font-size:30px;color:red;" th:text="${groupAndEventNum.groupNum}"></p></div>
+                                    <div class="code-text">社团审核</div>
+                                </a>
+                            </div>
+
+
+                            <div class="col-md-offset-1 col-md-5" style="background: #f9be2f;">
+                                <a th:href="@{/admin/event/goEventList}">
+                                    <div class="code-nub"><p style="font-size:30px;color:red;" th:text="${groupAndEventNum.eventNum}"></p></div>
+                                    <div class="code-text">活动审核</div>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="col-md-offset-1 col-md-10 code">
+                            <div class="col-md-3" style="background: #f1a296;">
+                                <a th:href="@{/partnerManage/schoolLook}">
+                                    <div class="code-nub"><p style="font-size:30px;color:red;" th:text="${schoolNo}"></p></div>
+                                    <div class="code-text">校园合伙人审核</div>
+                                </a>
+                            </div>
+                            <div class="col-md-offset-1 col-md-3" style="background: #c4d4a8;">
+                                <a th:href="@{/admin/fight/goreviewTopicList}">
+                                <div class="code-nub"><p style="font-size:30px;color:red;" th:text="${groupAndEventNum.topicNum}"></p></div>
+                                <div class="code-text">来战审核</div>
+                                </a>
+                            </div>
+                            <div class="col-md-offset-1 col-md-3" style="background: #85ceec;">
+                                <a th:href="@{/partnerManage/groupLook}">
+                                    <div class="code-nub"><p style="font-size:30px;color:red;" th:text="${groupNo}"></p></div>
+                                    <div class="code-text">社团合伙人审核</div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="row">-->
+        <!--<div class="col-xs-2"></div>-->
+        <!--<a th:href="@{/admin/event/goEventList}">-->
+        <!--<div class="col-xs-4">-->
+        <!--&lt;!&ndash;<div class="box-header">&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash; /.box-header &ndash;&gt;-->
+        <!--<div  class="eventApplyCount" style="-->
+        <!--width: 120px;-->
+        <!--height: 120px;-->
+        <!--border: 5px solid #999999;-->
+        <!--margin-top: 151px;-->
+        <!--margin-left: 150px;-->
+        <!--border-radius: 50%;-->
+        <!--text-align: center;-->
+        <!--line-height: 42px;-->
+        <!--">-->
+        <!--<p style="font-size:30px;color:red;" th:text="${groupAndEventNum.eventNum}"></p>-->
+        <!--待处理活动-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.box &ndash;&gt;-->
+        <!--</div>-->
+        <!--</a>-->
+        <!--<a th:href="@{/admin/reviewgroup/goreviewList}">-->
+        <!--<div class="col-xs-4">-->
+        <!--<div  class="groupApplyCount" style="-->
+        <!--width: 120px;-->
+        <!--height: 120px;-->
+        <!--border: 5px solid #999999;-->
+        <!--margin-top: 151px;-->
+        <!--margin-left: 150px;-->
+        <!--border-radius: 50%;-->
+        <!--text-align: center;-->
+        <!--line-height: 42px;-->
+        <!--">-->
+        <!--<p style="font-size:30px;color:red;" th:text="${groupAndEventNum.groupNum}"></p>-->
+        <!--待处理社团-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.box &ndash;&gt;-->
+        <!--</div>-->
+        <!--</a>-->
+        <!--</div>-->
+
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

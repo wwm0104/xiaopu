@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.TopicTagMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.TopicTag">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
+        <result column="tag_type" jdbcType="TINYINT" property="tagType"/>
+        <result column="target_id" jdbcType="INTEGER" property="targetId"/>
+        <result column="target_name" jdbcType="VARCHAR" property="targetName"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, topic_id, tag_type, target_id, target_name, status
+  </sql>
+    <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicTagExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from topic_tags
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from topic_tags
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from topic_tags
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicTagExample">
+        delete from topic_tags
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicTag">
+    insert into topic_tags (id, topic_id, tag_type, 
+      target_id, target_name, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{tagType,jdbcType=TINYINT}, 
+      #{targetId,jdbcType=INTEGER}, #{targetName,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicTag">
+        insert into topic_tags
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="topicId != null">
+                topic_id,
+            </if>
+            <if test="tagType != null">
+                tag_type,
+            </if>
+            <if test="targetId != null">
+                target_id,
+            </if>
+            <if test="targetName != null">
+                target_name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="topicId != null">
+                #{topicId,jdbcType=INTEGER},
+            </if>
+            <if test="tagType != null">
+                #{tagType,jdbcType=TINYINT},
+            </if>
+            <if test="targetId != null">
+                #{targetId,jdbcType=INTEGER},
+            </if>
+            <if test="targetName != null">
+                #{targetName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicTagExample"
+            resultType="java.lang.Long">
+        select count(*) from topic_tags
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update topic_tags
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.topicId != null">
+                topic_id = #{record.topicId,jdbcType=INTEGER},
+            </if>
+            <if test="record.tagType != null">
+                tag_type = #{record.tagType,jdbcType=TINYINT},
+            </if>
+            <if test="record.targetId != null">
+                target_id = #{record.targetId,jdbcType=INTEGER},
+            </if>
+            <if test="record.targetName != null">
+                target_name = #{record.targetName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update topic_tags
+        set id = #{record.id,jdbcType=INTEGER},
+        topic_id = #{record.topicId,jdbcType=INTEGER},
+        tag_type = #{record.tagType,jdbcType=TINYINT},
+        target_id = #{record.targetId,jdbcType=INTEGER},
+        target_name = #{record.targetName,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicTag">
+        update topic_tags
+        <set>
+            <if test="topicId != null">
+                topic_id = #{topicId,jdbcType=INTEGER},
+            </if>
+            <if test="tagType != null">
+                tag_type = #{tagType,jdbcType=TINYINT},
+            </if>
+            <if test="targetId != null">
+                target_id = #{targetId,jdbcType=INTEGER},
+            </if>
+            <if test="targetName != null">
+                target_name = #{targetName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.TopicTag">
+    update topic_tags
+    set topic_id = #{topicId,jdbcType=INTEGER},
+      tag_type = #{tagType,jdbcType=TINYINT},
+      target_id = #{targetId,jdbcType=INTEGER},
+      target_name = #{targetName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--主题关联的社团-->
+    <select id="getTagsGroupList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicTagsVo">
+     SELECT t.topic_id as topicId,t.target_id as id,t.target_name as name from topic_tags t where t.`status`=1 and t.tag_type = 1
+  </select>
+    <!--主题关联的活动-->
+    <select id="getTagsEventList" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicTagsVo">
+      SELECT t.topic_id as topicId,t.target_id as id,t.target_name as name from topic_tags t where t.`status`=1 and t.tag_type = 2
+  </select>
+  <!-- 根据topicId查询社团标签 -->
+  <select id="getGroupTagsByTopicId" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicTagsVo">
+    SELECT t.target_id AS id,t.target_name AS name FROM topic_tags t WHERE t.`status`=1 AND t.tag_type = 1 AND topic_id = #{topicId}
+  </select>
+  <!-- 根据topicId查询活动标签 -->
+  <select id="getEventTagsByTopicId" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.TopicTagsVo">
+    SELECT t.target_id AS id,t.target_name AS name FROM topic_tags t WHERE t.`status`=1 AND t.tag_type = 2 AND topic_id = #{topicId}
+  </select>
+
+    <select id="selectEventNameById" parameterType="java.lang.Integer" resultType="string">
+        select subject FROM events
+        WHERE id=#{id}
+    </select>
+    <select id="selectGroupNameById" parameterType="java.lang.Integer" resultType="string">
+        SELECT g.name FROM  groups g
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectTargetNameByPrizeLogId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+          IFNULL(t1.tagName,"无") as targetName
+        FROM
+            pk_prize_result ppr
+				LEFT JOIN pk_vote_result pvr ON pvr.pk_id = ppr.pk_id
+				LEFT JOIN topics ts ON ts.id = pvr.topic_id
+        LEFT JOIN (
+         SELECT tt.topic_id,group_concat(tt.target_name) tagName from topic_tags tt where tt.`status` = 1 GROUP BY tt.topic_id
+        ) t1 on t1.topic_id = ts.challenge_topic_id
+        WHERE ppr.pk_id = #{id} and pvr.creator_id = ppr.reward_user_id
+    </select>
+</mapper>

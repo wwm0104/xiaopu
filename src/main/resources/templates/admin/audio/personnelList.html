@@ -1,0 +1,132 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>人员管理</title>
+    <script th:src="@{/js/admin/audio/personnelList.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+
+    <section class="content-header">
+        <h1>
+            人员管理
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!--<div class="box-header">-->
+                    <!-- /.box-header -->
+                    <div class="box-header">
+                        <div class="col-xs-4">
+                            <button style="width: 150px;" type="button" onclick="toAdd()" class="btn true-color">添加</button>
+                        </div>
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <div class="input-group">
+                                <input type="text" id="realName1" placeholder="姓名" class="form-control" />
+                                <span class="input-group-addon seachButton" onclick="initPersonnelList(1,10)">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>姓名</th>
+                                <th>用户名</th>
+                                <th style="width: 220px;">
+                                    <select class="form-control" id="positionList" onchange="initPersonnelList(1,10)">
+                                        <option value="">全部职位</option>
+                                    </select>
+                                </th>
+                                <th>手机号</th>
+                                <th style="width: 220px;">
+                                    <select class="form-control" id="schoolList" onchange="initPersonnelList(1,10)">
+                                        <option value="">全部学校</option>
+                                    </select>
+                                </th>
+                                <th width="10%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="personnelList">
+                            </tbody>
+                        </table>
+                        <p id="personnelListPagination"></p>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+        </div>
+    </section>
+    <div class="modal fade" id="addPersonnel" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">员工添加</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="personnelForm" class="form-horizontal" role="form" novalidate="novalidate"  name="roleForm">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">姓名：<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="realName" name="realName" check-type="required" required-message="请填真实姓名" class="form-control" placeholder="请填真实姓名"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">手机号：<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="mobile" name="mobile" check-type="required" required-message="请填手机号" class="form-control" placeholder="请填写手机号" onblur="checkUserInfo()"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">职位：<i style="color: red">*</i></label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" id="positionList1">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <input type="hidden" id="id" value=""/>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button id="add" type="button" class="btn true-color">添加</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.content -->
+    <div class="modal fade" id="delcfmModel">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 30px;text-align: center;">您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="delid"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a  onclick="urlSubmit()" class="btn true-color" style="color: #444444;" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>

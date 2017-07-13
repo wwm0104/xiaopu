@@ -1,0 +1,111 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>未认领社团</title>
+    <style>
+        .deletediv {padding-top:15px;}
+    </style>
+    <script th:src="@{/js/bootstrap/bootstrap.js}" ></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}" ></script>
+    <script th:src="@{/js/unclaimed.js}" ></script>
+    <script type="text/javascript">
+        function boxchange(){
+            if($("#allchecked").is(':checked')){
+                $(".checkbox").each(function() {
+                    this.checked = true;
+                });
+            }else{
+                $(".checkbox").each(function() {
+                    this.checked = false;
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            未认领 社团列表
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 620px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-8">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="社团名称" class="form-control" onkeydown="seachList(event)"/>
+                                    <span class="input-group-addon seachButton" onclick="getUnclaimedGroupList()">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th><input type ="checkbox" style="display:none"/></th>
+                                <th>ID</th>
+                                <th>社团名称</th>
+                                <th style="width: 200px;">
+                                    <select   class="form-control" id="schoolList" onchange ="getUnclaimedGroupList()">
+                                        <option value="">所有大学名称</option>
+                                        <option th:each="school : ${schools}"
+                                                th:value="${school.id}"
+                                                th:text="${school.name}"></option>
+                                    </select>
+                                </th>
+                                <th>创建时间</th>
+                                <th style="width: 140px;"><select  class="form-control"  id="creater" onchange ="getUnclaimedGroupList()">
+                                    <option value="">全部</option>
+                                    <option value="1">平台创建</option>
+                                    <option value="2">社长创建</option>
+                                </select></th>
+                            </tr>
+                            </thead>
+                            <tbody id="groupList">
+                            </tbody>
+                        </table>
+                        <div class="deletediv">
+                            &nbsp;&nbsp;
+                            <label id="checkBoxId" style="display: none;margin-right: 20px;"><input type="checkbox" id="allchecked" style="margin-right: 6px;" onchange="boxchange()"/>全选</label>
+                            <input type="button" id="delete" class="btn delete-btn-bg" style="display: none;" value="删除" onclick="deleteInfo()"/>
+                        </div>
+                        <p id="groupListPagination"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="delcfmModel">
+            <div class="modal-dialog">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p style="text-align: center;font-size: 30px;">您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="delid"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a  onclick="deletegroup()" class="btn true-color" style="color: #444444" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </section>
+</div>
+</body>
+</html>

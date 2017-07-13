@@ -1,0 +1,116 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>子频道列表</title>
+    <script th:src="@{/js/admin/channel/chanList.js}"></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+
+    <section class="content-header">
+        <h1>
+            子频道列表
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!--<div class="box-header">-->
+                    <!-- /.box-header -->
+                    <div class="box-header">
+                        <div class="fanhui-icon col-xs-1">
+                            <a href="javascript:history.go(-1);"><i></i>返回</a>
+                        </div>
+                        <div class="col-xs-1">
+                            <a class="btn true-color" style="width: 150px; background-color: #3c8dbc;" href="/admin/channel/chanForm">添加子频道</a>
+                        </div>
+                        <div class="col-xs-1">
+                            <input type="button" class="btn btn-default" id="sorts" data-val=""
+                                   value="热门频道推荐查询"
+                                   onclick="orderBy(1)"/>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-4">
+                            <div class="input-group">
+                                <input type="text" id="name" placeholder="你输入要查询的频道名称" class="form-control"/>
+                                <span class="input-group-addon seachButton" onclick="initData(1,10)">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                            <tr>
+                            <tr>
+                                <th>频道</th>
+                                <th style="word-wrap:break-word;" width="20%">描述</th>
+                                <th>频道图片</th>
+                                <th>来战数量</th>
+                                <th>来源</th>
+                                <th>状态</th>
+                                <!--<th>频道类型</th>-->
+                                <th width="10%">
+                                <select class="form-control _select" id="type" onchange="initData()">
+                                    <option value="">类型</option>
+                                    <option value="1">图文</option>
+                                    <option value="2">音频</option>
+                                </select>
+                                </th>
+                                <th width="15%">操作</th>
+                                <th>热门推荐</th>
+                            </tr>
+                            </tr>
+                            </thead>
+                            <tbody id="channelist">
+                            </tbody>
+                        </table>
+                        <p id="channelListPagination"></p>
+                        <div style="display: none;background-color: inherit;" id="tuijianBox" class="form-group">
+                            <div class="form-group">
+                                <input type="hidden" id="pid" value=""/>
+                                <input type="hidden" id="reId" value=""/>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top5" class="btn btn-default col-sm-10 buttonClass5" value="top1"
+                                            onclick="voluation(5)"/>　　
+                                </div>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top4" class="btn btn-default col-sm-10 buttonClass4" value="top2"
+                                            onclick="voluation(4)"/>　　
+                                </div>
+                                <div class="col-sm-4" style="margin: 20px 0">
+                                    　<input type="button" id="top3" class="btn btn-default col-sm-10 buttonClass3" value="top3"
+                                            onclick="voluation(3)"/>　　
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    　<input type="button" id="top2" class="btn btn-default col-sm-10 buttonClass2" value="top4"
+                                            onclick="voluation(2)"/>　　
+                                </div>
+                                <div class="col-sm-4">
+                                    　<input type="button" id="top1" class="btn btn-default col-sm-10 buttonClass1" value="top5"
+                                            onclick="voluation(1)"/>　　
+                                </div>
+                                <div class="col-sm-4">
+                                    　<input type="button" class="btn true-color col-sm-10" onclick="submitTj()" value="确定"/>　　
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+        </div>
+    </section>
+</div>
+</body>
+</html>

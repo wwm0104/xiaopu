@@ -1,0 +1,103 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>修改图片</title>
+    <script th:src="@{/js/topics/bannerUpdate.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form class="form-horizontal" id="form">
+                        <div class="box-body">
+                            <div class="fanhui-icon">
+                                <a href="javascript:history.go(-1)"><i></i>返回</a>
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <input id="bannerId" th:value="${b.id}"  type="hidden" />
+                                <label class="col-sm-2 control-label">图片名称:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="name" class="form-control" th:value="${b.name}" placeholder="请填写图片名称" check-type="required" required-message="请填写图片名称"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片类型:</label>
+                                <div class="col-sm-4">
+                                    <input id="type1" type="hidden" th:value="${b.bannerType}" />
+                                    <select id="bannerType" class="form-control"  style="width: 100%;" check-type="required" required-message="请选择图片类型">
+                                        <option value="1">发现轮播图</option>
+                                        <option value="2">音频轮播图</option>
+                                        <option value="3">活动排行榜</option>
+                                        <option value="4">投票排行榜</option>
+                                        <option value="5">不服榜</option>
+                                        <option value="6">达人榜</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片标题:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="slogan" class="form-control" th:value="${b.slogan}" placeholder="请填写图片标题"  check-type="required" required-message="请填写图片标题"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">详情:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="description" class="form-control" th:value="${b.description}" placeholder="请填写详细信息" check-type="required" required-message="请填写详细信息"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">状态:</label>
+                                <div class="col-sm-4">
+                                    <select id="available" class="form-control" th:if="${b.available==0}" style="width: 100%;" check-type="required" required-message="请选择状态">
+                                        <option selected="selected" value="0">不启用</option>
+                                        <option value="1">启用</option>
+                                    </select>
+                                    <select id="available" class="form-control" th:if="${b.available==1}" style="width: 100%;" check-type="required" required-message="请选择状态">
+                                        <option  value="0">不启用</option>
+                                        <option selected="selected" value="1">启用</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="sortA">
+                                <label class="col-sm-2 control-label">推荐:</label>
+                                <div class="col-sm-4">
+                                    <input id="sort1" type="hidden" th:value="${b.sort}" />
+                                <select id="sort"  class="form-control" style="width: 100%;" check-type="required" required-message="请选择推荐位">
+                                    <option  value="0">无</option>
+                                    <option  value="5">NO.1</option>
+                                    <option  value="4">NO.2</option>
+                                    <option  value="3">NO.3</option>
+                                    <option  value="2">NO.4</option>
+                                    <option  value="1">NO.5</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片:</label>
+                                <div class="col-sm-4 dropz">
+                                    <input id="imgUrl" type="hidden" th:value="${b.imgUrl}" />
+                                    <img id="uploadImage1" class="dropzoneImgUpload" th:src="@{${b.imgsHostDomain}+${b.imgUrl}}" height="164" width="177" data-val=""
+                                         data-toggle="tooltip"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-2 col-sm-offset-2">
+                                    <button id="update" type="button" class="btn btn-block true-color" style="">修改</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

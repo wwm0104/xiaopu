@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.BackStageManagementEventMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.dto.EventDto">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+        <result column="organize_id" jdbcType="INTEGER" property="organizeId" />
+        <result column="organize_name" jdbcType="VARCHAR" property="organizeName" />
+        <result column="subject" jdbcType="VARCHAR" property="subject" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="join_type" jdbcType="TINYINT" property="joinType" />
+        <result column="allow_multi_groups" jdbcType="TINYINT" property="allowMultiGroups" />
+        <result column="qrcode" jdbcType="VARCHAR" property="qrcode" />
+        <result column="join_cnt" jdbcType="INTEGER" property="joinCnt" />
+        <result column="follow_cnt" jdbcType="INTEGER" property="followCnt" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="small_poster_img" jdbcType="VARCHAR" property="smallPosterImg" />
+        <result column="poster_img" jdbcType="VARCHAR" property="posterImg" />
+        <result column="content_imgs" jdbcType="VARCHAR" property="contentImgs" />
+        <result column="further" jdbcType="VARCHAR" property="further" />
+        <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
+        <result column="qq" jdbcType="VARCHAR" property="qq" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    </resultMap>
+
+    <!-- 查询活动列表 -->
+    <select id="selectEventList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.EventDto" resultMap="BaseResultMap">
+        SELECT e.*,g.school_name FROM events e LEFT JOIN groups g ON e.organize_id=g.id
+        <where>
+            <if test="schoolId != null">
+                AND g.school_id=#{schoolId}
+            </if>
+            <if test="subject != null">
+                AND e.subject like CONCAT('%','${subject}','%')
+            </if>
+            <if test="status != null">
+                AND e.status = #{status}
+            </if>
+            <if test="timeStatus == 1">
+                AND e.start_time &lt; now() AND e.end_time &gt; now()
+            </if>
+            <if test="timeStatus == 2">
+                AND e.start_time &gt; now()
+            </if>
+            <if test="timeStatus == 3">
+                AND  e.end_time &lt; now()
+            </if>
+            <if test="organizeId == 0 and organizeId != null">
+                AND  e.organize_id =0
+            </if>
+            <if test="organizeId != 0 and organizeId == null">
+                AND  e.organize_id !=0
+            </if>
+        </where>
+                 <if test="status != 0">
+                     order by e.create_time desc
+                  </if>
+                <if test="status == 0">
+                    order by e.start_time DESC
+                </if>
+    </select>
+
+    <select id="selectEventDteils" parameterType="com.chinaxiaopu.xiaopuMobi.dto.EventDto" resultMap="BaseResultMap">
+            SELECT e.*,g.school_name,ui.real_name,ui.qq,ui.mobile,ui.student_no,ui.user_id FROM events e
+            LEFT JOIN groups g ON e.organize_id = g.id
+            LEFT JOIN user_info ui ON ui.user_id = g.president_id
+            WHERE e.id = #{id}
+    </select>
+
+    <resultMap id="BaseResultMap1" type="com.chinaxiaopu.xiaopuMobi.model.EventGroup">
+        <id column="event_id" jdbcType="INTEGER" property="eventId" />
+        <id column="group_id" jdbcType="INTEGER" property="groupId" />
+        <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+        <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    </resultMap>
+    <select id="selectGroupByEventId" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventGroup" resultMap="BaseResultMap1">
+        SELECT event_id,group_id,group_name,school_id,school_name FROM event_groups
+        WHERE event_id = #{eventId}
+    </select>
+
+    <resultMap id="BaseResultMap2" type="com.chinaxiaopu.xiaopuMobi.model.Group">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="school_id" jdbcType="INTEGER" property="schoolId"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="VARCHAR" property="categoryId"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="president_id" jdbcType="INTEGER" property="presidentId"/>
+        <result column="president_name" jdbcType="VARCHAR" property="presidentName"/>
+        <result column="logo_img_url" jdbcType="VARCHAR" property="logoImgUrl"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="cnt" jdbcType="INTEGER" property="cnt"/>
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
+        <result column="small_poster_img" jdbcType="VARCHAR" property="smallPosterImg" />
+        <result column="poster_img" jdbcType="VARCHAR" property="posterImg" />
+        <result column="content_imgs" jdbcType="VARCHAR" property="contentImgs" />
+        <result column="further" jdbcType="VARCHAR" property="further" />
+    </resultMap>
+    <select id="selectInfoByGroupId" parameterType="com.chinaxiaopu.xiaopuMobi.model.Group" resultMap="BaseResultMap2">
+        SELECT * FROM groups
+        WHERE id=#{id }
+    </select>
+
+    <select id="selectGroupCount" resultType="long">
+        SELECT  count(*) FROM groups
+        WHERE status = 2
+    </select>
+    <select id="selectEventCount" resultType="long">
+        SELECT  count(*) FROM events
+        WHERE status = 0
+        AND start_time>now()
+    </select>
+
+    <update id="updateEventById" parameterType="com.chinaxiaopu.xiaopuMobi.model.Event">
+        UPDATE events
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="joinCnt != null">
+                join_cnt = #{joinCnt,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id=#{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateEventMembers" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+        UPDATE event_members
+        SET status = #{status}
+        WHERE  event_id = #{eventId}
+        AND member_id = #{memberId}
+        AND status = 2
+        AND is_join = 1
+    </update>
+
+    <select id="selectAllEventNum" resultType="long">
+         SELECT  count(*) FROM events
+    </select>
+
+    <select id="selectAllGroupNum" resultType="long">
+        SELECT  count(*) FROM groups
+    </select>
+
+    <select id="selectIndexGroup" resultMap="BaseResultMap2">
+        SELECT * FROM groups
+        WHERE status = 2
+        order by join_time desc
+        LIMIT 1,5
+
+    </select>
+
+    <select id="selectIndexEvent" resultMap="BaseResultMap">
+        SELECT * FROM events
+        WHERE status = 0
+        order by create_time desc
+         LIMIT 1,5
+    </select>
+
+    <resultMap id="BaseResultMap4" type="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+        <result column="event_id" jdbcType="INTEGER" property="eventId" />
+        <result column="event_name" jdbcType="VARCHAR" property="eventName" />
+        <result column="group_id" jdbcType="INTEGER" property="groupId" />
+        <result column="member_id" jdbcType="INTEGER" property="memberId" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="memo" jdbcType="VARCHAR" property="memo" />
+        <result column="is_join" jdbcType="TINYINT" property="isJoin" />
+        <result column="is_follow" jdbcType="TINYINT" property="isFollow" />
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime" />
+
+    </resultMap>
+
+    <select id="selectEventMember" resultMap="BaseResultMap4" parameterType="com.chinaxiaopu.xiaopuMobi.model.EventMember">
+        SELECT * FROM event_members em
+        LEFT JOIN user_info ui ON em.member_id = ui.user_id
+        WHERE  em.is_join = 1 AND  em.group_id = 0
+        <if test="eventId != null">
+           AND  em.event_id = #{eventId}
+        </if>
+        <if test="status != null">
+           AND em.status = #{status}
+        </if>
+        <if test="eventName != null">
+            AND (ui.real_name LIKE CONCAT('%','${eventName}','%') OR ui.mobile LIKE CONCAT('%','${eventName}','%'))
+        </if>
+        ORDER BY em.join_time DESC
+    </select>
+
+
+
+</mapper>

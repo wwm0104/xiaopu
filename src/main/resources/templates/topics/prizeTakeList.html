@@ -1,0 +1,211 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>奖励详情</title>
+    <script th:src="@{/js/topics/prizeTakeList.js}"></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+
+    <section class="content-header">
+        <h1>
+            发奖记录
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="overflow: auto;">
+        <form action="/export/prizeTakeExport" method="post">
+            <div class="row" style="min-width: 1250px;">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="fanhui-icon col-sm-12" style="margin-bottom: 20px;">
+                                        <a href="javascript:history.go(-1);"><i></i>返回</a>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-11 form-horizontal" th:each="e : ${AwardPreseList}">
+
+                                        <div class="col-sm-5">
+                                            <strong>发奖人：</strong>
+                                            <span th:text="${e.realName}"></span>　　　
+                                            <span th:text="${e.mobile}"></span>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            <strong>负责人：</strong>
+                                            <span th:text="${e.officialName}"></span>　　　
+                                            <span th:text="${e.officialMobile}"></span>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <strong>状态：</strong>
+                                            <span th:if="${e.available==1}">正常</span>
+                                            <span th:if="${e.available==0}">停止</span>
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="col-sm-1">-->
+                                        <!--<button type="submit" class="btn true-color btn-sm">导出</button>-->
+                                    <!--</div>-->
+
+                                </div>
+
+
+
+                                <script>
+                                    $(function () {
+                                        $('#endTime').daterangepicker({
+                                            timePicker: true, //是否显示小时和分钟
+                                            startDate: moment().subtract('days', 7),
+                                            endDate: new Date(),
+                                            maxDate: new Date(),
+                                            locale: {
+                                                separator: '/',
+                                                applyLabel: '确认',
+                                                cancelLabel: '取消',
+                                                fromLabel: '从',
+                                                toLabel: '到',
+                                                weekLabel: 'W',
+                                                format: 'YYYY-MM-DD HH:mm:ss',
+                                                customRangeLabel: 'Custom Range',
+                                                daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+                                                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                                            }
+                                        }, function (start, end, label) {
+                                            /*alert('A date range was chosen: ' + start.format('YYYY-MM-DD HH:mm:ss.SSSS') + ' to ' + end.format('YYYY-MM-DD HH:mm:ss.SSSS'));*/
+                                            /*$('#reservationtime span').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));*/
+                                        }).on('cancel.daterangepicker', function (ev, picker) {
+                                            $('#endTime').val("");
+                                            initPrizeTakeData();
+                                        }).on('apply.daterangepicker', function (ev, picker) {
+                                            initPrizeTakeData();
+
+                                        });
+                                        $('#takeTime').daterangepicker({
+                                            timePicker: true, //是否显示小时和分钟
+                                            startDate: moment().subtract('days', 7),
+                                            endDate: new Date(),
+                                            maxDate: new Date(),
+                                            locale: {
+                                                separator: '/',
+                                                applyLabel: '确认',
+                                                cancelLabel: '取消',
+                                                fromLabel: '从',
+                                                toLabel: '到',
+                                                weekLabel: 'W',
+                                                format: 'YYYY-MM-DD HH:mm:ss',
+                                                customRangeLabel: 'Custom Range',
+                                                daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+                                                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                                            }
+                                        }, function (start, end, label) {
+                                            /*alert('A date range was chosen: ' + start.format('YYYY-MM-DD HH:mm:ss.SSSS') + ' to ' + end.format('YYYY-MM-DD HH:mm:ss.SSSS'));*/
+                                            /*$('#reservationtime span').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));*/
+                                        }).on('cancel.daterangepicker', function (ev, picker) {
+                                            $('#takeTime').val("");
+                                            initPrizeTakeData();
+                                        }).on('apply.daterangepicker', function (ev, picker) {
+                                            initPrizeTakeData();
+
+                                        });
+                                        $('#endTime').val("");
+                                        $('#takeTime').val("");
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+
+                            <div class="form-group form-horizontal">
+                                <div class="col-sm-3 col-sm-offset-2">
+                                    <label class="col-sm-4 control-label">结束时间</label>
+                                    <div class="col-sm-8">
+                                        <input type="hidden" id="userId" th:value="${userId}"/>
+                                        <input type="text" class="form-control" id="endTime" placeholder="请选择开始时间和结束时间"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-sm-4 control-label">领奖时间</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="takeTime" placeholder="请选择开始时间和结束时间"/>
+                                    </div>
+                                </div>
+                                <div class="input-group col-sm-4">
+                                    <input type="text" id="seachText" placeholder="搜索领奖人姓名" class="form-control" />
+                                    <span class="input-group-addon seachButton" id="seachBtn">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </span>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th style="min-width: 50px;">昵称</th>
+                                    <th style="min-width: 50px;">姓名</th>
+                                    <th>学校</th>
+                                    <th>社团</th>
+                                    <th width="12%">
+                                        <select class="form-control" id="topicType" name="topicType"
+                                                onchange="initPrizeTakeData(1,10)">
+                                            <option value="">全部</option>
+                                            <option value="1">图片</option>
+                                            <option value="2">视频</option>
+                                            <option value="3">直播</option>
+                                            <option value="4">其他</option>
+                                        </select>
+                                    </th>
+                                    <th>来战标题</th>
+                                    <th>
+                                        结束时间
+                                        <!--<input type="hidden" id="userId" th:value="${userId}"/>-->
+                                        <!--<input type="text" class="form-control" id="endTime" placeholder="请选择开始时间和结束时间"/>-->
+                                    </th>
+                                    <th style="min-width: 50px;">名次</th>
+                                    <th style="min-width: 50px;">奖品</th>
+                                    <th width="12%">
+                                        <select class="form-control" id="hasTake" name="hasTake" onchange="initPrizeTakeData(1,10)">
+                                            <option value="">全部</option>
+                                            <option value="1">已领</option>
+                                            <option value="0">未领</option>
+                                        </select>
+                                    </th>
+                                    <th style="min-width: 68px;">发奖人</th>
+                                    <th>
+                                        领奖时间
+                                        <!--<input type="text" class="form-control" id="takeTime" placeholder="请选择开始时间和结束时间"/>-->
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="prizeTakeList">
+                                </tbody>
+                            </table>
+                            <!--<p id="Pagination"></p>-->
+
+                            <div class="form-group">
+                                <p id="Pagination" class="col-sm-11"></p>
+                                <div class="col-sm-1 text-right" style="margin: 20px 0;">
+                                    <button id="export" type="submit" class="btn true-color btn-sm">导出</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>

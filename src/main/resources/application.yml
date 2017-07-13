@@ -1,0 +1,148 @@
+server:
+  port: 8080
+
+logging:
+#  file: xiaopu_9001.log
+#  path: /var/log
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+#    org.springframework.scheduling.quartz: ERROR
+    com.chinaxiaopu.xiaopuMobi.mapper: DEBUG
+
+spring:
+  profiles.active: xiaopu_test
+  thymeleaf:
+    enabled: true
+    cache: false
+---
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.25.18.254:3306/xiaopu?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    username: xiaopu
+    password: Weiyin@2016
+    # 使用druid数据源
+    druid:
+      max-active: 20
+      initial-size: 1
+      min-idle: 3
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x' FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  # Redis
+  redis:
+    host: 10.25.18.254
+    port: 6380
+    password: weiyin2016
+
+system:
+  img-base-path: /Users/daer/webdata/imgs/
+  weixinindex: http://weixin.proxy1.chinaxiaopu.cn/future.html
+  weixinBinding: http://weixin.proxy1.chinaxiaopu.cn/mobile.html
+  weixinDomain: http://weixin.chinaxiaopu.com/
+  apiDomain: http://apiservice.proxy1.chinaxiaopu.cn/
+  imgsDomain: http://imgs.chinaxiaopu.top/
+  qrcodePath: /qrcode/
+  groupPosterImg: group_poster.png
+  smsDuration: 90
+  smsTodayLimit: 10
+  evenSharePage: share/activityDetail.html?id=
+  groupSharePage: share/associationsDetail.html?id=
+  partnerIndex: http://weixin.chinaxiaopu.top/futureApp.html
+  alyunoss: ALIYUNOSS_TEST
+  jpushApns: false
+  loginSmsCaptcha: true
+
+---
+spring:
+  profiles: xiaopu_test
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/xioapu?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    username: root
+    password: jiangkui1991
+    # 使用druid数据源
+    druid:
+      max-active: 20
+      initial-size: 1
+      min-idle: 3
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x' FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  # Redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+
+system:
+  img-base-path: /Users/daer/webdata/imgs/
+  weixinindex: http://weixin.proxy1.chinaxiaopu.cn/future.html
+  weixinBinding: http://weixin.proxy1.chinaxiaopu.cn/mobile.html
+  weixinDomain: http://weixin.proxy1.chinaxiaopu.cn/
+  apiDomain: http://apiservice.proxy1.chinaxiaopu.cn/
+  imgsDomain: http://imgs.chinaxiaopu.top/
+  qrcodePath: /qrcode/
+  groupPosterImg: /group_poster.png
+  smsDuration: 90
+  smsTodayLimit: 10
+  evenSharePage: share/activityDetail.html?id=
+  groupSharePage: share/associationsDetail.html?id=
+  partnerIndex: http://weixin.chinaxiaopu.com/futureApp.html
+  alyunoss: ALIYUNOSS_TEST
+
+
+---
+spring:
+  profiles: xiaopu_top
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://api.chinaxiaopu.top:3306/xiaopu?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    username: xiaopu
+    password: Weiyin@2016
+    # 使用druid数据源
+    druid:
+      max-active: 20
+      initial-size: 1
+      min-idle: 3
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x' FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  # Redis
+  redis:
+    host: 139.224.26.91
+    port: 6379
+    password: weiyin2016
+
+system:
+  img-base-path: /Users/daer/webdata/imgs/
+  weixinindex: http://weixin.proxy1.chinaxiaopu.cn/future.html
+  weixinBinding: http://weixin.proxy1.chinaxiaopu.cn/mobile.html
+  weixinDomain: http://weixin.proxy1.chinaxiaopu.cn/
+  apiDomain: http://apiservice.proxy1.chinaxiaopu.cn/
+  imgsDomain: http://imgs.chinaxiaopu.top/
+  qrcodePath: /qrcode/
+  groupPosterImg: /group_poster.png
+  smsDuration: 90
+  smsTodayLimit: 10
+  evenSharePage: share/activityDetail.html?id=
+  groupSharePage: share/associationsDetail.html?id=
+  partnerIndex: http://weixin.chinaxiaopu.com/futureApp.html
+  alyunoss: ALIYUNOSS_TEST
+
+
+

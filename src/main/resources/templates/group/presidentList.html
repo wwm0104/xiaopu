@@ -1,0 +1,63 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>社长信息</title>
+    <script th:src="@{/js/president.js}" ></script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            社长信息
+        </h1>
+    </section>
+    <section class="content" style="overflow-x: auto;">
+        <div class="row" style="min-width: 1050px;">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-8">
+                                <div class="input-group">
+                                    <input type="text" id="seachText" placeholder="社长姓名、社团名称" class="form-control" onkeydown="seachList(event)"/>
+                                    <span class="input-group-addon seachButton" onclick="getPresidentList()">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="min-width: 90px;">社长姓名</th>
+                                <th style="width: 200px;">
+                                    <select class="form-control" id="schoolList" onchange="getPresidentList()">
+                                        <option value="">所有大学名称</option>
+                                        <option th:each="school : ${schools}"
+                                                th:value="${school.id}"
+                                                th:text="${school.name}"></option>
+                                    </select>
+                                </th>
+                                <th width="40%">社团名称</th>
+                                <th style="min-width: 70px;">手机号</th>
+                                <th>QQ</th>
+                                <th>学号</th>
+                            </tr>
+                            </thead>
+                            <tbody id="presidentList">
+                            </tbody>
+                        </table>
+                        <p id="groupListPagination"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

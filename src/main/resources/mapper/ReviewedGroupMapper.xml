@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.ReviewedGroupMapper">
+    <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.dto.GroupDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="school_id" jdbcType="INTEGER" property="schoolId"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="VARCHAR" property="categoryId"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="president_id" jdbcType="INTEGER" property="presidentId"/>
+        <result column="president_name" jdbcType="VARCHAR" property="presidentName"/>
+        <result column="logo_img_url" jdbcType="VARCHAR" property="logoImgUrl"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="cnt" jdbcType="INTEGER" property="cnt"/>
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
+        <result column="small_poster_img" jdbcType="VARCHAR" property="smallPosterImg"/>
+        <result column="poster_img" jdbcType="VARCHAR" property="posterImg"/>
+        <result column="content_imgs" jdbcType="VARCHAR" property="contentImgs"/>
+        <result column="further" jdbcType="VARCHAR" property="further"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="student_no" jdbcType="VARCHAR" property="studentNo"/>
+    </resultMap>
+    <!-- 查询社团审核列表 -->
+    <!--<select id="selectReviewedGroupList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.GroupDto" resultMap="BaseResultMap"></select>-->
+    <select id="selectReviewedGroupList" parameterType="com.chinaxiaopu.xiaopuMobi.dto.GroupDto"
+            resultMap="BaseResultMap">
+        select g.*, u.mobile, u.student_no
+        from
+        groups g left join user_info u on
+        g.president_id = u.user_id
+        <where>
+            <if test="schoolName != null">
+                g.school_name = #{schoolName,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                AND CONCAT(g.president_name,g.name) like CONCAT('%','${name}','%')
+            </if>
+            <if test="status != null">
+                AND g.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="schoolId != null">
+                AND g.school_id = #{schoolId,jdbcType=VARCHAR}
+            </if>
+            <if test="id != null">
+                AND g.id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="presidentId != null">
+                AND g.president_id = #{presidentId,jdbcType=VARCHAR}
+            </if>
+            AND g.status != 0
+        </where>
+        order by join_time desc
+    </select>
+
+
+    <resultMap id="BaseResultMap1" type="com.chinaxiaopu.xiaopuMobi.model.Group">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="school_id" jdbcType="INTEGER" property="schoolId"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="VARCHAR" property="categoryId"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="president_id" jdbcType="INTEGER" property="presidentId"/>
+        <result column="president_name" jdbcType="VARCHAR" property="presidentName"/>
+        <result column="logo_img_url" jdbcType="VARCHAR" property="logoImgUrl"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="cnt" jdbcType="INTEGER" property="cnt"/>
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
+        <result column="small_poster_img" jdbcType="VARCHAR" property="smallPosterImg"/>
+        <result column="poster_img" jdbcType="VARCHAR" property="posterImg"/>
+        <result column="content_imgs" jdbcType="VARCHAR" property="contentImgs"/>
+        <result column="further" jdbcType="VARCHAR" property="further"/>
+    </resultMap>
+
+    <!-- 查询未认领社团 -->
+    <select id="selectUnclaimedGroupList" parameterType="com.chinaxiaopu.xiaopuMobi.model.Group"
+            resultMap="BaseResultMap1">
+        select * from groups
+        <where>
+            <if test="name != null">
+                AND name like CONCAT('%','${name}','%')
+            </if>
+            <if test="schoolId != null">
+                AND school_id = #{schoolId,jdbcType=VARCHAR}
+            </if>
+            <if test="id != null">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="createrStatus == 2 ">
+                AND further IS NOT null
+            </if>
+            <if test="createrStatus == 1 ">
+                AND further IS null
+            </if>
+            AND status = 0
+        </where>
+        order by join_time desc
+    </select>
+
+    <!-- 查看审核社团详情 -->
+    <!--     <select id="selectReviewedGroupDetails" parameterMap="com.chinaxiaopu.xiaopuMobi.model.Group" resultMap="BaseResultMap"> -->
+    <!--        select * from groups -->
+    <!--        where id = #{id,jdbcType=VARCHAR} -->
+    <!--     </select> -->
+
+    <!-- 社团审核 -->
+    <update id="reviewGroup" parameterType="com.chinaxiaopu.xiaopuMobi.model.Group">
+        update groups
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="cnt != null">
+                cnt = #{cnt,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id=#{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteGroup" parameterType="long">
+        delete from groups
+        where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and status = 0;
+    </delete>
+
+    <!-- 查询所有学校名称及id -->
+    <select id="selectAllSchoolNameAndId" resultType="com.chinaxiaopu.xiaopuMobi.model.School">
+        select id, name, area_code, area_name, address, lat, lon from schools
+    </select>
+
+    <select id="selectAllGroupBySchoolId" parameterType="com.chinaxiaopu.xiaopuMobi.model.Group"
+            resultMap="BaseResultMap1">
+        SELECT g.id, g.name, g.school_name, g.school_id
+        FROM groups g
+        WHERE 1=1
+        <if test="schoolId != null">
+            AND g.school_id = #{schoolId}
+        </if>
+        <if test="name != null">
+            AND g.name LIKE CONCAT('%','${name}','%')
+        </if>
+            AND g.status = 1
+
+    </select>
+
+    <update id="updateByGroupMember" parameterType="com.chinaxiaopu.xiaopuMobi.model.GroupMember">
+        UPDATE group_members
+        SET
+        status = #{status,jdbcType=TINYINT},
+        is_president = #{isPresident,jdbcType=TINYINT}
+        WHERE
+        group_id = #{groupId,jdbcType=INTEGER}
+        AND
+        member_id = #{memberId,jdbcType=INTEGER}
+        AND
+        status != 3
+    </update>
+
+    <update id="updateUserInfoById" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserInfo">
+          UPDATE user_info SET
+           valid = #{valid},
+           is_president = #{isPresident}
+           WHERE
+           user_id = #{userId}
+    </update>
+
+
+    <select id="selectGroupDetails" parameterType="com.chinaxiaopu.xiaopuMobi.model.Group" resultMap="BaseResultMap1">
+            SELECT * FROM groups
+            WHERE  id = #{id}
+    </select>
+
+    <insert id="insertPresidentRoleId" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRole">
+        INSERT INTO user_role
+        (user_id,role_id) VALUES
+        (#{userId},#{roleId})
+    </insert>
+    
+    <select id="selectRoleNum" parameterType="com.chinaxiaopu.xiaopuMobi.model.UserRole" resultType="Long">
+         SELECT count(*) FROM user_role
+         WHERE user_id = #{userId}
+         AND  role_id = #{roleId}
+    </select>
+
+</mapper>

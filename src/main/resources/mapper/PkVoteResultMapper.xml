@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaxiaopu.xiaopuMobi.mapper.PkVoteResultMapper">
+  <resultMap id="BaseResultMap" type="com.chinaxiaopu.xiaopuMobi.model.PkVoteResult">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="pk_id" jdbcType="INTEGER" property="pkId" />
+    <id column="topic_id" jdbcType="INTEGER" property="topicId" />
+    <result column="topic_slogan" jdbcType="VARCHAR" property="topicSlogan" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creator_nickname" jdbcType="VARCHAR" property="creatorNickname" />
+    <result column="vote_cnt" jdbcType="INTEGER" property="voteCnt" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, pk_id, topic_id, topic_slogan, creator_id, creator_nickname, vote_cnt, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pk_vote_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResultKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pk_vote_result
+    where id = #{id,jdbcType=INTEGER}
+      and pk_id = #{pkId,jdbcType=INTEGER}
+      and topic_id = #{topicId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResultKey">
+    delete from pk_vote_result
+    where id = #{id,jdbcType=INTEGER}
+      and pk_id = #{pkId,jdbcType=INTEGER}
+      and topic_id = #{topicId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResultExample">
+    delete from pk_vote_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResult">
+    insert into pk_vote_result (id, pk_id, topic_id, 
+      topic_slogan, creator_id, creator_nickname, 
+      vote_cnt, update_time)
+    values (#{id,jdbcType=INTEGER}, #{pkId,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, 
+      #{topicSlogan,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, #{creatorNickname,jdbcType=VARCHAR}, 
+      #{voteCnt,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResult">
+    insert into pk_vote_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pkId != null">
+        pk_id,
+      </if>
+      <if test="topicId != null">
+        topic_id,
+      </if>
+      <if test="topicSlogan != null">
+        topic_slogan,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creatorNickname != null">
+        creator_nickname,
+      </if>
+      <if test="voteCnt != null">
+        vote_cnt,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pkId != null">
+        #{pkId,jdbcType=INTEGER},
+      </if>
+      <if test="topicId != null">
+        #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="topicSlogan != null">
+        #{topicSlogan,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorNickname != null">
+        #{creatorNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="voteCnt != null">
+        #{voteCnt,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResultExample" resultType="java.lang.Long">
+    select count(*) from pk_vote_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pk_vote_result
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pkId != null">
+        pk_id = #{record.pkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.topicId != null">
+        topic_id = #{record.topicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.topicSlogan != null">
+        topic_slogan = #{record.topicSlogan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorNickname != null">
+        creator_nickname = #{record.creatorNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.voteCnt != null">
+        vote_cnt = #{record.voteCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pk_vote_result
+    set id = #{record.id,jdbcType=INTEGER},
+      pk_id = #{record.pkId,jdbcType=INTEGER},
+      topic_id = #{record.topicId,jdbcType=INTEGER},
+      topic_slogan = #{record.topicSlogan,jdbcType=VARCHAR},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creator_nickname = #{record.creatorNickname,jdbcType=VARCHAR},
+      vote_cnt = #{record.voteCnt,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResult">
+    update pk_vote_result
+    <set>
+      <if test="topicSlogan != null">
+        topic_slogan = #{topicSlogan,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorNickname != null">
+        creator_nickname = #{creatorNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="voteCnt != null">
+        vote_cnt = #{voteCnt,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and pk_id = #{pkId,jdbcType=INTEGER}
+      and topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResult">
+    update pk_vote_result
+    set topic_slogan = #{topicSlogan,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_nickname = #{creatorNickname,jdbcType=VARCHAR},
+      vote_cnt = #{voteCnt,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+      and pk_id = #{pkId,jdbcType=INTEGER}
+      and topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+
+  <select id="voteList" parameterType="java.lang.Integer" resultType="com.chinaxiaopu.xiaopuMobi.vo.topic.VoteResultListVo">
+    SELECT pvr.topic_id as topicId,ui.avatar_url as avatarUrl, ui.nick_name as nickName,pvr.vote_cnt as voteCnt,ui.user_id as creatorId
+    FROM pk_vote_result pvr
+    LEFT JOIN user_info ui ON pvr.creator_id = ui.user_id
+    LEFT JOIN topics t ON pvr.topic_id = t.id
+    WHERE pvr.pk_id = #{pkId,jdbcType=INTEGER} AND t.is_delete = 1
+    ORDER BY pvr.vote_cnt DESC,pvr.update_time ASC
+  </select>
+  <select id="selectByTopicId" resultMap="BaseResultMap">
+    SELECT * FROM pk_vote_result WHERE topic_id = #{topicId}
+  </select>
+  <update id="updateByTopicId" parameterType="com.chinaxiaopu.xiaopuMobi.model.PkVoteResult">
+    update pk_vote_result
+    set vote_cnt = #{voteCnt,jdbcType=INTEGER},
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectVoteMax" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT * from
+    (SELECT * FROM pk_vote_result p
+     WHERE vote_cnt = (SELECT MAX(vote_cnt) FROM  pk_vote_result pvr
+     LEFT JOIN topics t  ON t.id = pvr.topic_id
+     WHERE t.is_delete = 1 AND pk_id = #{pkId})
+     AND pk_id = #{pkId}
+     ORDER BY update_time) h LIMIT 0,1
+  </select>
+
+  <select id="selectCountByPkId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT count(*) FROM  pk_vote_result pvr
+    LEFT JOIN topics t  ON t.id = pvr.topic_id
+    WHERE pk_id = #{pkId}
+    AND t.is_delete = 1
+  </select>
+
+  <select id="checkUserVote" parameterType="map" resultType="java.lang.Integer">
+    SELECT  count(*) FROM pk_vote_result
+    WHERE pk_id = #{pkId} AND creator_id = #{userId}
+  </select>
+
+  <select id="selectVoteCntByPkId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    SELECT
+	SUM(pr.vote_cnt) voteCnt
+    FROM
+	pk_vote_result pr
+	LEFT JOIN topics t  ON t.id = pr.topic_id
+    WHERE pr.pk_id = #{pkId}
+    AND t.is_delete =1
+    GROUP BY pr.pk_id
+  </select>
+
+  <select id="selectUserIdList" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+     SELECT creator_id FROM pk_vote_result
+     WHERE pk_id = #{pkId}
+  </select>
+</mapper>

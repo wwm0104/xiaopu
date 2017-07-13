@@ -1,0 +1,41 @@
+<html layout:decorator="layout/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>社团创建</title>
+    <style type="text/css">
+        div {margin-bottom:40px;margin-top:40px;}
+        .create {width: 100%;}
+    </style>
+    <script th:src="@{/js/createGroup.js}" ></script>
+    <script type="text/javascript">
+        $(getSchoolList);
+        $(getCategoryList);
+    </script>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            创建社团
+        </h1>
+    </section>
+    <section class="content">
+        <div id="create" class ="create">
+            <div class="divlist"><label>学校 :</label><select id="schoolList"></select></div>
+            <div class="divlist"><label>社团名称 :</label> <input type="text" id="groupName" style="width: 300px;"/></div>
+            <div class="divlist"><label>社团口号:</label> <input type="text" id="groupSlogan" style="width: 300px;"/> </div>
+            <div class="divlist">社团分类:<select id="categoryList"></select></div>
+            <div class="divlist">社团介绍: <input type="text" id="description" style="width: 400px; height:200px;"/></div>
+            <div class="divlist">社团logo:<input type="file" id="logofile" onchange="upload(1)"/><input type="text" id="logoImg" style="display:none"/></div>
+            <div class="divlist">社团图片 :
+                <input type="file" id="groupfile1" onchange="upload(2)"/><input type="text" id="contentImg1" style="display:none"/>
+                <input type="file" id="groupfile2" onchange="upload(3)"/><input type="text" id="contentImg2" style="display:none"/>
+                <input type="file" id="groupfile3" onchange="upload(4)"/><input type="text" id="contentImg3" style="display:none"/>
+            </div>
+        </div>
+        <div><input type="button" id="createGroup" style="width:25%" class="btn btn-block btn-primary btn-lg" value="确认发布" onclick="createGroup()"/></div>
+    </section>
+</div>
+</body>
+</html>
