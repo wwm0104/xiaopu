@@ -2,7 +2,7 @@ package com.chinaxiaopu.xiaopuMobi.vo.authorization;
 
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 16/6/15
  */
 public class ResourceTreeVo {

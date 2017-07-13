@@ -22,7 +22,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 2016/11/3
  */
 @Slf4j

@@ -4,7 +4,7 @@ import com.chinaxiaopu.xiaopuMobi.model.UserInfo;
 import lombok.Data;
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 2016/11/14
  */
 @Data

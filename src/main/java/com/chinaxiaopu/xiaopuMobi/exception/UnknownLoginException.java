@@ -2,7 +2,7 @@ package com.chinaxiaopu.xiaopuMobi.exception;
 
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 16/7/15
  */
 public class UnknownLoginException extends Exception {

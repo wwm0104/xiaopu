@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 2016/11/12
  */
 public @Data class UserVrActivityVo {

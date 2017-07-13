@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 16/9/28
  */
 public class SmsCaptchaDto extends ContextDto {

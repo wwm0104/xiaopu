@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 /**
- * Created by liuwei
+ * Created by ellien
  * date: 2016/11/2
  * 该类主要用于集群版本
  */
